@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-08-06 16:11:55.286817 by Eclipse SUMO buildScenario.py v1_26_0+0000-fa7df22d7f1
+  options: 
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+<parkingArea id="ParkArea0" lane="road0_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkArea0" lane="-road0_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="ParkArea1" lane="road1_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkArea1" lane="-road1_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="ParkAreaAlternative0" lane="roadAlternative0_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkAreaAlternative0" lane="-roadAlternative0_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="ParkAreaAlternative1" lane="roadAlternative1_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkAreaAlternative1" lane="-roadAlternative1_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="ParkAreaOutOfTown0" lane="roadOutOfTown0_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkAreaOutOfTown0" lane="-roadOutOfTown0_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="ParkAreaOutOfTown1" lane="roadOutOfTown1_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkAreaOutOfTown1" lane="-roadOutOfTown1_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="ParkAreaOutOfTown2" lane="roadOutOfTown2_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkAreaOutOfTown2" lane="-roadOutOfTown2_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="ParkAreaOutOfTown3" lane="roadOutOfTown3_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<parkingArea id="-ParkAreaOutOfTown3" lane="-roadOutOfTown3_1" roadsideCapacity="10" angle="270" length="8">
+</parkingArea>
+<vType id="car" color="0.7,0.7,0.7"/>
+<vType id="carB" color="red"/>
+</additional>

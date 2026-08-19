@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-08-06 16:11:55.109913 by Eclipse SUMO buildScenario.py v1_26_0+0000-fa7df22d7f1
+  options: 
+-->
+
+<edges xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/edges_file.xsd">
+<edge id="mainin" from="in" to="main0" numLanes="3"/>
+<edge id="main0to1" from="main0" to="main1" numLanes="3"/>
+<edge id="mainAlternative0to1" from="mainAlternative0" to="mainAlternative1" numLanes="3"/>
+<edge id="mainOutOfTown1to0" from="mainOutOfTown1" to="mainOutOfTown0" numLanes="3"/>
+<edge id="mainOutOfTown2to1" from="mainOutOfTown2" to="mainOutOfTown1" numLanes="3"/>
+<edge id="mainOutOfTown3to2" from="mainOutOfTown3" to="mainOutOfTown2" numLanes="3"/>
+<edge id="mainmid" from="main1" to="mainAlternative0" numLanes="3"/>
+<edge id="mainout" from="mainAlternative1" to="out" numLanes="3"/>
+<edge id="inOutOfTown" from="backout" to="mainOutOfTown3" numLanes="3"/>
+<edge id="outOutOfTown" from="mainOutOfTown0" to="backin" numLanes="3"/>
+<edge id="turnbackout" from="out" to="backout" numLanes="3"/>
+<edge id="turnbackin" from="backin" to="in" numLanes="3"/>
+<edge id="cyber0to1" from="cyber0" to="cyber1" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="-cyber0to1" from="cyber1" to="cyber0" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="cyberAlternative0to1" from="cyberAlternative0" to="cyberAlternative1" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="-cyberAlternative0to1" from="cyberAlternative1" to="cyberAlternative0" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="cyberOutOfTown0to1" from="cyberOutOfTown0" to="cyberOutOfTown1" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="-cyberOutOfTown0to1" from="cyberOutOfTown1" to="cyberOutOfTown0" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="cyberOutOfTown1to2" from="cyberOutOfTown1" to="cyberOutOfTown2" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="-cyberOutOfTown1to2" from="cyberOutOfTown2" to="cyberOutOfTown1" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="cyberOutOfTown2to3" from="cyberOutOfTown2" to="cyberOutOfTown3" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="-cyberOutOfTown2to3" from="cyberOutOfTown3" to="cyberOutOfTown2" numLanes="2" spreadType="center">
+    <lane index="0"/>
+    <lane index="1"/>
+</edge>
+<edge id="road0" from="main0" to="cyber0" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-road0" from="cyber0" to="main0" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="roadAlternative0" from="mainAlternative0" to="cyberAlternative0" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-roadAlternative0" from="cyberAlternative0" to="mainAlternative0" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="road1" from="main1" to="cyber1" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-road1" from="cyber1" to="main1" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="roadAlternative1" from="mainAlternative1" to="cyberAlternative1" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-roadAlternative1" from="cyberAlternative1" to="mainAlternative1" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="roadOutOfTown0" from="mainOutOfTown0" to="cyberOutOfTown0" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-roadOutOfTown0" from="cyberOutOfTown0" to="mainOutOfTown0" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="roadOutOfTown1" from="mainOutOfTown1" to="cyberOutOfTown1" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-roadOutOfTown1" from="cyberOutOfTown1" to="mainOutOfTown1" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="roadOutOfTown2" from="mainOutOfTown2" to="cyberOutOfTown2" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-roadOutOfTown2" from="cyberOutOfTown2" to="mainOutOfTown2" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="roadOutOfTown3" from="mainOutOfTown3" to="cyberOutOfTown3" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+<edge id="-roadOutOfTown3" from="cyberOutOfTown3" to="mainOutOfTown3" numLanes="3">
+    <lane index="0"/>
+    <lane index="1"/>
+    <lane index="2"/>
+</edge>
+</edges>

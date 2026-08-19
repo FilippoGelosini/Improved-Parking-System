@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-08-06 16:11:55.109345 by Eclipse SUMO buildScenario.py v1_26_0+0000-fa7df22d7f1
+  options: 
+-->
+
+<nodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/nodes_file.xsd">
+<node id="in" x="-100" y="0"/>
+<node id="main0" x="0" y="0"/>
+<node id="main1" x="29" y="0"/>
+<node id="mainAlternative0" x="100" y="0"/>
+<node id="mainAlternative1" x="129" y="0"/>
+<node id="mainOutOfTown0" x="21.0" y="-150"/>
+<node id="mainOutOfTown1" x="50.0" y="-150"/>
+<node id="mainOutOfTown2" x="79.0" y="-150"/>
+<node id="mainOutOfTown3" x="108.0" y="-150"/>
+<node id="out" x="225" y="0"/>
+<node id="backin" x="-100" y="-150"/>
+<node id="backout" x="225" y="-150"/>
+<node id="cyber" x="-100" y="65"/>
+<node id="cyber0" x="0" y="65"/>
+<node id="cyber1" x="29" y="65"/>
+<node id="cyberAlternative" x="-500" y="65"/>
+<node id="cyberAlternative0" x="100" y="65"/>
+<node id="cyberAlternative1" x="129" y="65"/>
+<node id="cyberOutOfTown" x="-500" y="-85"/>
+<node id="cyberOutOfTown0" x="21.0" y="-85"/>
+<node id="cyberOutOfTown1" x="50.0" y="-85"/>
+<node id="cyberOutOfTown2" x="79.0" y="-85"/>
+<node id="cyberOutOfTown3" x="108.0" y="-85"/>
+</nodes>

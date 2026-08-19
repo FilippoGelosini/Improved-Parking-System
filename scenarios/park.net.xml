@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-08-06T16:11:55.274670+01:00 by Eclipse SUMO netconvert 1.26.0
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="scenarios/park.nod.xml"/>
+        <edge-files value="scenarios/park.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="scenarios/park.net.xml"/>
+    </output>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="100.00,150.00" convBoundary="0.00,0.00,325.00,215.00" origBoundary="-500.00,-150.00,225.00,65.00" projParameter="!"/>
+
+    <edge id=":backin_0" function="internal">
+        <lane id=":backin_0_0" index="0" speed="3.90" length="2.58" shape="9.60,8.00 8.90,8.10 8.40,8.40 8.10,8.90 8.00,9.60"/>
+        <lane id=":backin_0_1" index="1" speed="6.08" length="7.74" shape="9.60,4.80 7.50,5.10 6.00,6.00 5.10,7.50 4.80,9.60"/>
+        <lane id=":backin_0_2" index="2" speed="7.66" length="12.90" shape="9.60,1.60 6.10,2.10 3.60,3.60 2.10,6.10 1.60,9.60"/>
+    </edge>
+    <edge id=":backout_0" function="internal">
+        <lane id=":backout_0_0" index="0" speed="3.90" length="2.58" shape="317.00,9.60 316.90,8.90 316.60,8.40 316.10,8.10 315.40,8.00"/>
+        <lane id=":backout_0_1" index="1" speed="6.08" length="7.74" shape="320.20,9.60 319.90,7.50 319.00,6.00 317.50,5.10 315.40,4.80"/>
+        <lane id=":backout_0_2" index="2" speed="7.66" length="12.90" shape="323.40,9.60 322.90,6.10 321.40,3.60 318.90,2.10 315.40,1.60"/>
+    </edge>
+    <edge id=":cyber0_0" function="internal">
+        <lane id=":cyber0_0_0" index="0" speed="11.39" length="29.84" shape="113.59,219.79 104.14,218.85 97.40,216.00 93.35,211.26 92.00,204.61"/>
+        <lane id=":cyber0_0_1" index="1" speed="10.40" length="24.71" shape="113.59,216.59 105.55,215.85 99.80,213.60 96.35,209.86 95.20,204.61"/>
+        <lane id=":cyber0_0_2" index="2" speed="9.83" length="21.98" shape="113.59,216.59 106.95,215.85 102.20,213.60 99.35,209.86 98.40,204.61"/>
+    </edge>
+    <edge id=":cyber0_3" function="internal">
+        <lane id=":cyber0_3_0" index="0" speed="6.51" length="9.03" shape="108.00,204.61 108.35,207.06 109.40,208.81 111.15,209.86 113.60,210.21"/>
+        <lane id=":cyber0_3_1" index="1" speed="8.00" length="14.19" shape="104.80,204.61 105.35,208.46 107.00,211.21 109.75,212.86 113.59,213.41"/>
+    </edge>
+    <edge id=":cyber1_0" function="internal">
+        <lane id=":cyber1_0_0" index="0" speed="11.39" length="29.82" shape="137.00,204.61 135.65,211.25 131.60,215.99 124.85,218.84 115.41,219.79"/>
+        <lane id=":cyber1_0_1" index="1" speed="10.40" length="24.70" shape="133.80,204.61 132.65,209.85 129.20,213.59 123.45,215.84 115.41,216.59"/>
+    </edge>
+    <edge id=":cyber1_2" function="internal">
+        <lane id=":cyber1_2_0" index="0" speed="6.51" length="9.03" shape="115.40,210.21 117.85,209.86 119.60,208.81 120.65,207.06 121.00,204.61"/>
+        <lane id=":cyber1_2_1" index="1" speed="8.00" length="14.19" shape="115.40,213.41 119.25,212.86 122.00,211.21 123.65,208.46 124.20,204.61"/>
+        <lane id=":cyber1_2_2" index="2" speed="8.67" length="16.85" shape="115.40,213.41 120.65,212.86 124.40,211.22 126.65,208.47 127.40,204.61"/>
+    </edge>
+    <edge id=":cyberAlternative0_0" function="internal">
+        <lane id=":cyberAlternative0_0_0" index="0" speed="11.39" length="29.84" shape="213.59,219.79 204.14,218.85 197.40,216.00 193.35,211.26 192.00,204.61"/>
+        <lane id=":cyberAlternative0_0_1" index="1" speed="10.40" length="24.71" shape="213.59,216.59 205.55,215.85 199.80,213.60 196.35,209.86 195.20,204.61"/>
+        <lane id=":cyberAlternative0_0_2" index="2" speed="9.83" length="21.98" shape="213.59,216.59 206.95,215.85 202.20,213.60 199.35,209.86 198.40,204.61"/>
+    </edge>
+    <edge id=":cyberAlternative0_3" function="internal">
+        <lane id=":cyberAlternative0_3_0" index="0" speed="6.51" length="9.03" shape="208.00,204.61 208.35,207.06 209.40,208.81 211.15,209.86 213.60,210.21"/>
+        <lane id=":cyberAlternative0_3_1" index="1" speed="8.00" length="14.19" shape="204.80,204.61 205.35,208.46 207.00,211.21 209.75,212.86 213.59,213.41"/>
+    </edge>
+    <edge id=":cyberAlternative1_0" function="internal">
+        <lane id=":cyberAlternative1_0_0" index="0" speed="11.39" length="29.82" shape="237.00,204.61 235.65,211.25 231.60,215.99 224.85,218.84 215.41,219.79"/>
+        <lane id=":cyberAlternative1_0_1" index="1" speed="10.40" length="24.70" shape="233.80,204.61 232.65,209.85 229.20,213.59 223.45,215.84 215.41,216.59"/>
+    </edge>
+    <edge id=":cyberAlternative1_2" function="internal">
+        <lane id=":cyberAlternative1_2_0" index="0" speed="6.51" length="9.03" shape="215.40,210.21 217.85,209.86 219.60,208.81 220.65,207.06 221.00,204.61"/>
+        <lane id=":cyberAlternative1_2_1" index="1" speed="8.00" length="14.19" shape="215.40,213.41 219.25,212.86 222.00,211.21 223.65,208.46 224.20,204.61"/>
+        <lane id=":cyberAlternative1_2_2" index="2" speed="8.67" length="16.85" shape="215.40,213.41 220.65,212.86 224.40,211.22 226.65,208.47 227.40,204.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown0_0" function="internal">
+        <lane id=":cyberOutOfTown0_0_0" index="0" speed="11.39" length="29.84" shape="134.59,69.79 125.14,68.85 118.40,66.00 114.35,61.26 113.00,54.61"/>
+        <lane id=":cyberOutOfTown0_0_1" index="1" speed="10.40" length="24.71" shape="134.59,66.59 126.55,65.85 120.80,63.60 117.35,59.86 116.20,54.61"/>
+        <lane id=":cyberOutOfTown0_0_2" index="2" speed="9.83" length="21.98" shape="134.59,66.59 127.95,65.85 123.20,63.60 120.35,59.86 119.40,54.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown0_3" function="internal">
+        <lane id=":cyberOutOfTown0_3_0" index="0" speed="6.51" length="9.03" shape="129.00,54.61 129.35,57.06 130.40,58.81 132.15,59.86 134.60,60.21"/>
+        <lane id=":cyberOutOfTown0_3_1" index="1" speed="8.00" length="14.19" shape="125.80,54.61 126.35,58.46 128.00,61.21 130.75,62.86 134.59,63.41"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_0" function="internal">
+        <lane id=":cyberOutOfTown1_0_0" index="0" speed="13.89" length="27.19" shape="163.59,69.79 136.41,69.79"/>
+        <lane id=":cyberOutOfTown1_0_1" index="1" speed="13.89" length="27.19" shape="163.59,66.59 136.41,66.59"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_2" function="internal">
+        <lane id=":cyberOutOfTown1_2_0" index="0" speed="10.40" length="24.72" shape="163.59,66.59 155.55,65.85 149.80,63.60 146.35,59.85 145.20,54.61"/>
+        <lane id=":cyberOutOfTown1_2_1" index="1" speed="9.83" length="21.98" shape="163.59,66.59 156.95,65.85 152.20,63.60 149.35,59.85 148.40,54.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_4" function="internal">
+        <lane id=":cyberOutOfTown1_4_0" index="0" speed="3.64" length="4.65" shape="163.59,66.59 162.40,65.79 162.00,65.00 162.40,64.20 163.60,63.41"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_5" function="internal">
+        <lane id=":cyberOutOfTown1_5_0" index="0" speed="6.51" length="9.03" shape="158.00,54.61 158.35,57.06 159.40,58.81 161.15,59.86 163.60,60.21"/>
+        <lane id=":cyberOutOfTown1_5_1" index="1" speed="8.00" length="14.19" shape="154.80,54.61 155.35,58.46 157.00,61.21 159.75,62.86 163.60,63.41"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_7" function="internal">
+        <lane id=":cyberOutOfTown1_7_0" index="0" speed="9.84" length="21.97" shape="151.60,54.61 150.65,59.85 147.80,63.59 143.05,65.84 136.41,66.59"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_8" function="internal">
+        <lane id=":cyberOutOfTown1_8_0" index="0" speed="3.65" length="4.67" shape="151.60,54.61 150.80,55.81 150.00,56.21 149.20,55.81 148.40,54.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_9" function="internal">
+        <lane id=":cyberOutOfTown1_9_0" index="0" speed="6.51" length="9.04" shape="136.40,60.21 138.85,59.86 140.60,58.81 141.65,57.06 142.00,54.61"/>
+        <lane id=":cyberOutOfTown1_9_1" index="1" speed="8.00" length="14.19" shape="136.40,63.41 140.25,62.86 143.00,61.21 144.65,58.46 145.20,54.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_11" function="internal">
+        <lane id=":cyberOutOfTown1_11_0" index="0" speed="13.89" length="27.30" shape="136.40,63.41 143.47,62.91 150.00,61.81 156.54,60.71 163.60,60.21"/>
+        <lane id=":cyberOutOfTown1_11_1" index="1" speed="13.89" length="27.30" shape="136.40,63.41 163.60,63.41"/>
+    </edge>
+    <edge id=":cyberOutOfTown1_13" function="internal">
+        <lane id=":cyberOutOfTown1_13_0" index="0" speed="3.64" length="4.64" shape="136.40,63.41 137.60,64.20 137.99,65.00 137.60,65.79 136.41,66.59"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_0" function="internal">
+        <lane id=":cyberOutOfTown2_0_0" index="0" speed="13.89" length="27.19" shape="192.59,69.79 165.41,69.79"/>
+        <lane id=":cyberOutOfTown2_0_1" index="1" speed="13.89" length="27.19" shape="192.59,66.59 165.41,66.59"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_2" function="internal">
+        <lane id=":cyberOutOfTown2_2_0" index="0" speed="10.40" length="24.72" shape="192.59,66.59 184.55,65.85 178.80,63.60 175.35,59.85 174.20,54.61"/>
+        <lane id=":cyberOutOfTown2_2_1" index="1" speed="9.83" length="21.98" shape="192.59,66.59 185.95,65.85 181.20,63.60 178.35,59.85 177.40,54.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_4" function="internal">
+        <lane id=":cyberOutOfTown2_4_0" index="0" speed="3.64" length="4.65" shape="192.59,66.59 191.40,65.79 191.00,65.00 191.40,64.20 192.60,63.41"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_5" function="internal">
+        <lane id=":cyberOutOfTown2_5_0" index="0" speed="6.51" length="9.03" shape="187.00,54.61 187.35,57.06 188.40,58.81 190.15,59.86 192.60,60.21"/>
+        <lane id=":cyberOutOfTown2_5_1" index="1" speed="8.00" length="14.19" shape="183.80,54.61 184.35,58.46 186.00,61.21 188.75,62.86 192.60,63.41"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_7" function="internal">
+        <lane id=":cyberOutOfTown2_7_0" index="0" speed="9.84" length="21.97" shape="180.60,54.61 179.65,59.85 176.80,63.59 172.05,65.84 165.41,66.59"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_8" function="internal">
+        <lane id=":cyberOutOfTown2_8_0" index="0" speed="3.65" length="4.67" shape="180.60,54.61 179.80,55.81 179.00,56.21 178.20,55.81 177.40,54.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_9" function="internal">
+        <lane id=":cyberOutOfTown2_9_0" index="0" speed="6.51" length="9.04" shape="165.40,60.21 167.85,59.86 169.60,58.81 170.65,57.06 171.00,54.61"/>
+        <lane id=":cyberOutOfTown2_9_1" index="1" speed="8.00" length="14.19" shape="165.40,63.41 169.25,62.86 172.00,61.21 173.65,58.46 174.20,54.61"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_11" function="internal">
+        <lane id=":cyberOutOfTown2_11_0" index="0" speed="13.89" length="27.30" shape="165.40,63.41 172.47,62.91 179.00,61.81 185.54,60.71 192.60,60.21"/>
+        <lane id=":cyberOutOfTown2_11_1" index="1" speed="13.89" length="27.30" shape="165.40,63.41 192.60,63.41"/>
+    </edge>
+    <edge id=":cyberOutOfTown2_13" function="internal">
+        <lane id=":cyberOutOfTown2_13_0" index="0" speed="3.64" length="4.64" shape="165.40,63.41 166.60,64.20 166.99,65.00 166.60,65.79 165.41,66.59"/>
+    </edge>
+    <edge id=":cyberOutOfTown3_0" function="internal">
+        <lane id=":cyberOutOfTown3_0_0" index="0" speed="11.39" length="29.82" shape="216.00,54.61 214.65,61.25 210.60,65.99 203.85,68.84 194.41,69.79"/>
+        <lane id=":cyberOutOfTown3_0_1" index="1" speed="10.40" length="24.70" shape="212.80,54.61 211.65,59.85 208.20,63.59 202.45,65.84 194.41,66.59"/>
+    </edge>
+    <edge id=":cyberOutOfTown3_2" function="internal">
+        <lane id=":cyberOutOfTown3_2_0" index="0" speed="6.51" length="9.03" shape="194.40,60.21 196.85,59.86 198.60,58.81 199.65,57.06 200.00,54.61"/>
+        <lane id=":cyberOutOfTown3_2_1" index="1" speed="8.00" length="14.19" shape="194.40,63.41 198.25,62.86 201.00,61.21 202.65,58.46 203.20,54.61"/>
+        <lane id=":cyberOutOfTown3_2_2" index="2" speed="8.67" length="16.85" shape="194.40,63.41 199.65,62.86 203.40,61.22 205.65,58.47 206.40,54.61"/>
+    </edge>
+    <edge id=":in_0" function="internal">
+        <lane id=":in_0_0" index="0" speed="3.90" length="2.58" shape="8.00,140.40 8.10,141.10 8.40,141.60 8.90,141.90 9.60,142.00"/>
+        <lane id=":in_0_1" index="1" speed="6.08" length="7.74" shape="4.80,140.40 5.10,142.50 6.00,144.00 7.50,144.90 9.60,145.20"/>
+        <lane id=":in_0_2" index="2" speed="7.66" length="12.90" shape="1.60,140.40 2.10,143.90 3.60,146.40 6.10,147.90 9.60,148.40"/>
+    </edge>
+    <edge id=":main0_0" function="internal">
+        <lane id=":main0_0_0" index="0" speed="10.17" length="1.21" shape="92.00,151.50 92.33,150.34"/>
+        <lane id=":main0_0_1" index="1" speed="9.08" length="1.01" shape="95.20,151.50 95.54,150.55"/>
+        <lane id=":main0_0_2" index="2" speed="7.88" length="0.40" shape="98.40,151.50 98.60,151.16"/>
+    </edge>
+    <edge id=":main0_3" function="internal">
+        <lane id=":main0_3_0" index="0" speed="3.65" length="0.35" shape="98.40,151.50 98.60,151.21"/>
+    </edge>
+    <edge id=":main0_10" function="internal">
+        <lane id=":main0_10_0" index="0" speed="10.17" length="22.37" shape="92.33,150.34 93.19,147.34 96.78,144.38 102.74,142.59 111.10,142.00"/>
+        <lane id=":main0_10_1" index="0" speed="9.08" length="17.57" shape="95.54,150.55 96.19,148.74 99.18,146.77 104.14,145.59 111.10,145.20"/>
+        <lane id=":main0_10_2" index="0" speed="7.88" length="13.32" shape="98.60,151.16 99.19,150.14 101.58,149.18 105.54,148.59 111.10,148.40"/>
+    </edge>
+    <edge id=":main0_11" function="internal">
+        <lane id=":main0_11_0" index="0" speed="3.65" length="4.32" shape="98.60,151.21 99.20,150.30 100.00,149.90 100.80,150.30 101.60,151.50"/>
+    </edge>
+    <edge id=":main0_4" function="internal">
+        <lane id=":main0_4_0" index="0" speed="13.89" length="22.20" shape="88.90,142.00 111.10,142.00"/>
+        <lane id=":main0_4_1" index="1" speed="13.89" length="22.20" shape="88.90,145.20 111.10,145.20"/>
+        <lane id=":main0_4_2" index="2" speed="13.89" length="22.20" shape="88.90,148.40 111.10,148.40"/>
+    </edge>
+    <edge id=":main0_7" function="internal">
+        <lane id=":main0_7_0" index="0" speed="9.38" length="19.87" shape="88.90,148.40 97.26,148.59 103.22,149.18 106.81,150.14 108.00,151.50"/>
+        <lane id=":main0_7_1" index="1" speed="8.65" length="16.78" shape="88.90,148.40 95.86,148.59 100.83,149.18 103.81,150.14 104.80,151.50"/>
+        <lane id=":main0_7_2" index="2" speed="7.88" length="13.71" shape="88.90,148.40 94.46,148.59 98.43,149.18 100.81,150.14 101.60,151.50"/>
+    </edge>
+    <edge id=":main1_0" function="internal">
+        <lane id=":main1_0_0" index="0" speed="10.17" length="1.21" shape="121.00,151.50 121.33,150.34"/>
+        <lane id=":main1_0_1" index="1" speed="9.08" length="1.01" shape="124.20,151.50 124.54,150.55"/>
+        <lane id=":main1_0_2" index="2" speed="7.88" length="0.40" shape="127.40,151.50 127.60,151.16"/>
+    </edge>
+    <edge id=":main1_3" function="internal">
+        <lane id=":main1_3_0" index="0" speed="3.65" length="0.35" shape="127.40,151.50 127.60,151.21"/>
+    </edge>
+    <edge id=":main1_10" function="internal">
+        <lane id=":main1_10_0" index="0" speed="10.17" length="22.37" shape="121.33,150.34 122.19,147.34 125.78,144.38 131.74,142.59 140.10,142.00"/>
+        <lane id=":main1_10_1" index="0" speed="9.08" length="17.57" shape="124.54,150.55 125.19,148.74 128.18,146.77 133.14,145.59 140.10,145.20"/>
+        <lane id=":main1_10_2" index="0" speed="7.88" length="13.32" shape="127.60,151.16 128.19,150.14 130.58,149.17 134.54,148.59 140.10,148.40"/>
+    </edge>
+    <edge id=":main1_11" function="internal">
+        <lane id=":main1_11_0" index="0" speed="3.65" length="4.32" shape="127.60,151.21 128.20,150.30 129.00,149.90 129.80,150.30 130.60,151.50"/>
+    </edge>
+    <edge id=":main1_4" function="internal">
+        <lane id=":main1_4_0" index="0" speed="13.89" length="22.20" shape="117.90,142.00 140.10,142.00"/>
+        <lane id=":main1_4_1" index="1" speed="13.89" length="22.20" shape="117.90,145.20 140.10,145.20"/>
+        <lane id=":main1_4_2" index="2" speed="13.89" length="22.20" shape="117.90,148.40 140.10,148.40"/>
+    </edge>
+    <edge id=":main1_7" function="internal">
+        <lane id=":main1_7_0" index="0" speed="9.38" length="19.87" shape="117.90,148.40 126.26,148.59 132.22,149.18 135.81,150.14 137.00,151.50"/>
+        <lane id=":main1_7_1" index="1" speed="8.65" length="16.78" shape="117.90,148.40 124.86,148.59 129.82,149.18 132.81,150.14 133.80,151.50"/>
+        <lane id=":main1_7_2" index="2" speed="7.88" length="13.71" shape="117.90,148.40 123.46,148.59 127.42,149.18 129.81,150.14 130.60,151.50"/>
+    </edge>
+    <edge id=":mainAlternative0_0" function="internal">
+        <lane id=":mainAlternative0_0_0" index="0" speed="10.17" length="1.21" shape="192.00,151.50 192.33,150.34"/>
+        <lane id=":mainAlternative0_0_1" index="1" speed="9.08" length="1.01" shape="195.20,151.50 195.54,150.55"/>
+        <lane id=":mainAlternative0_0_2" index="2" speed="7.88" length="0.40" shape="198.40,151.50 198.60,151.16"/>
+    </edge>
+    <edge id=":mainAlternative0_3" function="internal">
+        <lane id=":mainAlternative0_3_0" index="0" speed="3.65" length="0.35" shape="198.40,151.50 198.60,151.21"/>
+    </edge>
+    <edge id=":mainAlternative0_10" function="internal">
+        <lane id=":mainAlternative0_10_0" index="0" speed="10.17" length="22.37" shape="192.33,150.34 193.19,147.34 196.78,144.38 202.74,142.59 211.10,142.00"/>
+        <lane id=":mainAlternative0_10_1" index="0" speed="9.08" length="17.57" shape="195.54,150.55 196.19,148.74 199.17,146.77 204.14,145.59 211.10,145.20"/>
+        <lane id=":mainAlternative0_10_2" index="0" speed="7.88" length="13.32" shape="198.60,151.16 199.19,150.14 201.58,149.18 205.54,148.59 211.10,148.40"/>
+    </edge>
+    <edge id=":mainAlternative0_11" function="internal">
+        <lane id=":mainAlternative0_11_0" index="0" speed="3.65" length="4.32" shape="198.60,151.21 199.20,150.30 200.00,149.90 200.80,150.30 201.60,151.50"/>
+    </edge>
+    <edge id=":mainAlternative0_4" function="internal">
+        <lane id=":mainAlternative0_4_0" index="0" speed="13.89" length="22.20" shape="188.90,142.00 211.10,142.00"/>
+        <lane id=":mainAlternative0_4_1" index="1" speed="13.89" length="22.20" shape="188.90,145.20 211.10,145.20"/>
+        <lane id=":mainAlternative0_4_2" index="2" speed="13.89" length="22.20" shape="188.90,148.40 211.10,148.40"/>
+    </edge>
+    <edge id=":mainAlternative0_7" function="internal">
+        <lane id=":mainAlternative0_7_0" index="0" speed="9.38" length="19.87" shape="188.90,148.40 197.26,148.59 203.22,149.18 206.81,150.14 208.00,151.50"/>
+        <lane id=":mainAlternative0_7_1" index="1" speed="8.65" length="16.78" shape="188.90,148.40 195.86,148.59 200.82,149.18 203.81,150.14 204.80,151.50"/>
+        <lane id=":mainAlternative0_7_2" index="2" speed="7.88" length="13.71" shape="188.90,148.40 194.46,148.59 198.43,149.18 200.81,150.14 201.60,151.50"/>
+    </edge>
+    <edge id=":mainAlternative1_0" function="internal">
+        <lane id=":mainAlternative1_0_0" index="0" speed="10.17" length="1.21" shape="221.00,151.50 221.33,150.34"/>
+        <lane id=":mainAlternative1_0_1" index="1" speed="9.08" length="1.01" shape="224.20,151.50 224.54,150.55"/>
+        <lane id=":mainAlternative1_0_2" index="2" speed="7.88" length="0.40" shape="227.40,151.50 227.60,151.16"/>
+    </edge>
+    <edge id=":mainAlternative1_3" function="internal">
+        <lane id=":mainAlternative1_3_0" index="0" speed="3.65" length="0.35" shape="227.40,151.50 227.60,151.21"/>
+    </edge>
+    <edge id=":mainAlternative1_10" function="internal">
+        <lane id=":mainAlternative1_10_0" index="0" speed="10.17" length="22.37" shape="221.33,150.34 222.19,147.34 225.78,144.38 231.74,142.59 240.10,142.00"/>
+        <lane id=":mainAlternative1_10_1" index="0" speed="9.08" length="17.57" shape="224.54,150.55 225.19,148.74 228.17,146.77 233.14,145.59 240.10,145.20"/>
+        <lane id=":mainAlternative1_10_2" index="0" speed="7.88" length="13.32" shape="227.60,151.16 228.19,150.14 230.58,149.18 234.54,148.59 240.10,148.40"/>
+    </edge>
+    <edge id=":mainAlternative1_11" function="internal">
+        <lane id=":mainAlternative1_11_0" index="0" speed="3.65" length="4.32" shape="227.60,151.21 228.20,150.30 229.00,149.90 229.80,150.30 230.60,151.50"/>
+    </edge>
+    <edge id=":mainAlternative1_4" function="internal">
+        <lane id=":mainAlternative1_4_0" index="0" speed="13.89" length="22.20" shape="217.90,142.00 240.10,142.00"/>
+        <lane id=":mainAlternative1_4_1" index="1" speed="13.89" length="22.20" shape="217.90,145.20 240.10,145.20"/>
+        <lane id=":mainAlternative1_4_2" index="2" speed="13.89" length="22.20" shape="217.90,148.40 240.10,148.40"/>
+    </edge>
+    <edge id=":mainAlternative1_7" function="internal">
+        <lane id=":mainAlternative1_7_0" index="0" speed="9.38" length="19.87" shape="217.90,148.40 226.26,148.59 232.22,149.18 235.81,150.14 237.00,151.50"/>
+        <lane id=":mainAlternative1_7_1" index="1" speed="8.65" length="16.78" shape="217.90,148.40 224.86,148.59 229.82,149.18 232.81,150.14 233.80,151.50"/>
+        <lane id=":mainAlternative1_7_2" index="2" speed="7.88" length="13.71" shape="217.90,148.40 223.46,148.59 227.42,149.18 229.81,150.14 230.60,151.50"/>
+    </edge>
+    <edge id=":mainOutOfTown0_0" function="internal">
+        <lane id=":mainOutOfTown0_0_0" index="0" speed="6.51" length="9.03" shape="113.00,13.60 112.65,11.15 111.60,9.40 109.85,8.35 107.40,8.00"/>
+        <lane id=":mainOutOfTown0_0_1" index="1" speed="8.00" length="14.19" shape="116.20,13.60 115.65,9.75 114.00,7.00 111.25,5.35 107.40,4.80"/>
+        <lane id=":mainOutOfTown0_0_2" index="2" speed="9.26" length="19.35" shape="119.40,13.60 118.65,8.35 116.40,4.60 112.65,2.35 107.40,1.60"/>
+    </edge>
+    <edge id=":mainOutOfTown0_3" function="internal">
+        <lane id=":mainOutOfTown0_3_0" index="0" speed="3.65" length="1.44" shape="119.40,13.60 120.20,12.40"/>
+    </edge>
+    <edge id=":mainOutOfTown0_10" function="internal">
+        <lane id=":mainOutOfTown0_10_0" index="0" speed="3.65" length="3.23" shape="120.20,12.40 121.00,12.00 121.80,12.40 122.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown0_4" function="internal">
+        <lane id=":mainOutOfTown0_4_0" index="0" speed="6.51" length="9.03" shape="134.60,8.00 132.15,8.35 130.40,9.40 129.35,11.15 129.00,13.60"/>
+        <lane id=":mainOutOfTown0_4_1" index="1" speed="7.33" length="11.73" shape="134.60,8.00 130.75,8.35 128.00,9.40 126.35,11.15 125.80,13.60"/>
+        <lane id=":mainOutOfTown0_4_2" index="2" speed="8.10" length="14.57" shape="134.60,8.00 129.35,8.35 125.60,9.40 123.35,11.15 122.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown0_7" function="internal">
+        <lane id=":mainOutOfTown0_7_0" index="0" speed="13.89" length="27.20" shape="134.60,8.00 107.40,8.00"/>
+        <lane id=":mainOutOfTown0_7_1" index="1" speed="13.89" length="27.20" shape="134.60,4.80 107.40,4.80"/>
+        <lane id=":mainOutOfTown0_7_2" index="2" speed="13.89" length="27.20" shape="134.60,1.60 107.40,1.60"/>
+    </edge>
+    <edge id=":mainOutOfTown1_0" function="internal">
+        <lane id=":mainOutOfTown1_0_0" index="0" speed="6.51" length="9.03" shape="142.00,13.60 141.65,11.15 140.60,9.40 138.85,8.35 136.40,8.00"/>
+        <lane id=":mainOutOfTown1_0_1" index="1" speed="8.00" length="14.19" shape="145.20,13.60 144.65,9.75 143.00,7.00 140.25,5.35 136.40,4.80"/>
+        <lane id=":mainOutOfTown1_0_2" index="2" speed="9.26" length="19.35" shape="148.40,13.60 147.65,8.35 145.40,4.60 141.65,2.35 136.40,1.60"/>
+    </edge>
+    <edge id=":mainOutOfTown1_3" function="internal">
+        <lane id=":mainOutOfTown1_3_0" index="0" speed="3.65" length="1.44" shape="148.40,13.60 149.20,12.40"/>
+    </edge>
+    <edge id=":mainOutOfTown1_10" function="internal">
+        <lane id=":mainOutOfTown1_10_0" index="0" speed="3.65" length="3.23" shape="149.20,12.40 150.00,12.00 150.80,12.40 151.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown1_4" function="internal">
+        <lane id=":mainOutOfTown1_4_0" index="0" speed="6.51" length="9.03" shape="163.60,8.00 161.15,8.35 159.40,9.40 158.35,11.15 158.00,13.60"/>
+        <lane id=":mainOutOfTown1_4_1" index="1" speed="7.33" length="11.73" shape="163.60,8.00 159.75,8.35 157.00,9.40 155.35,11.15 154.80,13.60"/>
+        <lane id=":mainOutOfTown1_4_2" index="2" speed="8.10" length="14.57" shape="163.60,8.00 158.35,8.35 154.60,9.40 152.35,11.15 151.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown1_7" function="internal">
+        <lane id=":mainOutOfTown1_7_0" index="0" speed="13.89" length="27.20" shape="163.60,8.00 136.40,8.00"/>
+        <lane id=":mainOutOfTown1_7_1" index="1" speed="13.89" length="27.20" shape="163.60,4.80 136.40,4.80"/>
+        <lane id=":mainOutOfTown1_7_2" index="2" speed="13.89" length="27.20" shape="163.60,1.60 136.40,1.60"/>
+    </edge>
+    <edge id=":mainOutOfTown2_0" function="internal">
+        <lane id=":mainOutOfTown2_0_0" index="0" speed="6.51" length="9.03" shape="171.00,13.60 170.65,11.15 169.60,9.40 167.85,8.35 165.40,8.00"/>
+        <lane id=":mainOutOfTown2_0_1" index="1" speed="8.00" length="14.19" shape="174.20,13.60 173.65,9.75 172.00,7.00 169.25,5.35 165.40,4.80"/>
+        <lane id=":mainOutOfTown2_0_2" index="2" speed="9.26" length="19.35" shape="177.40,13.60 176.65,8.35 174.40,4.60 170.65,2.35 165.40,1.60"/>
+    </edge>
+    <edge id=":mainOutOfTown2_3" function="internal">
+        <lane id=":mainOutOfTown2_3_0" index="0" speed="3.65" length="1.44" shape="177.40,13.60 178.20,12.40"/>
+    </edge>
+    <edge id=":mainOutOfTown2_10" function="internal">
+        <lane id=":mainOutOfTown2_10_0" index="0" speed="3.65" length="3.23" shape="178.20,12.40 179.00,12.00 179.80,12.40 180.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown2_4" function="internal">
+        <lane id=":mainOutOfTown2_4_0" index="0" speed="6.51" length="9.03" shape="192.60,8.00 190.15,8.35 188.40,9.40 187.35,11.15 187.00,13.60"/>
+        <lane id=":mainOutOfTown2_4_1" index="1" speed="7.33" length="11.73" shape="192.60,8.00 188.75,8.35 186.00,9.40 184.35,11.15 183.80,13.60"/>
+        <lane id=":mainOutOfTown2_4_2" index="2" speed="8.10" length="14.57" shape="192.60,8.00 187.35,8.35 183.60,9.40 181.35,11.15 180.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown2_7" function="internal">
+        <lane id=":mainOutOfTown2_7_0" index="0" speed="13.89" length="27.20" shape="192.60,8.00 165.40,8.00"/>
+        <lane id=":mainOutOfTown2_7_1" index="1" speed="13.89" length="27.20" shape="192.60,4.80 165.40,4.80"/>
+        <lane id=":mainOutOfTown2_7_2" index="2" speed="13.89" length="27.20" shape="192.60,1.60 165.40,1.60"/>
+    </edge>
+    <edge id=":mainOutOfTown3_0" function="internal">
+        <lane id=":mainOutOfTown3_0_0" index="0" speed="6.51" length="9.03" shape="200.00,13.60 199.65,11.15 198.60,9.40 196.85,8.35 194.40,8.00"/>
+        <lane id=":mainOutOfTown3_0_1" index="1" speed="8.00" length="14.19" shape="203.20,13.60 202.65,9.75 201.00,7.00 198.25,5.35 194.40,4.80"/>
+        <lane id=":mainOutOfTown3_0_2" index="2" speed="9.26" length="19.35" shape="206.40,13.60 205.65,8.35 203.40,4.60 199.65,2.35 194.40,1.60"/>
+    </edge>
+    <edge id=":mainOutOfTown3_3" function="internal">
+        <lane id=":mainOutOfTown3_3_0" index="0" speed="3.65" length="1.44" shape="206.40,13.60 207.20,12.40"/>
+    </edge>
+    <edge id=":mainOutOfTown3_10" function="internal">
+        <lane id=":mainOutOfTown3_10_0" index="0" speed="3.65" length="3.23" shape="207.20,12.40 208.00,12.00 208.80,12.40 209.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown3_4" function="internal">
+        <lane id=":mainOutOfTown3_4_0" index="0" speed="6.51" length="9.03" shape="221.60,8.00 219.15,8.35 217.40,9.40 216.35,11.15 216.00,13.60"/>
+        <lane id=":mainOutOfTown3_4_1" index="1" speed="7.33" length="11.73" shape="221.60,8.00 217.75,8.35 215.00,9.40 213.35,11.15 212.80,13.60"/>
+        <lane id=":mainOutOfTown3_4_2" index="2" speed="8.10" length="14.57" shape="221.60,8.00 216.35,8.35 212.60,9.40 210.35,11.15 209.60,13.60"/>
+    </edge>
+    <edge id=":mainOutOfTown3_7" function="internal">
+        <lane id=":mainOutOfTown3_7_0" index="0" speed="13.89" length="27.20" shape="221.60,8.00 194.40,8.00"/>
+        <lane id=":mainOutOfTown3_7_1" index="1" speed="13.89" length="27.20" shape="221.60,4.80 194.40,4.80"/>
+        <lane id=":mainOutOfTown3_7_2" index="2" speed="13.89" length="27.20" shape="221.60,1.60 194.40,1.60"/>
+    </edge>
+    <edge id=":out_0" function="internal">
+        <lane id=":out_0_0" index="0" speed="3.90" length="2.58" shape="315.40,142.00 316.10,141.90 316.60,141.60 316.90,141.10 317.00,140.40"/>
+        <lane id=":out_0_1" index="1" speed="6.08" length="7.74" shape="315.40,145.20 317.50,144.90 319.00,144.00 319.90,142.50 320.20,140.40"/>
+        <lane id=":out_0_2" index="2" speed="7.66" length="12.90" shape="315.40,148.40 318.90,147.90 321.40,146.40 322.90,143.90 323.40,140.40"/>
+    </edge>
+
+    <edge id="-cyber0to1" from="cyber1" to="cyber0" priority="-1" spreadType="center" shape="129.35,218.18 100.00,218.20">
+        <lane id="-cyber0to1_0" index="0" speed="13.89" length="1.82" shape="115.41,219.79 113.59,219.79"/>
+        <lane id="-cyber0to1_1" index="1" speed="13.89" length="1.82" shape="115.41,216.59 113.59,216.59"/>
+    </edge>
+    <edge id="-cyberAlternative0to1" from="cyberAlternative1" to="cyberAlternative0" priority="-1" spreadType="center" shape="229.35,218.18 200.00,218.20">
+        <lane id="-cyberAlternative0to1_0" index="0" speed="13.89" length="1.82" shape="215.41,219.79 213.59,219.79"/>
+        <lane id="-cyberAlternative0to1_1" index="1" speed="13.89" length="1.82" shape="215.41,216.59 213.59,216.59"/>
+    </edge>
+    <edge id="-cyberOutOfTown0to1" from="cyberOutOfTown1" to="cyberOutOfTown0" priority="-1" spreadType="center" shape="150.35,68.18 121.00,68.20">
+        <lane id="-cyberOutOfTown0to1_0" index="0" speed="13.89" length="1.82" shape="136.41,69.79 134.59,69.79"/>
+        <lane id="-cyberOutOfTown0to1_1" index="1" speed="13.89" length="1.82" shape="136.41,66.59 134.59,66.59"/>
+    </edge>
+    <edge id="-cyberOutOfTown1to2" from="cyberOutOfTown2" to="cyberOutOfTown1" priority="-1" spreadType="center" shape="179.35,68.18 150.00,68.20">
+        <lane id="-cyberOutOfTown1to2_0" index="0" speed="13.89" length="1.81" shape="165.41,69.79 163.59,69.79"/>
+        <lane id="-cyberOutOfTown1to2_1" index="1" speed="13.89" length="1.81" shape="165.41,66.59 163.59,66.59"/>
+    </edge>
+    <edge id="-cyberOutOfTown2to3" from="cyberOutOfTown3" to="cyberOutOfTown2" priority="-1" spreadType="center" shape="208.35,68.18 179.00,68.20">
+        <lane id="-cyberOutOfTown2to3_0" index="0" speed="13.89" length="1.81" shape="194.41,69.79 192.59,69.79"/>
+        <lane id="-cyberOutOfTown2to3_1" index="1" speed="13.89" length="1.81" shape="194.41,66.59 192.59,66.59"/>
+    </edge>
+    <edge id="-road0" from="cyber0" to="main0" priority="-1">
+        <lane id="-road0_0" index="0" speed="13.89" length="53.11" shape="92.00,204.61 92.00,151.50"/>
+        <lane id="-road0_1" index="1" speed="13.89" length="53.11" shape="95.20,204.61 95.20,151.50"/>
+        <lane id="-road0_2" index="2" speed="13.89" length="53.11" shape="98.40,204.61 98.40,151.50"/>
+    </edge>
+    <edge id="-road1" from="cyber1" to="main1" priority="-1">
+        <lane id="-road1_0" index="0" speed="13.89" length="53.11" shape="121.00,204.61 121.00,151.50"/>
+        <lane id="-road1_1" index="1" speed="13.89" length="53.11" shape="124.20,204.61 124.20,151.50"/>
+        <lane id="-road1_2" index="2" speed="13.89" length="53.11" shape="127.40,204.61 127.40,151.50"/>
+    </edge>
+    <edge id="-roadAlternative0" from="cyberAlternative0" to="mainAlternative0" priority="-1">
+        <lane id="-roadAlternative0_0" index="0" speed="13.89" length="53.11" shape="192.00,204.61 192.00,151.50"/>
+        <lane id="-roadAlternative0_1" index="1" speed="13.89" length="53.11" shape="195.20,204.61 195.20,151.50"/>
+        <lane id="-roadAlternative0_2" index="2" speed="13.89" length="53.11" shape="198.40,204.61 198.40,151.50"/>
+    </edge>
+    <edge id="-roadAlternative1" from="cyberAlternative1" to="mainAlternative1" priority="-1">
+        <lane id="-roadAlternative1_0" index="0" speed="13.89" length="53.11" shape="221.00,204.61 221.00,151.50"/>
+        <lane id="-roadAlternative1_1" index="1" speed="13.89" length="53.11" shape="224.20,204.61 224.20,151.50"/>
+        <lane id="-roadAlternative1_2" index="2" speed="13.89" length="53.11" shape="227.40,204.61 227.40,151.50"/>
+    </edge>
+    <edge id="-roadOutOfTown0" from="cyberOutOfTown0" to="mainOutOfTown0" priority="-1">
+        <lane id="-roadOutOfTown0_0" index="0" speed="13.89" length="41.01" shape="113.00,54.61 113.00,13.60"/>
+        <lane id="-roadOutOfTown0_1" index="1" speed="13.89" length="41.01" shape="116.20,54.61 116.20,13.60"/>
+        <lane id="-roadOutOfTown0_2" index="2" speed="13.89" length="41.01" shape="119.40,54.61 119.40,13.60"/>
+    </edge>
+    <edge id="-roadOutOfTown1" from="cyberOutOfTown1" to="mainOutOfTown1" priority="-1">
+        <lane id="-roadOutOfTown1_0" index="0" speed="13.89" length="41.01" shape="142.00,54.61 142.00,13.60"/>
+        <lane id="-roadOutOfTown1_1" index="1" speed="13.89" length="41.01" shape="145.20,54.61 145.20,13.60"/>
+        <lane id="-roadOutOfTown1_2" index="2" speed="13.89" length="41.01" shape="148.40,54.61 148.40,13.60"/>
+    </edge>
+    <edge id="-roadOutOfTown2" from="cyberOutOfTown2" to="mainOutOfTown2" priority="-1">
+        <lane id="-roadOutOfTown2_0" index="0" speed="13.89" length="41.01" shape="171.00,54.61 171.00,13.60"/>
+        <lane id="-roadOutOfTown2_1" index="1" speed="13.89" length="41.01" shape="174.20,54.61 174.20,13.60"/>
+        <lane id="-roadOutOfTown2_2" index="2" speed="13.89" length="41.01" shape="177.40,54.61 177.40,13.60"/>
+    </edge>
+    <edge id="-roadOutOfTown3" from="cyberOutOfTown3" to="mainOutOfTown3" priority="-1">
+        <lane id="-roadOutOfTown3_0" index="0" speed="13.89" length="41.01" shape="200.00,54.61 200.00,13.60"/>
+        <lane id="-roadOutOfTown3_1" index="1" speed="13.89" length="41.01" shape="203.20,54.61 203.20,13.60"/>
+        <lane id="-roadOutOfTown3_2" index="2" speed="13.89" length="41.01" shape="206.40,54.61 206.40,13.60"/>
+    </edge>
+    <edge id="cyber0to1" from="cyber0" to="cyber1" priority="-1" spreadType="center" shape="100.00,211.80 129.35,211.82">
+        <lane id="cyber0to1_0" index="0" speed="13.89" length="1.81" shape="113.60,210.21 115.40,210.21"/>
+        <lane id="cyber0to1_1" index="1" speed="13.89" length="1.81" shape="113.59,213.41 115.40,213.41"/>
+    </edge>
+    <edge id="cyberAlternative0to1" from="cyberAlternative0" to="cyberAlternative1" priority="-1" spreadType="center" shape="200.00,211.80 229.35,211.82">
+        <lane id="cyberAlternative0to1_0" index="0" speed="13.89" length="1.81" shape="213.60,210.21 215.40,210.21"/>
+        <lane id="cyberAlternative0to1_1" index="1" speed="13.89" length="1.81" shape="213.59,213.41 215.40,213.41"/>
+    </edge>
+    <edge id="cyberOutOfTown0to1" from="cyberOutOfTown0" to="cyberOutOfTown1" priority="-1" spreadType="center" shape="121.00,61.80 150.35,61.82">
+        <lane id="cyberOutOfTown0to1_0" index="0" speed="13.89" length="1.81" shape="134.60,60.21 136.40,60.21"/>
+        <lane id="cyberOutOfTown0to1_1" index="1" speed="13.89" length="1.81" shape="134.59,63.41 136.40,63.41"/>
+    </edge>
+    <edge id="cyberOutOfTown1to2" from="cyberOutOfTown1" to="cyberOutOfTown2" priority="-1" spreadType="center" shape="150.00,61.80 179.35,61.82">
+        <lane id="cyberOutOfTown1to2_0" index="0" speed="13.89" length="1.80" shape="163.60,60.21 165.40,60.21"/>
+        <lane id="cyberOutOfTown1to2_1" index="1" speed="13.89" length="1.80" shape="163.60,63.41 165.40,63.41"/>
+    </edge>
+    <edge id="cyberOutOfTown2to3" from="cyberOutOfTown2" to="cyberOutOfTown3" priority="-1" spreadType="center" shape="179.00,61.80 208.35,61.82">
+        <lane id="cyberOutOfTown2to3_0" index="0" speed="13.89" length="1.80" shape="192.60,60.21 194.40,60.21"/>
+        <lane id="cyberOutOfTown2to3_1" index="1" speed="13.89" length="1.80" shape="192.60,63.41 194.40,63.41"/>
+    </edge>
+    <edge id="inOutOfTown" from="backout" to="mainOutOfTown3" priority="-1">
+        <lane id="inOutOfTown_0" index="0" speed="13.89" length="93.80" shape="315.40,8.00 221.60,8.00"/>
+        <lane id="inOutOfTown_1" index="1" speed="13.89" length="93.80" shape="315.40,4.80 221.60,4.80"/>
+        <lane id="inOutOfTown_2" index="2" speed="13.89" length="93.80" shape="315.40,1.60 221.60,1.60"/>
+    </edge>
+    <edge id="main0to1" from="main0" to="main1" priority="-1">
+        <lane id="main0to1_0" index="0" speed="13.89" length="6.80" shape="111.10,142.00 117.90,142.00"/>
+        <lane id="main0to1_1" index="1" speed="13.89" length="6.80" shape="111.10,145.20 117.90,145.20"/>
+        <lane id="main0to1_2" index="2" speed="13.89" length="6.80" shape="111.10,148.40 117.90,148.40"/>
+    </edge>
+    <edge id="mainAlternative0to1" from="mainAlternative0" to="mainAlternative1" priority="-1">
+        <lane id="mainAlternative0to1_0" index="0" speed="13.89" length="6.80" shape="211.10,142.00 217.90,142.00"/>
+        <lane id="mainAlternative0to1_1" index="1" speed="13.89" length="6.80" shape="211.10,145.20 217.90,145.20"/>
+        <lane id="mainAlternative0to1_2" index="2" speed="13.89" length="6.80" shape="211.10,148.40 217.90,148.40"/>
+    </edge>
+    <edge id="mainOutOfTown1to0" from="mainOutOfTown1" to="mainOutOfTown0" priority="-1">
+        <lane id="mainOutOfTown1to0_0" index="0" speed="13.89" length="1.80" shape="136.40,8.00 134.60,8.00"/>
+        <lane id="mainOutOfTown1to0_1" index="1" speed="13.89" length="1.80" shape="136.40,4.80 134.60,4.80"/>
+        <lane id="mainOutOfTown1to0_2" index="2" speed="13.89" length="1.80" shape="136.40,1.60 134.60,1.60"/>
+    </edge>
+    <edge id="mainOutOfTown2to1" from="mainOutOfTown2" to="mainOutOfTown1" priority="-1">
+        <lane id="mainOutOfTown2to1_0" index="0" speed="13.89" length="1.80" shape="165.40,8.00 163.60,8.00"/>
+        <lane id="mainOutOfTown2to1_1" index="1" speed="13.89" length="1.80" shape="165.40,4.80 163.60,4.80"/>
+        <lane id="mainOutOfTown2to1_2" index="2" speed="13.89" length="1.80" shape="165.40,1.60 163.60,1.60"/>
+    </edge>
+    <edge id="mainOutOfTown3to2" from="mainOutOfTown3" to="mainOutOfTown2" priority="-1">
+        <lane id="mainOutOfTown3to2_0" index="0" speed="13.89" length="1.80" shape="194.40,8.00 192.60,8.00"/>
+        <lane id="mainOutOfTown3to2_1" index="1" speed="13.89" length="1.80" shape="194.40,4.80 192.60,4.80"/>
+        <lane id="mainOutOfTown3to2_2" index="2" speed="13.89" length="1.80" shape="194.40,1.60 192.60,1.60"/>
+    </edge>
+    <edge id="mainin" from="in" to="main0" priority="-1">
+        <lane id="mainin_0" index="0" speed="13.89" length="79.30" shape="9.60,142.00 88.90,142.00"/>
+        <lane id="mainin_1" index="1" speed="13.89" length="79.30" shape="9.60,145.20 88.90,145.20"/>
+        <lane id="mainin_2" index="2" speed="13.89" length="79.30" shape="9.60,148.40 88.90,148.40"/>
+    </edge>
+    <edge id="mainmid" from="main1" to="mainAlternative0" priority="-1">
+        <lane id="mainmid_0" index="0" speed="13.89" length="48.80" shape="140.10,142.00 188.90,142.00"/>
+        <lane id="mainmid_1" index="1" speed="13.89" length="48.80" shape="140.10,145.20 188.90,145.20"/>
+        <lane id="mainmid_2" index="2" speed="13.89" length="48.80" shape="140.10,148.40 188.90,148.40"/>
+    </edge>
+    <edge id="mainout" from="mainAlternative1" to="out" priority="-1">
+        <lane id="mainout_0" index="0" speed="13.89" length="75.30" shape="240.10,142.00 315.40,142.00"/>
+        <lane id="mainout_1" index="1" speed="13.89" length="75.30" shape="240.10,145.20 315.40,145.20"/>
+        <lane id="mainout_2" index="2" speed="13.89" length="75.30" shape="240.10,148.40 315.40,148.40"/>
+    </edge>
+    <edge id="outOutOfTown" from="mainOutOfTown0" to="backin" priority="-1">
+        <lane id="outOutOfTown_0" index="0" speed="13.89" length="97.80" shape="107.40,8.00 9.60,8.00"/>
+        <lane id="outOutOfTown_1" index="1" speed="13.89" length="97.80" shape="107.40,4.80 9.60,4.80"/>
+        <lane id="outOutOfTown_2" index="2" speed="13.89" length="97.80" shape="107.40,1.60 9.60,1.60"/>
+    </edge>
+    <edge id="road0" from="main0" to="cyber0" priority="-1">
+        <lane id="road0_0" index="0" speed="13.89" length="53.11" shape="108.00,151.50 108.00,204.61"/>
+        <lane id="road0_1" index="1" speed="13.89" length="53.11" shape="104.80,151.50 104.80,204.61"/>
+        <lane id="road0_2" index="2" speed="13.89" length="53.11" shape="101.60,151.50 101.60,204.61"/>
+    </edge>
+    <edge id="road1" from="main1" to="cyber1" priority="-1">
+        <lane id="road1_0" index="0" speed="13.89" length="53.11" shape="137.00,151.50 137.00,204.61"/>
+        <lane id="road1_1" index="1" speed="13.89" length="53.11" shape="133.80,151.50 133.80,204.61"/>
+        <lane id="road1_2" index="2" speed="13.89" length="53.11" shape="130.60,151.50 130.60,204.61"/>
+    </edge>
+    <edge id="roadAlternative0" from="mainAlternative0" to="cyberAlternative0" priority="-1">
+        <lane id="roadAlternative0_0" index="0" speed="13.89" length="53.11" shape="208.00,151.50 208.00,204.61"/>
+        <lane id="roadAlternative0_1" index="1" speed="13.89" length="53.11" shape="204.80,151.50 204.80,204.61"/>
+        <lane id="roadAlternative0_2" index="2" speed="13.89" length="53.11" shape="201.60,151.50 201.60,204.61"/>
+    </edge>
+    <edge id="roadAlternative1" from="mainAlternative1" to="cyberAlternative1" priority="-1">
+        <lane id="roadAlternative1_0" index="0" speed="13.89" length="53.11" shape="237.00,151.50 237.00,204.61"/>
+        <lane id="roadAlternative1_1" index="1" speed="13.89" length="53.11" shape="233.80,151.50 233.80,204.61"/>
+        <lane id="roadAlternative1_2" index="2" speed="13.89" length="53.11" shape="230.60,151.50 230.60,204.61"/>
+    </edge>
+    <edge id="roadOutOfTown0" from="mainOutOfTown0" to="cyberOutOfTown0" priority="-1">
+        <lane id="roadOutOfTown0_0" index="0" speed="13.89" length="41.01" shape="129.00,13.60 129.00,54.61"/>
+        <lane id="roadOutOfTown0_1" index="1" speed="13.89" length="41.01" shape="125.80,13.60 125.80,54.61"/>
+        <lane id="roadOutOfTown0_2" index="2" speed="13.89" length="41.01" shape="122.60,13.60 122.60,54.61"/>
+    </edge>
+    <edge id="roadOutOfTown1" from="mainOutOfTown1" to="cyberOutOfTown1" priority="-1">
+        <lane id="roadOutOfTown1_0" index="0" speed="13.89" length="41.01" shape="158.00,13.60 158.00,54.61"/>
+        <lane id="roadOutOfTown1_1" index="1" speed="13.89" length="41.01" shape="154.80,13.60 154.80,54.61"/>
+        <lane id="roadOutOfTown1_2" index="2" speed="13.89" length="41.01" shape="151.60,13.60 151.60,54.61"/>
+    </edge>
+    <edge id="roadOutOfTown2" from="mainOutOfTown2" to="cyberOutOfTown2" priority="-1">
+        <lane id="roadOutOfTown2_0" index="0" speed="13.89" length="41.01" shape="187.00,13.60 187.00,54.61"/>
+        <lane id="roadOutOfTown2_1" index="1" speed="13.89" length="41.01" shape="183.80,13.60 183.80,54.61"/>
+        <lane id="roadOutOfTown2_2" index="2" speed="13.89" length="41.01" shape="180.60,13.60 180.60,54.61"/>
+    </edge>
+    <edge id="roadOutOfTown3" from="mainOutOfTown3" to="cyberOutOfTown3" priority="-1">
+        <lane id="roadOutOfTown3_0" index="0" speed="13.89" length="41.01" shape="216.00,13.60 216.00,54.61"/>
+        <lane id="roadOutOfTown3_1" index="1" speed="13.89" length="41.01" shape="212.80,13.60 212.80,54.61"/>
+        <lane id="roadOutOfTown3_2" index="2" speed="13.89" length="41.01" shape="209.60,13.60 209.60,54.61"/>
+    </edge>
+    <edge id="turnbackin" from="backin" to="in" priority="-1">
+        <lane id="turnbackin_0" index="0" speed="13.89" length="130.80" shape="8.00,9.60 8.00,140.40"/>
+        <lane id="turnbackin_1" index="1" speed="13.89" length="130.80" shape="4.80,9.60 4.80,140.40"/>
+        <lane id="turnbackin_2" index="2" speed="13.89" length="130.80" shape="1.60,9.60 1.60,140.40"/>
+    </edge>
+    <edge id="turnbackout" from="out" to="backout" priority="-1">
+        <lane id="turnbackout_0" index="0" speed="13.89" length="130.80" shape="317.00,140.40 317.00,9.60"/>
+        <lane id="turnbackout_1" index="1" speed="13.89" length="130.80" shape="320.20,140.40 320.20,9.60"/>
+        <lane id="turnbackout_2" index="2" speed="13.89" length="130.80" shape="323.40,140.40 323.40,9.60"/>
+    </edge>
+
+    <junction id="backin" type="priority" x="0.00" y="0.00" incLanes="outOutOfTown_0 outOutOfTown_1 outOutOfTown_2" intLanes=":backin_0_0 :backin_0_1 :backin_0_2" shape="0.00,9.60 9.60,9.60 9.60,0.00 6.67,0.27 4.27,1.07 2.40,2.40 1.07,4.27 0.27,6.67">
+        <request index="0" response="000" foes="000" cont="0"/>
+        <request index="1" response="000" foes="000" cont="0"/>
+        <request index="2" response="000" foes="000" cont="0"/>
+    </junction>
+    <junction id="backout" type="priority" x="325.00" y="0.00" incLanes="turnbackout_0 turnbackout_1 turnbackout_2" intLanes=":backout_0_0 :backout_0_1 :backout_0_2" shape="315.40,9.60 325.00,9.60 324.73,6.67 323.93,4.27 322.60,2.40 320.73,1.07 318.33,0.27 315.40,0.00">
+        <request index="0" response="000" foes="000" cont="0"/>
+        <request index="1" response="000" foes="000" cont="0"/>
+        <request index="2" response="000" foes="000" cont="0"/>
+    </junction>
+    <junction id="cyber0" type="priority" x="100.00" y="215.00" incLanes="-cyber0to1_0 -cyber0to1_1 road0_0 road0_1 road0_2" intLanes=":cyber0_0_0 :cyber0_0_1 :cyber0_0_2 :cyber0_3_0 :cyber0_3_1" shape="113.59,221.39 113.60,208.61 111.38,208.16 110.60,207.61 110.04,206.83 109.71,205.83 109.60,204.61 90.40,204.61 91.04,209.74 92.98,213.94 96.20,217.20 100.71,219.53 106.50,220.93">
+        <request index="0" response="00000" foes="00000" cont="0"/>
+        <request index="1" response="00000" foes="00000" cont="0"/>
+        <request index="2" response="00000" foes="00000" cont="0"/>
+        <request index="3" response="00000" foes="00000" cont="0"/>
+        <request index="4" response="00000" foes="00000" cont="0"/>
+    </junction>
+    <junction id="cyber1" type="priority" x="129.00" y="215.00" incLanes="road1_0 road1_1 road1_2 cyber0to1_0 cyber0to1_1" intLanes=":cyber1_0_0 :cyber1_0_1 :cyber1_2_0 :cyber1_2_1 :cyber1_2_2" shape="138.60,204.61 119.40,204.61 118.96,206.84 118.40,207.61 117.62,208.17 116.62,208.50 115.40,208.61 115.41,221.39 122.49,220.92 128.29,219.52 132.80,217.19 136.02,213.93 137.96,209.73">
+        <request index="0" response="00000" foes="00000" cont="0"/>
+        <request index="1" response="00000" foes="00000" cont="0"/>
+        <request index="2" response="00000" foes="00000" cont="0"/>
+        <request index="3" response="00000" foes="00000" cont="0"/>
+        <request index="4" response="00000" foes="00000" cont="0"/>
+    </junction>
+    <junction id="cyberAlternative0" type="priority" x="200.00" y="215.00" incLanes="-cyberAlternative0to1_0 -cyberAlternative0to1_1 roadAlternative0_0 roadAlternative0_1 roadAlternative0_2" intLanes=":cyberAlternative0_0_0 :cyberAlternative0_0_1 :cyberAlternative0_0_2 :cyberAlternative0_3_0 :cyberAlternative0_3_1" shape="213.59,221.39 213.60,208.61 211.38,208.16 210.60,207.61 210.04,206.83 209.71,205.83 209.60,204.61 190.40,204.61 191.04,209.74 192.98,213.94 196.20,217.20 200.71,219.53 206.50,220.93">
+        <request index="0" response="00000" foes="00000" cont="0"/>
+        <request index="1" response="00000" foes="00000" cont="0"/>
+        <request index="2" response="00000" foes="00000" cont="0"/>
+        <request index="3" response="00000" foes="00000" cont="0"/>
+        <request index="4" response="00000" foes="00000" cont="0"/>
+    </junction>
+    <junction id="cyberAlternative1" type="priority" x="229.00" y="215.00" incLanes="roadAlternative1_0 roadAlternative1_1 roadAlternative1_2 cyberAlternative0to1_0 cyberAlternative0to1_1" intLanes=":cyberAlternative1_0_0 :cyberAlternative1_0_1 :cyberAlternative1_2_0 :cyberAlternative1_2_1 :cyberAlternative1_2_2" shape="238.60,204.61 219.40,204.61 218.96,206.84 218.40,207.61 217.62,208.17 216.62,208.50 215.40,208.61 215.41,221.39 222.49,220.92 228.29,219.52 232.80,217.19 236.02,213.93 237.96,209.73">
+        <request index="0" response="00000" foes="00000" cont="0"/>
+        <request index="1" response="00000" foes="00000" cont="0"/>
+        <request index="2" response="00000" foes="00000" cont="0"/>
+        <request index="3" response="00000" foes="00000" cont="0"/>
+        <request index="4" response="00000" foes="00000" cont="0"/>
+    </junction>
+    <junction id="cyberOutOfTown0" type="priority" x="121.00" y="65.00" incLanes="-cyberOutOfTown0to1_0 -cyberOutOfTown0to1_1 roadOutOfTown0_0 roadOutOfTown0_1 roadOutOfTown0_2" intLanes=":cyberOutOfTown0_0_0 :cyberOutOfTown0_0_1 :cyberOutOfTown0_0_2 :cyberOutOfTown0_3_0 :cyberOutOfTown0_3_1" shape="134.59,71.39 134.60,58.61 132.38,58.16 131.60,57.61 131.04,56.83 130.71,55.83 130.60,54.61 111.40,54.61 112.04,59.74 113.98,63.94 117.20,67.20 121.71,69.53 127.50,70.93">
+        <request index="0" response="00000" foes="00000" cont="0"/>
+        <request index="1" response="00000" foes="00000" cont="0"/>
+        <request index="2" response="00000" foes="00000" cont="0"/>
+        <request index="3" response="00000" foes="00000" cont="0"/>
+        <request index="4" response="00000" foes="00000" cont="0"/>
+    </junction>
+    <junction id="cyberOutOfTown1" type="priority" x="150.00" y="65.00" incLanes="-cyberOutOfTown1to2_0 -cyberOutOfTown1to2_1 roadOutOfTown1_0 roadOutOfTown1_1 roadOutOfTown1_2 cyberOutOfTown0to1_0 cyberOutOfTown0to1_1" intLanes=":cyberOutOfTown1_0_0 :cyberOutOfTown1_0_1 :cyberOutOfTown1_2_0 :cyberOutOfTown1_2_1 :cyberOutOfTown1_4_0 :cyberOutOfTown1_5_0 :cyberOutOfTown1_5_1 :cyberOutOfTown1_7_0 :cyberOutOfTown1_8_0 :cyberOutOfTown1_9_0 :cyberOutOfTown1_9_1 :cyberOutOfTown1_11_0 :cyberOutOfTown1_11_1 :cyberOutOfTown1_13_0" shape="163.59,71.39 163.60,58.61 161.38,58.16 160.60,57.61 160.04,56.83 159.71,55.83 159.60,54.61 140.40,54.61 139.96,56.83 139.40,57.61 138.62,58.17 137.62,58.50 136.40,58.61 136.41,71.39">
+        <request index="0"  response="00000010000000" foes="10000010000000" cont="0"/>
+        <request index="1"  response="00000010000000" foes="10000010000000" cont="0"/>
+        <request index="2"  response="01111010000000" foes="01111110000000" cont="0"/>
+        <request index="3"  response="01111010000000" foes="01111110000000" cont="0"/>
+        <request index="4"  response="01100001100000" foes="01100001100000" cont="0"/>
+        <request index="5"  response="00000000000000" foes="01100000010000" cont="0"/>
+        <request index="6"  response="00000000000000" foes="01100000010000" cont="0"/>
+        <request index="7"  response="00000000000000" foes="11100000001111" cont="0"/>
+        <request index="8"  response="00000000001100" foes="00000000001100" cont="0"/>
+        <request index="9"  response="00000000000000" foes="00000000001100" cont="0"/>
+        <request index="10" response="00000000000000" foes="00000000001100" cont="0"/>
+        <request index="11" response="00000011100000" foes="00000011111100" cont="0"/>
+        <request index="12" response="00000011100000" foes="00000011111100" cont="0"/>
+        <request index="13" response="00000010000011" foes="00000010000011" cont="0"/>
+    </junction>
+    <junction id="cyberOutOfTown2" type="priority" x="179.00" y="65.00" incLanes="-cyberOutOfTown2to3_0 -cyberOutOfTown2to3_1 roadOutOfTown2_0 roadOutOfTown2_1 roadOutOfTown2_2 cyberOutOfTown1to2_0 cyberOutOfTown1to2_1" intLanes=":cyberOutOfTown2_0_0 :cyberOutOfTown2_0_1 :cyberOutOfTown2_2_0 :cyberOutOfTown2_2_1 :cyberOutOfTown2_4_0 :cyberOutOfTown2_5_0 :cyberOutOfTown2_5_1 :cyberOutOfTown2_7_0 :cyberOutOfTown2_8_0 :cyberOutOfTown2_9_0 :cyberOutOfTown2_9_1 :cyberOutOfTown2_11_0 :cyberOutOfTown2_11_1 :cyberOutOfTown2_13_0" shape="192.59,71.39 192.60,58.61 190.38,58.16 189.60,57.61 189.04,56.83 188.71,55.83 188.60,54.61 169.40,54.61 168.96,56.83 168.40,57.61 167.62,58.17 166.62,58.50 165.40,58.61 165.41,71.39">
+        <request index="0"  response="00000010000000" foes="10000010000000" cont="0"/>
+        <request index="1"  response="00000010000000" foes="10000010000000" cont="0"/>
+        <request index="2"  response="01111010000000" foes="01111110000000" cont="0"/>
+        <request index="3"  response="01111010000000" foes="01111110000000" cont="0"/>
+        <request index="4"  response="01100001100000" foes="01100001100000" cont="0"/>
+        <request index="5"  response="00000000000000" foes="01100000010000" cont="0"/>
+        <request index="6"  response="00000000000000" foes="01100000010000" cont="0"/>
+        <request index="7"  response="00000000000000" foes="11100000001111" cont="0"/>
+        <request index="8"  response="00000000001100" foes="00000000001100" cont="0"/>
+        <request index="9"  response="00000000000000" foes="00000000001100" cont="0"/>
+        <request index="10" response="00000000000000" foes="00000000001100" cont="0"/>
+        <request index="11" response="00000011100000" foes="00000011111100" cont="0"/>
+        <request index="12" response="00000011100000" foes="00000011111100" cont="0"/>
+        <request index="13" response="00000010000011" foes="00000010000011" cont="0"/>
+    </junction>
+    <junction id="cyberOutOfTown3" type="priority" x="208.00" y="65.00" incLanes="roadOutOfTown3_0 roadOutOfTown3_1 roadOutOfTown3_2 cyberOutOfTown2to3_0 cyberOutOfTown2to3_1" intLanes=":cyberOutOfTown3_0_0 :cyberOutOfTown3_0_1 :cyberOutOfTown3_2_0 :cyberOutOfTown3_2_1 :cyberOutOfTown3_2_2" shape="217.60,54.61 198.40,54.61 197.96,56.84 197.40,57.61 196.62,58.17 195.62,58.50 194.40,58.61 194.41,71.39 201.49,70.92 207.29,69.52 211.80,67.19 215.02,63.93 216.96,59.73">
+        <request index="0" response="00000" foes="00000" cont="0"/>
+        <request index="1" response="00000" foes="00000" cont="0"/>
+        <request index="2" response="00000" foes="00000" cont="0"/>
+        <request index="3" response="00000" foes="00000" cont="0"/>
+        <request index="4" response="00000" foes="00000" cont="0"/>
+    </junction>
+    <junction id="in" type="priority" x="0.00" y="150.00" incLanes="turnbackin_0 turnbackin_1 turnbackin_2" intLanes=":in_0_0 :in_0_1 :in_0_2" shape="9.60,150.00 9.60,140.40 0.00,140.40 0.27,143.33 1.07,145.73 2.40,147.60 4.27,148.93 6.67,149.73">
+        <request index="0" response="000" foes="000" cont="0"/>
+        <request index="1" response="000" foes="000" cont="0"/>
+        <request index="2" response="000" foes="000" cont="0"/>
+    </junction>
+    <junction id="main0" type="priority" x="100.00" y="150.00" incLanes="-road0_0 -road0_1 -road0_2 mainin_0 mainin_1 mainin_2" intLanes=":main0_10_0 :main0_10_1 :main0_10_2 :main0_11_0 :main0_4_0 :main0_4_1 :main0_4_2 :main0_7_0 :main0_7_1 :main0_7_2" shape="90.40,151.50 109.60,151.50 109.77,150.67 109.97,150.38 110.27,150.17 110.64,150.04 111.10,150.00 111.10,140.40 88.90,140.40 88.90,150.00 89.73,150.17 90.03,150.38 90.23,150.67 90.36,151.04">
+        <request index="0" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="1" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="2" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="3" response="1110000000" foes="1110000000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="5" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="6" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="7" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="8" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="9" response="0000000000" foes="0000001111" cont="0"/>
+    </junction>
+    <junction id="main1" type="priority" x="129.00" y="150.00" incLanes="-road1_0 -road1_1 -road1_2 main0to1_0 main0to1_1 main0to1_2" intLanes=":main1_10_0 :main1_10_1 :main1_10_2 :main1_11_0 :main1_4_0 :main1_4_1 :main1_4_2 :main1_7_0 :main1_7_1 :main1_7_2" shape="119.40,151.50 138.60,151.50 138.77,150.67 138.97,150.38 139.27,150.17 139.64,150.04 140.10,150.00 140.10,140.40 117.90,140.40 117.90,150.00 118.73,150.17 119.03,150.38 119.23,150.67 119.36,151.04">
+        <request index="0" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="1" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="2" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="3" response="1110000000" foes="1110000000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="5" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="6" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="7" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="8" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="9" response="0000000000" foes="0000001111" cont="0"/>
+    </junction>
+    <junction id="mainAlternative0" type="priority" x="200.00" y="150.00" incLanes="-roadAlternative0_0 -roadAlternative0_1 -roadAlternative0_2 mainmid_0 mainmid_1 mainmid_2" intLanes=":mainAlternative0_10_0 :mainAlternative0_10_1 :mainAlternative0_10_2 :mainAlternative0_11_0 :mainAlternative0_4_0 :mainAlternative0_4_1 :mainAlternative0_4_2 :mainAlternative0_7_0 :mainAlternative0_7_1 :mainAlternative0_7_2" shape="190.40,151.50 209.60,151.50 209.77,150.67 209.97,150.38 210.27,150.17 210.64,150.04 211.10,150.00 211.10,140.40 188.90,140.40 188.90,150.00 189.73,150.17 190.03,150.38 190.23,150.67 190.36,151.04">
+        <request index="0" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="1" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="2" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="3" response="1110000000" foes="1110000000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="5" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="6" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="7" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="8" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="9" response="0000000000" foes="0000001111" cont="0"/>
+    </junction>
+    <junction id="mainAlternative1" type="priority" x="229.00" y="150.00" incLanes="-roadAlternative1_0 -roadAlternative1_1 -roadAlternative1_2 mainAlternative0to1_0 mainAlternative0to1_1 mainAlternative0to1_2" intLanes=":mainAlternative1_10_0 :mainAlternative1_10_1 :mainAlternative1_10_2 :mainAlternative1_11_0 :mainAlternative1_4_0 :mainAlternative1_4_1 :mainAlternative1_4_2 :mainAlternative1_7_0 :mainAlternative1_7_1 :mainAlternative1_7_2" shape="219.40,151.50 238.60,151.50 238.77,150.67 238.97,150.38 239.27,150.17 239.64,150.04 240.10,150.00 240.10,140.40 217.90,140.40 217.90,150.00 218.73,150.17 219.03,150.38 219.23,150.67 219.36,151.04">
+        <request index="0" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="1" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="2" response="1111110000" foes="1111110000" cont="1"/>
+        <request index="3" response="1110000000" foes="1110000000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="5" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="6" response="0000000000" foes="0000000111" cont="0"/>
+        <request index="7" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="8" response="0000000000" foes="0000001111" cont="0"/>
+        <request index="9" response="0000000000" foes="0000001111" cont="0"/>
+    </junction>
+    <junction id="mainOutOfTown0" type="priority" x="121.00" y="0.00" incLanes="-roadOutOfTown0_0 -roadOutOfTown0_1 -roadOutOfTown0_2 mainOutOfTown1to0_0 mainOutOfTown1to0_1 mainOutOfTown1to0_2" intLanes=":mainOutOfTown0_0_0 :mainOutOfTown0_0_1 :mainOutOfTown0_0_2 :mainOutOfTown0_10_0 :mainOutOfTown0_4_0 :mainOutOfTown0_4_1 :mainOutOfTown0_4_2 :mainOutOfTown0_7_0 :mainOutOfTown0_7_1 :mainOutOfTown0_7_2" shape="111.40,13.60 130.60,13.60 131.04,11.38 131.60,10.60 132.38,10.04 133.38,9.71 134.60,9.60 134.60,0.00 107.40,0.00 107.40,9.60 109.62,10.04 110.40,10.60 110.96,11.38 111.29,12.38">
+        <request index="0" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="1" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="2" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="3" response="0001110000" foes="0001110000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="5" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="6" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="7" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="8" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="9" response="0000000111" foes="0000000111" cont="0"/>
+    </junction>
+    <junction id="mainOutOfTown1" type="priority" x="150.00" y="0.00" incLanes="-roadOutOfTown1_0 -roadOutOfTown1_1 -roadOutOfTown1_2 mainOutOfTown2to1_0 mainOutOfTown2to1_1 mainOutOfTown2to1_2" intLanes=":mainOutOfTown1_0_0 :mainOutOfTown1_0_1 :mainOutOfTown1_0_2 :mainOutOfTown1_10_0 :mainOutOfTown1_4_0 :mainOutOfTown1_4_1 :mainOutOfTown1_4_2 :mainOutOfTown1_7_0 :mainOutOfTown1_7_1 :mainOutOfTown1_7_2" shape="140.40,13.60 159.60,13.60 160.04,11.38 160.60,10.60 161.38,10.04 162.38,9.71 163.60,9.60 163.60,0.00 136.40,0.00 136.40,9.60 138.62,10.04 139.40,10.60 139.96,11.38 140.29,12.38">
+        <request index="0" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="1" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="2" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="3" response="0001110000" foes="0001110000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="5" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="6" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="7" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="8" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="9" response="0000000111" foes="0000000111" cont="0"/>
+    </junction>
+    <junction id="mainOutOfTown2" type="priority" x="179.00" y="0.00" incLanes="-roadOutOfTown2_0 -roadOutOfTown2_1 -roadOutOfTown2_2 mainOutOfTown3to2_0 mainOutOfTown3to2_1 mainOutOfTown3to2_2" intLanes=":mainOutOfTown2_0_0 :mainOutOfTown2_0_1 :mainOutOfTown2_0_2 :mainOutOfTown2_10_0 :mainOutOfTown2_4_0 :mainOutOfTown2_4_1 :mainOutOfTown2_4_2 :mainOutOfTown2_7_0 :mainOutOfTown2_7_1 :mainOutOfTown2_7_2" shape="169.40,13.60 188.60,13.60 189.04,11.38 189.60,10.60 190.38,10.04 191.38,9.71 192.60,9.60 192.60,0.00 165.40,0.00 165.40,9.60 167.62,10.04 168.40,10.60 168.96,11.38 169.29,12.38">
+        <request index="0" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="1" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="2" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="3" response="0001110000" foes="0001110000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="5" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="6" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="7" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="8" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="9" response="0000000111" foes="0000000111" cont="0"/>
+    </junction>
+    <junction id="mainOutOfTown3" type="priority" x="208.00" y="0.00" incLanes="-roadOutOfTown3_0 -roadOutOfTown3_1 -roadOutOfTown3_2 inOutOfTown_0 inOutOfTown_1 inOutOfTown_2" intLanes=":mainOutOfTown3_0_0 :mainOutOfTown3_0_1 :mainOutOfTown3_0_2 :mainOutOfTown3_10_0 :mainOutOfTown3_4_0 :mainOutOfTown3_4_1 :mainOutOfTown3_4_2 :mainOutOfTown3_7_0 :mainOutOfTown3_7_1 :mainOutOfTown3_7_2" shape="198.40,13.60 217.60,13.60 218.04,11.38 218.60,10.60 219.38,10.04 220.38,9.71 221.60,9.60 221.60,0.00 194.40,0.00 194.40,9.60 196.62,10.04 197.40,10.60 197.96,11.38 198.29,12.38">
+        <request index="0" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="1" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="2" response="0000000000" foes="1110000000" cont="0"/>
+        <request index="3" response="0001110000" foes="0001110000" cont="1"/>
+        <request index="4" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="5" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="6" response="0000000000" foes="0000001000" cont="0"/>
+        <request index="7" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="8" response="0000000111" foes="0000000111" cont="0"/>
+        <request index="9" response="0000000111" foes="0000000111" cont="0"/>
+    </junction>
+    <junction id="out" type="priority" x="325.00" y="150.00" incLanes="mainout_0 mainout_1 mainout_2" intLanes=":out_0_0 :out_0_1 :out_0_2" shape="325.00,140.40 315.40,140.40 315.40,150.00 318.33,149.73 320.73,148.93 322.60,147.60 323.93,145.73 324.73,143.33">
+        <request index="0" response="000" foes="000" cont="0"/>
+        <request index="1" response="000" foes="000" cont="0"/>
+        <request index="2" response="000" foes="000" cont="0"/>
+    </junction>
+
+    <junction id=":main0_10_0" type="internal" x="92.33" y="150.34" incLanes=":main0_0_0 mainin_0 mainin_1 mainin_2" intLanes=":main0_4_0 :main0_4_1 :main0_4_2 :main0_7_0 :main0_7_1 :main0_7_2"/>
+    <junction id=":main0_10_1" type="internal" x="95.54" y="150.55" incLanes=":main0_0_1 mainin_0 mainin_1 mainin_2" intLanes=":main0_4_0 :main0_4_1 :main0_4_2 :main0_7_0 :main0_7_1 :main0_7_2"/>
+    <junction id=":main0_10_2" type="internal" x="98.60" y="151.16" incLanes=":main0_0_2 mainin_0 mainin_1 mainin_2" intLanes=":main0_4_0 :main0_4_1 :main0_4_2 :main0_7_0 :main0_7_1 :main0_7_2"/>
+    <junction id=":main0_11_0" type="internal" x="98.60" y="151.21" incLanes=":main0_3_0 mainin_2" intLanes=":main0_7_0 :main0_7_1 :main0_7_2"/>
+    <junction id=":main1_10_0" type="internal" x="121.33" y="150.34" incLanes=":main1_0_0 main0to1_0 main0to1_1 main0to1_2" intLanes=":main1_4_0 :main1_4_1 :main1_4_2 :main1_7_0 :main1_7_1 :main1_7_2"/>
+    <junction id=":main1_10_1" type="internal" x="124.54" y="150.55" incLanes=":main1_0_1 main0to1_0 main0to1_1 main0to1_2" intLanes=":main1_4_0 :main1_4_1 :main1_4_2 :main1_7_0 :main1_7_1 :main1_7_2"/>
+    <junction id=":main1_10_2" type="internal" x="127.60" y="151.16" incLanes=":main1_0_2 main0to1_0 main0to1_1 main0to1_2" intLanes=":main1_4_0 :main1_4_1 :main1_4_2 :main1_7_0 :main1_7_1 :main1_7_2"/>
+    <junction id=":main1_11_0" type="internal" x="127.60" y="151.21" incLanes=":main1_3_0 main0to1_2" intLanes=":main1_7_0 :main1_7_1 :main1_7_2"/>
+    <junction id=":mainAlternative0_10_0" type="internal" x="192.33" y="150.34" incLanes=":mainAlternative0_0_0 mainmid_0 mainmid_1 mainmid_2" intLanes=":mainAlternative0_4_0 :mainAlternative0_4_1 :mainAlternative0_4_2 :mainAlternative0_7_0 :mainAlternative0_7_1 :mainAlternative0_7_2"/>
+    <junction id=":mainAlternative0_10_1" type="internal" x="195.54" y="150.55" incLanes=":mainAlternative0_0_1 mainmid_0 mainmid_1 mainmid_2" intLanes=":mainAlternative0_4_0 :mainAlternative0_4_1 :mainAlternative0_4_2 :mainAlternative0_7_0 :mainAlternative0_7_1 :mainAlternative0_7_2"/>
+    <junction id=":mainAlternative0_10_2" type="internal" x="198.60" y="151.16" incLanes=":mainAlternative0_0_2 mainmid_0 mainmid_1 mainmid_2" intLanes=":mainAlternative0_4_0 :mainAlternative0_4_1 :mainAlternative0_4_2 :mainAlternative0_7_0 :mainAlternative0_7_1 :mainAlternative0_7_2"/>
+    <junction id=":mainAlternative0_11_0" type="internal" x="198.60" y="151.21" incLanes=":mainAlternative0_3_0 mainmid_2" intLanes=":mainAlternative0_7_0 :mainAlternative0_7_1 :mainAlternative0_7_2"/>
+    <junction id=":mainAlternative1_10_0" type="internal" x="221.33" y="150.34" incLanes=":mainAlternative1_0_0 mainAlternative0to1_0 mainAlternative0to1_1 mainAlternative0to1_2" intLanes=":mainAlternative1_4_0 :mainAlternative1_4_1 :mainAlternative1_4_2 :mainAlternative1_7_0 :mainAlternative1_7_1 :mainAlternative1_7_2"/>
+    <junction id=":mainAlternative1_10_1" type="internal" x="224.54" y="150.55" incLanes=":mainAlternative1_0_1 mainAlternative0to1_0 mainAlternative0to1_1 mainAlternative0to1_2" intLanes=":mainAlternative1_4_0 :mainAlternative1_4_1 :mainAlternative1_4_2 :mainAlternative1_7_0 :mainAlternative1_7_1 :mainAlternative1_7_2"/>
+    <junction id=":mainAlternative1_10_2" type="internal" x="227.60" y="151.16" incLanes=":mainAlternative1_0_2 mainAlternative0to1_0 mainAlternative0to1_1 mainAlternative0to1_2" intLanes=":mainAlternative1_4_0 :mainAlternative1_4_1 :mainAlternative1_4_2 :mainAlternative1_7_0 :mainAlternative1_7_1 :mainAlternative1_7_2"/>
+    <junction id=":mainAlternative1_11_0" type="internal" x="227.60" y="151.21" incLanes=":mainAlternative1_3_0 mainAlternative0to1_2" intLanes=":mainAlternative1_7_0 :mainAlternative1_7_1 :mainAlternative1_7_2"/>
+    <junction id=":mainOutOfTown0_10_0" type="internal" x="120.20" y="12.40" incLanes=":mainOutOfTown0_3_0 mainOutOfTown1to0_0" intLanes=":mainOutOfTown0_4_0 :mainOutOfTown0_4_1 :mainOutOfTown0_4_2"/>
+    <junction id=":mainOutOfTown1_10_0" type="internal" x="149.20" y="12.40" incLanes=":mainOutOfTown1_3_0 mainOutOfTown2to1_0" intLanes=":mainOutOfTown1_4_0 :mainOutOfTown1_4_1 :mainOutOfTown1_4_2"/>
+    <junction id=":mainOutOfTown2_10_0" type="internal" x="178.20" y="12.40" incLanes=":mainOutOfTown2_3_0 mainOutOfTown3to2_0" intLanes=":mainOutOfTown2_4_0 :mainOutOfTown2_4_1 :mainOutOfTown2_4_2"/>
+    <junction id=":mainOutOfTown3_10_0" type="internal" x="207.20" y="12.40" incLanes=":mainOutOfTown3_3_0 inOutOfTown_0" intLanes=":mainOutOfTown3_4_0 :mainOutOfTown3_4_1 :mainOutOfTown3_4_2"/>
+
+    <connection from="-cyber0to1" to="-road0" fromLane="0" toLane="0" via=":cyber0_0_0" dir="l" state="M"/>
+    <connection from="-cyber0to1" to="-road0" fromLane="1" toLane="1" via=":cyber0_0_1" dir="l" state="M"/>
+    <connection from="-cyber0to1" to="-road0" fromLane="1" toLane="2" via=":cyber0_0_2" dir="l" state="M"/>
+    <connection from="-cyberAlternative0to1" to="-roadAlternative0" fromLane="0" toLane="0" via=":cyberAlternative0_0_0" dir="l" state="M"/>
+    <connection from="-cyberAlternative0to1" to="-roadAlternative0" fromLane="1" toLane="1" via=":cyberAlternative0_0_1" dir="l" state="M"/>
+    <connection from="-cyberAlternative0to1" to="-roadAlternative0" fromLane="1" toLane="2" via=":cyberAlternative0_0_2" dir="l" state="M"/>
+    <connection from="-cyberOutOfTown0to1" to="-roadOutOfTown0" fromLane="0" toLane="0" via=":cyberOutOfTown0_0_0" dir="l" state="M"/>
+    <connection from="-cyberOutOfTown0to1" to="-roadOutOfTown0" fromLane="1" toLane="1" via=":cyberOutOfTown0_0_1" dir="l" state="M"/>
+    <connection from="-cyberOutOfTown0to1" to="-roadOutOfTown0" fromLane="1" toLane="2" via=":cyberOutOfTown0_0_2" dir="l" state="M"/>
+    <connection from="-cyberOutOfTown1to2" to="-cyberOutOfTown0to1" fromLane="0" toLane="0" via=":cyberOutOfTown1_0_0" dir="s" state="m"/>
+    <connection from="-cyberOutOfTown1to2" to="-cyberOutOfTown0to1" fromLane="1" toLane="1" via=":cyberOutOfTown1_0_1" dir="s" state="m"/>
+    <connection from="-cyberOutOfTown1to2" to="-roadOutOfTown1" fromLane="1" toLane="1" via=":cyberOutOfTown1_2_0" dir="l" state="m"/>
+    <connection from="-cyberOutOfTown1to2" to="-roadOutOfTown1" fromLane="1" toLane="2" via=":cyberOutOfTown1_2_1" dir="l" state="m"/>
+    <connection from="-cyberOutOfTown1to2" to="cyberOutOfTown1to2" fromLane="1" toLane="1" via=":cyberOutOfTown1_4_0" dir="t" state="m"/>
+    <connection from="-cyberOutOfTown2to3" to="-cyberOutOfTown1to2" fromLane="0" toLane="0" via=":cyberOutOfTown2_0_0" dir="s" state="m"/>
+    <connection from="-cyberOutOfTown2to3" to="-cyberOutOfTown1to2" fromLane="1" toLane="1" via=":cyberOutOfTown2_0_1" dir="s" state="m"/>
+    <connection from="-cyberOutOfTown2to3" to="-roadOutOfTown2" fromLane="1" toLane="1" via=":cyberOutOfTown2_2_0" dir="l" state="m"/>
+    <connection from="-cyberOutOfTown2to3" to="-roadOutOfTown2" fromLane="1" toLane="2" via=":cyberOutOfTown2_2_1" dir="l" state="m"/>
+    <connection from="-cyberOutOfTown2to3" to="cyberOutOfTown2to3" fromLane="1" toLane="1" via=":cyberOutOfTown2_4_0" dir="t" state="m"/>
+    <connection from="-road0" to="main0to1" fromLane="0" toLane="0" via=":main0_0_0" dir="l" state="m"/>
+    <connection from="-road0" to="main0to1" fromLane="1" toLane="1" via=":main0_0_1" dir="l" state="m"/>
+    <connection from="-road0" to="main0to1" fromLane="2" toLane="2" via=":main0_0_2" dir="l" state="m"/>
+    <connection from="-road0" to="road0" fromLane="2" toLane="2" via=":main0_3_0" dir="t" state="m"/>
+    <connection from="-road1" to="mainmid" fromLane="0" toLane="0" via=":main1_0_0" dir="l" state="m"/>
+    <connection from="-road1" to="mainmid" fromLane="1" toLane="1" via=":main1_0_1" dir="l" state="m"/>
+    <connection from="-road1" to="mainmid" fromLane="2" toLane="2" via=":main1_0_2" dir="l" state="m"/>
+    <connection from="-road1" to="road1" fromLane="2" toLane="2" via=":main1_3_0" dir="t" state="m"/>
+    <connection from="-roadAlternative0" to="mainAlternative0to1" fromLane="0" toLane="0" via=":mainAlternative0_0_0" dir="l" state="m"/>
+    <connection from="-roadAlternative0" to="mainAlternative0to1" fromLane="1" toLane="1" via=":mainAlternative0_0_1" dir="l" state="m"/>
+    <connection from="-roadAlternative0" to="mainAlternative0to1" fromLane="2" toLane="2" via=":mainAlternative0_0_2" dir="l" state="m"/>
+    <connection from="-roadAlternative0" to="roadAlternative0" fromLane="2" toLane="2" via=":mainAlternative0_3_0" dir="t" state="m"/>
+    <connection from="-roadAlternative1" to="mainout" fromLane="0" toLane="0" via=":mainAlternative1_0_0" dir="l" state="m"/>
+    <connection from="-roadAlternative1" to="mainout" fromLane="1" toLane="1" via=":mainAlternative1_0_1" dir="l" state="m"/>
+    <connection from="-roadAlternative1" to="mainout" fromLane="2" toLane="2" via=":mainAlternative1_0_2" dir="l" state="m"/>
+    <connection from="-roadAlternative1" to="roadAlternative1" fromLane="2" toLane="2" via=":mainAlternative1_3_0" dir="t" state="m"/>
+    <connection from="-roadOutOfTown0" to="outOutOfTown" fromLane="0" toLane="0" via=":mainOutOfTown0_0_0" dir="r" state="M"/>
+    <connection from="-roadOutOfTown0" to="outOutOfTown" fromLane="1" toLane="1" via=":mainOutOfTown0_0_1" dir="r" state="M"/>
+    <connection from="-roadOutOfTown0" to="outOutOfTown" fromLane="2" toLane="2" via=":mainOutOfTown0_0_2" dir="r" state="M"/>
+    <connection from="-roadOutOfTown0" to="roadOutOfTown0" fromLane="2" toLane="2" via=":mainOutOfTown0_3_0" dir="t" state="m"/>
+    <connection from="-roadOutOfTown1" to="mainOutOfTown1to0" fromLane="0" toLane="0" via=":mainOutOfTown1_0_0" dir="r" state="M"/>
+    <connection from="-roadOutOfTown1" to="mainOutOfTown1to0" fromLane="1" toLane="1" via=":mainOutOfTown1_0_1" dir="r" state="M"/>
+    <connection from="-roadOutOfTown1" to="mainOutOfTown1to0" fromLane="2" toLane="2" via=":mainOutOfTown1_0_2" dir="r" state="M"/>
+    <connection from="-roadOutOfTown1" to="roadOutOfTown1" fromLane="2" toLane="2" via=":mainOutOfTown1_3_0" dir="t" state="m"/>
+    <connection from="-roadOutOfTown2" to="mainOutOfTown2to1" fromLane="0" toLane="0" via=":mainOutOfTown2_0_0" dir="r" state="M"/>
+    <connection from="-roadOutOfTown2" to="mainOutOfTown2to1" fromLane="1" toLane="1" via=":mainOutOfTown2_0_1" dir="r" state="M"/>
+    <connection from="-roadOutOfTown2" to="mainOutOfTown2to1" fromLane="2" toLane="2" via=":mainOutOfTown2_0_2" dir="r" state="M"/>
+    <connection from="-roadOutOfTown2" to="roadOutOfTown2" fromLane="2" toLane="2" via=":mainOutOfTown2_3_0" dir="t" state="m"/>
+    <connection from="-roadOutOfTown3" to="mainOutOfTown3to2" fromLane="0" toLane="0" via=":mainOutOfTown3_0_0" dir="r" state="M"/>
+    <connection from="-roadOutOfTown3" to="mainOutOfTown3to2" fromLane="1" toLane="1" via=":mainOutOfTown3_0_1" dir="r" state="M"/>
+    <connection from="-roadOutOfTown3" to="mainOutOfTown3to2" fromLane="2" toLane="2" via=":mainOutOfTown3_0_2" dir="r" state="M"/>
+    <connection from="-roadOutOfTown3" to="roadOutOfTown3" fromLane="2" toLane="2" via=":mainOutOfTown3_3_0" dir="t" state="m"/>
+    <connection from="cyber0to1" to="-road1" fromLane="0" toLane="0" via=":cyber1_2_0" dir="r" state="M"/>
+    <connection from="cyber0to1" to="-road1" fromLane="1" toLane="1" via=":cyber1_2_1" dir="r" state="M"/>
+    <connection from="cyber0to1" to="-road1" fromLane="1" toLane="2" via=":cyber1_2_2" dir="r" state="M"/>
+    <connection from="cyberAlternative0to1" to="-roadAlternative1" fromLane="0" toLane="0" via=":cyberAlternative1_2_0" dir="r" state="M"/>
+    <connection from="cyberAlternative0to1" to="-roadAlternative1" fromLane="1" toLane="1" via=":cyberAlternative1_2_1" dir="r" state="M"/>
+    <connection from="cyberAlternative0to1" to="-roadAlternative1" fromLane="1" toLane="2" via=":cyberAlternative1_2_2" dir="r" state="M"/>
+    <connection from="cyberOutOfTown0to1" to="-roadOutOfTown1" fromLane="0" toLane="0" via=":cyberOutOfTown1_9_0" dir="r" state="M"/>
+    <connection from="cyberOutOfTown0to1" to="-roadOutOfTown1" fromLane="1" toLane="1" via=":cyberOutOfTown1_9_1" dir="r" state="M"/>
+    <connection from="cyberOutOfTown0to1" to="cyberOutOfTown1to2" fromLane="1" toLane="0" via=":cyberOutOfTown1_11_0" dir="s" state="m"/>
+    <connection from="cyberOutOfTown0to1" to="cyberOutOfTown1to2" fromLane="1" toLane="1" via=":cyberOutOfTown1_11_1" dir="s" state="m"/>
+    <connection from="cyberOutOfTown0to1" to="-cyberOutOfTown0to1" fromLane="1" toLane="1" via=":cyberOutOfTown1_13_0" dir="t" state="m"/>
+    <connection from="cyberOutOfTown1to2" to="-roadOutOfTown2" fromLane="0" toLane="0" via=":cyberOutOfTown2_9_0" dir="r" state="M"/>
+    <connection from="cyberOutOfTown1to2" to="-roadOutOfTown2" fromLane="1" toLane="1" via=":cyberOutOfTown2_9_1" dir="r" state="M"/>
+    <connection from="cyberOutOfTown1to2" to="cyberOutOfTown2to3" fromLane="1" toLane="0" via=":cyberOutOfTown2_11_0" dir="s" state="m"/>
+    <connection from="cyberOutOfTown1to2" to="cyberOutOfTown2to3" fromLane="1" toLane="1" via=":cyberOutOfTown2_11_1" dir="s" state="m"/>
+    <connection from="cyberOutOfTown1to2" to="-cyberOutOfTown1to2" fromLane="1" toLane="1" via=":cyberOutOfTown2_13_0" dir="t" state="m"/>
+    <connection from="cyberOutOfTown2to3" to="-roadOutOfTown3" fromLane="0" toLane="0" via=":cyberOutOfTown3_2_0" dir="r" state="M"/>
+    <connection from="cyberOutOfTown2to3" to="-roadOutOfTown3" fromLane="1" toLane="1" via=":cyberOutOfTown3_2_1" dir="r" state="M"/>
+    <connection from="cyberOutOfTown2to3" to="-roadOutOfTown3" fromLane="1" toLane="2" via=":cyberOutOfTown3_2_2" dir="r" state="M"/>
+    <connection from="inOutOfTown" to="roadOutOfTown3" fromLane="0" toLane="0" via=":mainOutOfTown3_4_0" dir="r" state="M"/>
+    <connection from="inOutOfTown" to="roadOutOfTown3" fromLane="0" toLane="1" via=":mainOutOfTown3_4_1" dir="r" state="M"/>
+    <connection from="inOutOfTown" to="roadOutOfTown3" fromLane="0" toLane="2" via=":mainOutOfTown3_4_2" dir="r" state="M"/>
+    <connection from="inOutOfTown" to="mainOutOfTown3to2" fromLane="0" toLane="0" via=":mainOutOfTown3_7_0" dir="s" state="m"/>
+    <connection from="inOutOfTown" to="mainOutOfTown3to2" fromLane="1" toLane="1" via=":mainOutOfTown3_7_1" dir="s" state="m"/>
+    <connection from="inOutOfTown" to="mainOutOfTown3to2" fromLane="2" toLane="2" via=":mainOutOfTown3_7_2" dir="s" state="m"/>
+    <connection from="main0to1" to="mainmid" fromLane="0" toLane="0" via=":main1_4_0" dir="s" state="M"/>
+    <connection from="main0to1" to="mainmid" fromLane="1" toLane="1" via=":main1_4_1" dir="s" state="M"/>
+    <connection from="main0to1" to="mainmid" fromLane="2" toLane="2" via=":main1_4_2" dir="s" state="M"/>
+    <connection from="main0to1" to="road1" fromLane="2" toLane="0" via=":main1_7_0" dir="l" state="M"/>
+    <connection from="main0to1" to="road1" fromLane="2" toLane="1" via=":main1_7_1" dir="l" state="M"/>
+    <connection from="main0to1" to="road1" fromLane="2" toLane="2" via=":main1_7_2" dir="l" state="M"/>
+    <connection from="mainAlternative0to1" to="mainout" fromLane="0" toLane="0" via=":mainAlternative1_4_0" dir="s" state="M"/>
+    <connection from="mainAlternative0to1" to="mainout" fromLane="1" toLane="1" via=":mainAlternative1_4_1" dir="s" state="M"/>
+    <connection from="mainAlternative0to1" to="mainout" fromLane="2" toLane="2" via=":mainAlternative1_4_2" dir="s" state="M"/>
+    <connection from="mainAlternative0to1" to="roadAlternative1" fromLane="2" toLane="0" via=":mainAlternative1_7_0" dir="l" state="M"/>
+    <connection from="mainAlternative0to1" to="roadAlternative1" fromLane="2" toLane="1" via=":mainAlternative1_7_1" dir="l" state="M"/>
+    <connection from="mainAlternative0to1" to="roadAlternative1" fromLane="2" toLane="2" via=":mainAlternative1_7_2" dir="l" state="M"/>
+    <connection from="mainOutOfTown1to0" to="roadOutOfTown0" fromLane="0" toLane="0" via=":mainOutOfTown0_4_0" dir="r" state="M"/>
+    <connection from="mainOutOfTown1to0" to="roadOutOfTown0" fromLane="0" toLane="1" via=":mainOutOfTown0_4_1" dir="r" state="M"/>
+    <connection from="mainOutOfTown1to0" to="roadOutOfTown0" fromLane="0" toLane="2" via=":mainOutOfTown0_4_2" dir="r" state="M"/>
+    <connection from="mainOutOfTown1to0" to="outOutOfTown" fromLane="0" toLane="0" via=":mainOutOfTown0_7_0" dir="s" state="m"/>
+    <connection from="mainOutOfTown1to0" to="outOutOfTown" fromLane="1" toLane="1" via=":mainOutOfTown0_7_1" dir="s" state="m"/>
+    <connection from="mainOutOfTown1to0" to="outOutOfTown" fromLane="2" toLane="2" via=":mainOutOfTown0_7_2" dir="s" state="m"/>
+    <connection from="mainOutOfTown2to1" to="roadOutOfTown1" fromLane="0" toLane="0" via=":mainOutOfTown1_4_0" dir="r" state="M"/>
+    <connection from="mainOutOfTown2to1" to="roadOutOfTown1" fromLane="0" toLane="1" via=":mainOutOfTown1_4_1" dir="r" state="M"/>
+    <connection from="mainOutOfTown2to1" to="roadOutOfTown1" fromLane="0" toLane="2" via=":mainOutOfTown1_4_2" dir="r" state="M"/>
+    <connection from="mainOutOfTown2to1" to="mainOutOfTown1to0" fromLane="0" toLane="0" via=":mainOutOfTown1_7_0" dir="s" state="m"/>
+    <connection from="mainOutOfTown2to1" to="mainOutOfTown1to0" fromLane="1" toLane="1" via=":mainOutOfTown1_7_1" dir="s" state="m"/>
+    <connection from="mainOutOfTown2to1" to="mainOutOfTown1to0" fromLane="2" toLane="2" via=":mainOutOfTown1_7_2" dir="s" state="m"/>
+    <connection from="mainOutOfTown3to2" to="roadOutOfTown2" fromLane="0" toLane="0" via=":mainOutOfTown2_4_0" dir="r" state="M"/>
+    <connection from="mainOutOfTown3to2" to="roadOutOfTown2" fromLane="0" toLane="1" via=":mainOutOfTown2_4_1" dir="r" state="M"/>
+    <connection from="mainOutOfTown3to2" to="roadOutOfTown2" fromLane="0" toLane="2" via=":mainOutOfTown2_4_2" dir="r" state="M"/>
+    <connection from="mainOutOfTown3to2" to="mainOutOfTown2to1" fromLane="0" toLane="0" via=":mainOutOfTown2_7_0" dir="s" state="m"/>
+    <connection from="mainOutOfTown3to2" to="mainOutOfTown2to1" fromLane="1" toLane="1" via=":mainOutOfTown2_7_1" dir="s" state="m"/>
+    <connection from="mainOutOfTown3to2" to="mainOutOfTown2to1" fromLane="2" toLane="2" via=":mainOutOfTown2_7_2" dir="s" state="m"/>
+    <connection from="mainin" to="main0to1" fromLane="0" toLane="0" via=":main0_4_0" dir="s" state="M"/>
+    <connection from="mainin" to="main0to1" fromLane="1" toLane="1" via=":main0_4_1" dir="s" state="M"/>
+    <connection from="mainin" to="main0to1" fromLane="2" toLane="2" via=":main0_4_2" dir="s" state="M"/>
+    <connection from="mainin" to="road0" fromLane="2" toLane="0" via=":main0_7_0" dir="l" state="M"/>
+    <connection from="mainin" to="road0" fromLane="2" toLane="1" via=":main0_7_1" dir="l" state="M"/>
+    <connection from="mainin" to="road0" fromLane="2" toLane="2" via=":main0_7_2" dir="l" state="M"/>
+    <connection from="mainmid" to="mainAlternative0to1" fromLane="0" toLane="0" via=":mainAlternative0_4_0" dir="s" state="M"/>
+    <connection from="mainmid" to="mainAlternative0to1" fromLane="1" toLane="1" via=":mainAlternative0_4_1" dir="s" state="M"/>
+    <connection from="mainmid" to="mainAlternative0to1" fromLane="2" toLane="2" via=":mainAlternative0_4_2" dir="s" state="M"/>
+    <connection from="mainmid" to="roadAlternative0" fromLane="2" toLane="0" via=":mainAlternative0_7_0" dir="l" state="M"/>
+    <connection from="mainmid" to="roadAlternative0" fromLane="2" toLane="1" via=":mainAlternative0_7_1" dir="l" state="M"/>
+    <connection from="mainmid" to="roadAlternative0" fromLane="2" toLane="2" via=":mainAlternative0_7_2" dir="l" state="M"/>
+    <connection from="mainout" to="turnbackout" fromLane="0" toLane="0" via=":out_0_0" dir="r" state="M"/>
+    <connection from="mainout" to="turnbackout" fromLane="1" toLane="1" via=":out_0_1" dir="r" state="M"/>
+    <connection from="mainout" to="turnbackout" fromLane="2" toLane="2" via=":out_0_2" dir="r" state="M"/>
+    <connection from="outOutOfTown" to="turnbackin" fromLane="0" toLane="0" via=":backin_0_0" dir="r" state="M"/>
+    <connection from="outOutOfTown" to="turnbackin" fromLane="1" toLane="1" via=":backin_0_1" dir="r" state="M"/>
+    <connection from="outOutOfTown" to="turnbackin" fromLane="2" toLane="2" via=":backin_0_2" dir="r" state="M"/>
+    <connection from="road0" to="cyber0to1" fromLane="0" toLane="0" via=":cyber0_3_0" dir="r" state="M"/>
+    <connection from="road0" to="cyber0to1" fromLane="1" toLane="1" via=":cyber0_3_1" dir="r" state="M"/>
+    <connection from="road1" to="-cyber0to1" fromLane="0" toLane="0" via=":cyber1_0_0" dir="l" state="M"/>
+    <connection from="road1" to="-cyber0to1" fromLane="1" toLane="1" via=":cyber1_0_1" dir="l" state="M"/>
+    <connection from="roadAlternative0" to="cyberAlternative0to1" fromLane="0" toLane="0" via=":cyberAlternative0_3_0" dir="r" state="M"/>
+    <connection from="roadAlternative0" to="cyberAlternative0to1" fromLane="1" toLane="1" via=":cyberAlternative0_3_1" dir="r" state="M"/>
+    <connection from="roadAlternative1" to="-cyberAlternative0to1" fromLane="0" toLane="0" via=":cyberAlternative1_0_0" dir="l" state="M"/>
+    <connection from="roadAlternative1" to="-cyberAlternative0to1" fromLane="1" toLane="1" via=":cyberAlternative1_0_1" dir="l" state="M"/>
+    <connection from="roadOutOfTown0" to="cyberOutOfTown0to1" fromLane="0" toLane="0" via=":cyberOutOfTown0_3_0" dir="r" state="M"/>
+    <connection from="roadOutOfTown0" to="cyberOutOfTown0to1" fromLane="1" toLane="1" via=":cyberOutOfTown0_3_1" dir="r" state="M"/>
+    <connection from="roadOutOfTown1" to="cyberOutOfTown1to2" fromLane="0" toLane="0" via=":cyberOutOfTown1_5_0" dir="r" state="M"/>
+    <connection from="roadOutOfTown1" to="cyberOutOfTown1to2" fromLane="1" toLane="1" via=":cyberOutOfTown1_5_1" dir="r" state="M"/>
+    <connection from="roadOutOfTown1" to="-cyberOutOfTown0to1" fromLane="2" toLane="1" via=":cyberOutOfTown1_7_0" dir="l" state="M"/>
+    <connection from="roadOutOfTown1" to="-roadOutOfTown1" fromLane="2" toLane="2" via=":cyberOutOfTown1_8_0" dir="t" state="m"/>
+    <connection from="roadOutOfTown2" to="cyberOutOfTown2to3" fromLane="0" toLane="0" via=":cyberOutOfTown2_5_0" dir="r" state="M"/>
+    <connection from="roadOutOfTown2" to="cyberOutOfTown2to3" fromLane="1" toLane="1" via=":cyberOutOfTown2_5_1" dir="r" state="M"/>
+    <connection from="roadOutOfTown2" to="-cyberOutOfTown1to2" fromLane="2" toLane="1" via=":cyberOutOfTown2_7_0" dir="l" state="M"/>
+    <connection from="roadOutOfTown2" to="-roadOutOfTown2" fromLane="2" toLane="2" via=":cyberOutOfTown2_8_0" dir="t" state="m"/>
+    <connection from="roadOutOfTown3" to="-cyberOutOfTown2to3" fromLane="0" toLane="0" via=":cyberOutOfTown3_0_0" dir="l" state="M"/>
+    <connection from="roadOutOfTown3" to="-cyberOutOfTown2to3" fromLane="1" toLane="1" via=":cyberOutOfTown3_0_1" dir="l" state="M"/>
+    <connection from="turnbackin" to="mainin" fromLane="0" toLane="0" via=":in_0_0" dir="r" state="M"/>
+    <connection from="turnbackin" to="mainin" fromLane="1" toLane="1" via=":in_0_1" dir="r" state="M"/>
+    <connection from="turnbackin" to="mainin" fromLane="2" toLane="2" via=":in_0_2" dir="r" state="M"/>
+    <connection from="turnbackout" to="inOutOfTown" fromLane="0" toLane="0" via=":backout_0_0" dir="r" state="M"/>
+    <connection from="turnbackout" to="inOutOfTown" fromLane="1" toLane="1" via=":backout_0_1" dir="r" state="M"/>
+    <connection from="turnbackout" to="inOutOfTown" fromLane="2" toLane="2" via=":backout_0_2" dir="r" state="M"/>
+
+    <connection from=":backin_0" to="turnbackin" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":backin_0" to="turnbackin" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":backin_0" to="turnbackin" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":backout_0" to="inOutOfTown" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":backout_0" to="inOutOfTown" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":backout_0" to="inOutOfTown" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":cyber0_0" to="-road0" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":cyber0_0" to="-road0" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":cyber0_0" to="-road0" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":cyber0_3" to="cyber0to1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyber0_3" to="cyber0to1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyber1_0" to="-cyber0to1" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":cyber1_0" to="-cyber0to1" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":cyber1_2" to="-road1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyber1_2" to="-road1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyber1_2" to="-road1" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":cyberAlternative0_0" to="-roadAlternative0" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":cyberAlternative0_0" to="-roadAlternative0" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberAlternative0_0" to="-roadAlternative0" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":cyberAlternative0_3" to="cyberAlternative0to1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberAlternative0_3" to="cyberAlternative0to1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberAlternative1_0" to="-cyberAlternative0to1" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":cyberAlternative1_0" to="-cyberAlternative0to1" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberAlternative1_2" to="-roadAlternative1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberAlternative1_2" to="-roadAlternative1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberAlternative1_2" to="-roadAlternative1" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown0_0" to="-roadOutOfTown0" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown0_0" to="-roadOutOfTown0" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown0_0" to="-roadOutOfTown0" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown0_3" to="cyberOutOfTown0to1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown0_3" to="cyberOutOfTown0to1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown1_0" to="-cyberOutOfTown0to1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown1_0" to="-cyberOutOfTown0to1" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown1_2" to="-roadOutOfTown1" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown1_2" to="-roadOutOfTown1" fromLane="1" toLane="2" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown1_4" to="cyberOutOfTown1to2" fromLane="0" toLane="1" dir="t" state="M"/>
+    <connection from=":cyberOutOfTown1_5" to="cyberOutOfTown1to2" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown1_5" to="cyberOutOfTown1to2" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown1_7" to="-cyberOutOfTown0to1" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown1_8" to="-roadOutOfTown1" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":cyberOutOfTown1_9" to="-roadOutOfTown1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown1_9" to="-roadOutOfTown1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown1_11" to="cyberOutOfTown1to2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown1_11" to="cyberOutOfTown1to2" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown1_13" to="-cyberOutOfTown0to1" fromLane="0" toLane="1" dir="t" state="M"/>
+    <connection from=":cyberOutOfTown2_0" to="-cyberOutOfTown1to2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown2_0" to="-cyberOutOfTown1to2" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown2_2" to="-roadOutOfTown2" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown2_2" to="-roadOutOfTown2" fromLane="1" toLane="2" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown2_4" to="cyberOutOfTown2to3" fromLane="0" toLane="1" dir="t" state="M"/>
+    <connection from=":cyberOutOfTown2_5" to="cyberOutOfTown2to3" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown2_5" to="cyberOutOfTown2to3" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown2_7" to="-cyberOutOfTown1to2" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown2_8" to="-roadOutOfTown2" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":cyberOutOfTown2_9" to="-roadOutOfTown2" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown2_9" to="-roadOutOfTown2" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown2_11" to="cyberOutOfTown2to3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown2_11" to="cyberOutOfTown2to3" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":cyberOutOfTown2_13" to="-cyberOutOfTown1to2" fromLane="0" toLane="1" dir="t" state="M"/>
+    <connection from=":cyberOutOfTown3_0" to="-cyberOutOfTown2to3" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown3_0" to="-cyberOutOfTown2to3" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":cyberOutOfTown3_2" to="-roadOutOfTown3" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown3_2" to="-roadOutOfTown3" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":cyberOutOfTown3_2" to="-roadOutOfTown3" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":in_0" to="mainin" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":in_0" to="mainin" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":in_0" to="mainin" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":main0_0" to="main0to1" fromLane="0" toLane="0" via=":main0_10_0" dir="l" state="m"/>
+    <connection from=":main0_10" to="main0to1" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":main0_0" to="main0to1" fromLane="1" toLane="1" via=":main0_10_1" dir="l" state="m"/>
+    <connection from=":main0_10" to="main0to1" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":main0_0" to="main0to1" fromLane="2" toLane="2" via=":main0_10_2" dir="l" state="m"/>
+    <connection from=":main0_10" to="main0to1" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":main0_3" to="road0" fromLane="0" toLane="2" via=":main0_11_0" dir="t" state="m"/>
+    <connection from=":main0_11" to="road0" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":main0_4" to="main0to1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":main0_4" to="main0to1" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":main0_4" to="main0to1" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":main0_7" to="road0" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":main0_7" to="road0" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":main0_7" to="road0" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":main1_0" to="mainmid" fromLane="0" toLane="0" via=":main1_10_0" dir="l" state="m"/>
+    <connection from=":main1_10" to="mainmid" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":main1_0" to="mainmid" fromLane="1" toLane="1" via=":main1_10_1" dir="l" state="m"/>
+    <connection from=":main1_10" to="mainmid" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":main1_0" to="mainmid" fromLane="2" toLane="2" via=":main1_10_2" dir="l" state="m"/>
+    <connection from=":main1_10" to="mainmid" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":main1_3" to="road1" fromLane="0" toLane="2" via=":main1_11_0" dir="t" state="m"/>
+    <connection from=":main1_11" to="road1" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":main1_4" to="mainmid" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":main1_4" to="mainmid" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":main1_4" to="mainmid" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":main1_7" to="road1" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":main1_7" to="road1" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":main1_7" to="road1" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":mainAlternative0_0" to="mainAlternative0to1" fromLane="0" toLane="0" via=":mainAlternative0_10_0" dir="l" state="m"/>
+    <connection from=":mainAlternative0_10" to="mainAlternative0to1" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":mainAlternative0_0" to="mainAlternative0to1" fromLane="1" toLane="1" via=":mainAlternative0_10_1" dir="l" state="m"/>
+    <connection from=":mainAlternative0_10" to="mainAlternative0to1" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":mainAlternative0_0" to="mainAlternative0to1" fromLane="2" toLane="2" via=":mainAlternative0_10_2" dir="l" state="m"/>
+    <connection from=":mainAlternative0_10" to="mainAlternative0to1" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":mainAlternative0_3" to="roadAlternative0" fromLane="0" toLane="2" via=":mainAlternative0_11_0" dir="t" state="m"/>
+    <connection from=":mainAlternative0_11" to="roadAlternative0" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":mainAlternative0_4" to="mainAlternative0to1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":mainAlternative0_4" to="mainAlternative0to1" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":mainAlternative0_4" to="mainAlternative0to1" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":mainAlternative0_7" to="roadAlternative0" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":mainAlternative0_7" to="roadAlternative0" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":mainAlternative0_7" to="roadAlternative0" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":mainAlternative1_0" to="mainout" fromLane="0" toLane="0" via=":mainAlternative1_10_0" dir="l" state="m"/>
+    <connection from=":mainAlternative1_10" to="mainout" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":mainAlternative1_0" to="mainout" fromLane="1" toLane="1" via=":mainAlternative1_10_1" dir="l" state="m"/>
+    <connection from=":mainAlternative1_10" to="mainout" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":mainAlternative1_0" to="mainout" fromLane="2" toLane="2" via=":mainAlternative1_10_2" dir="l" state="m"/>
+    <connection from=":mainAlternative1_10" to="mainout" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":mainAlternative1_3" to="roadAlternative1" fromLane="0" toLane="2" via=":mainAlternative1_11_0" dir="t" state="m"/>
+    <connection from=":mainAlternative1_11" to="roadAlternative1" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":mainAlternative1_4" to="mainout" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":mainAlternative1_4" to="mainout" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":mainAlternative1_4" to="mainout" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":mainAlternative1_7" to="roadAlternative1" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":mainAlternative1_7" to="roadAlternative1" fromLane="1" toLane="1" dir="l" state="M"/>
+    <connection from=":mainAlternative1_7" to="roadAlternative1" fromLane="2" toLane="2" dir="l" state="M"/>
+    <connection from=":mainOutOfTown0_0" to="outOutOfTown" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown0_0" to="outOutOfTown" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown0_0" to="outOutOfTown" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown0_3" to="roadOutOfTown0" fromLane="0" toLane="2" via=":mainOutOfTown0_10_0" dir="t" state="m"/>
+    <connection from=":mainOutOfTown0_10" to="roadOutOfTown0" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":mainOutOfTown0_4" to="roadOutOfTown0" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown0_4" to="roadOutOfTown0" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown0_4" to="roadOutOfTown0" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown0_7" to="outOutOfTown" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":mainOutOfTown0_7" to="outOutOfTown" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":mainOutOfTown0_7" to="outOutOfTown" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":mainOutOfTown1_0" to="mainOutOfTown1to0" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown1_0" to="mainOutOfTown1to0" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown1_0" to="mainOutOfTown1to0" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown1_3" to="roadOutOfTown1" fromLane="0" toLane="2" via=":mainOutOfTown1_10_0" dir="t" state="m"/>
+    <connection from=":mainOutOfTown1_10" to="roadOutOfTown1" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":mainOutOfTown1_4" to="roadOutOfTown1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown1_4" to="roadOutOfTown1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown1_4" to="roadOutOfTown1" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown1_7" to="mainOutOfTown1to0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":mainOutOfTown1_7" to="mainOutOfTown1to0" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":mainOutOfTown1_7" to="mainOutOfTown1to0" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":mainOutOfTown2_0" to="mainOutOfTown2to1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown2_0" to="mainOutOfTown2to1" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown2_0" to="mainOutOfTown2to1" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown2_3" to="roadOutOfTown2" fromLane="0" toLane="2" via=":mainOutOfTown2_10_0" dir="t" state="m"/>
+    <connection from=":mainOutOfTown2_10" to="roadOutOfTown2" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":mainOutOfTown2_4" to="roadOutOfTown2" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown2_4" to="roadOutOfTown2" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown2_4" to="roadOutOfTown2" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown2_7" to="mainOutOfTown2to1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":mainOutOfTown2_7" to="mainOutOfTown2to1" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":mainOutOfTown2_7" to="mainOutOfTown2to1" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":mainOutOfTown3_0" to="mainOutOfTown3to2" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown3_0" to="mainOutOfTown3to2" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown3_0" to="mainOutOfTown3to2" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown3_3" to="roadOutOfTown3" fromLane="0" toLane="2" via=":mainOutOfTown3_10_0" dir="t" state="m"/>
+    <connection from=":mainOutOfTown3_10" to="roadOutOfTown3" fromLane="0" toLane="2" dir="t" state="M"/>
+    <connection from=":mainOutOfTown3_4" to="roadOutOfTown3" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":mainOutOfTown3_4" to="roadOutOfTown3" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":mainOutOfTown3_4" to="roadOutOfTown3" fromLane="2" toLane="2" dir="r" state="M"/>
+    <connection from=":mainOutOfTown3_7" to="mainOutOfTown3to2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":mainOutOfTown3_7" to="mainOutOfTown3to2" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":mainOutOfTown3_7" to="mainOutOfTown3to2" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":out_0" to="turnbackout" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":out_0" to="turnbackout" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":out_0" to="turnbackout" fromLane="2" toLane="2" dir="r" state="M"/>
+
+</net>
