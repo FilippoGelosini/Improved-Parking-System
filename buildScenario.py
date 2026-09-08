@@ -218,8 +218,13 @@ def generate_simulation_map():
     return
 
 def generate_routes():
+    random.seed(TOTAL_POPULATION)
     departTime = 1
     number_bad_vehicles = int(TOTAL_POPULATION * BAD_DRIVERS_PERCENTAGE)
+
+    is_vehicle_bad = [False] * (TOTAL_POPULATION - number_bad_vehicles) + [True] * number_bad_vehicles
+
+    random.shuffle(is_vehicle_bad)
     
     rowNumberOutOfTown = math.ceil(TOTAL_POPULATION / 20)
     if rowNumberOutOfTown < 4:
@@ -229,7 +234,7 @@ def generate_routes():
         print("<routes>", file=routes)
         
         for i in range(TOTAL_POPULATION):
-            is_bad = i >= (TOTAL_POPULATION - number_bad_vehicles)
+            is_bad = is_vehicle_bad[i]
             vtype = "carB" if is_bad else "car"
             good_behaviour = "False" if is_bad else "True"
             delay = STEPS_PER_HOUR if is_bad else 0
@@ -250,7 +255,7 @@ def generate_routes():
                 duration = random.randrange(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR
                 park_area_type = random.choice([PARK_AREA_NAMES[0], PARK_AREA_NAMES[1]])
                 
-                print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration}"/>', file=routes)
+                print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration + delay}"/>', file=routes)
                 
                 if (s + 1) % STOPS_PER_DAY == 0:
                     out_duration = random.randrange(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR

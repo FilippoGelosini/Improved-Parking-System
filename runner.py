@@ -230,7 +230,8 @@ def run():
 
                         # Check vehicle's wallet, if it has enough credits it can park in "Town"
                         if not is_out_of_town(park_area):
-                            new_wallet = check_wallet(duration, id_vehicle)
+                            delay = int(traci.vehicle.getParameter(id_vehicle, "delay"))
+                            new_wallet = check_wallet(duration - delay, id_vehicle)
                             if not new_wallet:
                                 new_park_area = go_to_no_system_park(
                                     id_vehicle, duration, 0, areas
@@ -273,9 +274,7 @@ def run():
                         if CONSTANT_BUFFER_SPOTS != -1:
                             cont_free_parks = CONSTANT_BUFFER_SPOTS
 
-                cont_ending_park = 0
-                if park_area in leaving_area_park_vehicle:
-                    cont_ending_park = leaving_area_park_vehicle[park_area]
+                cont_ending_park = leaving_area_park_vehicle.get(park_area, 0)
 
                 # Check if the designated park area is fully booked (NOT full of vehicles) AFTER a vehicle already booked (behaviour of the "original" project)
                 if area.is_fully_booked(cont_free_parks):
@@ -340,9 +339,7 @@ def run():
                     else:
                         cont_free_parks = 0
 
-                cont_ending_park = 0
-                if park_area in leaving_area_park_vehicle:
-                    cont_ending_park = leaving_area_park_vehicle[park_area]
+                cont_ending_park = leaving_area_park_vehicle.get(park_area, 0)
 
                 # Check if the designated park area is not fully booked, but still full of vehicles (many vehicles overstayed, leads to NO PARK scenario)
                 if (
@@ -491,22 +488,27 @@ def run():
         else:
             print(f"Buffer: constant={CONSTANT_BUFFER_SPOTS}", file=f)
         print(
-            f"How many vehicles changed their route at least once? {vehicles_change_route_count}",
-            file=f,
-        )
-        print(
-            f"How many times a vehicle does not park? (when there are no more car-park)"
-            f" {cont_no_park}",
-            file=f,
-        )
-        print(
-            f"How many times a vehicle change its route? (when there are no more reservations)"
+            f"Bookings rejected, area already booked out:"
             f" {unsatisfied_reservations_cont}",
             file=f,
         )
         print(
-            f"How many times a vehicle could not book a reservation?"
+            f"  of which relocated to another in-town area:"
+            f" {unsatisfied_reservations_cont - no_found_reservation_cont}",
+            file=f,
+        )
+        print(
+            f"  of which sent out of town, no in-town area free:"
             f" {no_found_reservation_cont}",
+            file=f,
+        )
+        print(
+            f"Arrivals at a physically full area: {cont_no_park}",
+            file=f,
+        )
+        print(
+            f"Vehicles that hit a physically full area at least once:"
+            f" {vehicles_change_route_count}",
             file=f,
         )
         print(f"End park(good behaviour): {cont_end_park}", file=f)
