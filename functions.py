@@ -50,12 +50,12 @@ def check_wallet(duration: int, id_vehicle: str) -> int:
     return new_wallet
 
 
-def system_charge(id_vehicle: str):
-    """Function to change the vehicle's reputation based on behaviour."""
+def system_charge(id_vehicle: str, overstayed: bool):
+    """Function to change the vehicle's reputation based on behaviour. Called when a vehicle exits an area"""
 
     review_stars = int(traci.vehicle.getParameter(id_vehicle, "reviewStars"))
-    delay = int(traci.vehicle.getParameter(id_vehicle, "delay"))
-    if delay > 0:
+
+    if overstayed:
         traci.vehicle.setParameter(id_vehicle, "goodBehaviour", "False")
         if review_stars == 0:
             return

@@ -113,9 +113,12 @@ def run():
                 and simulation_time > int(vehicle.park_duration)
             )
 
-            # Notify the buffer manager about the vehicle leaving the area
+            # Notify the buffer manager about the vehicle leaving the area (only if the area is "in town")
             if old_park_area and not is_out_of_town(old_park_area):
                 buffer_manager.on_exit(end_stop_vehicle, old_park_area, overstayed)
+
+                # Update vehicle's reputation
+                system_charge(end_stop_vehicle, overstayed)
 
             # Decrement reservation count for the area the vehicle is leaving
             if vehicle is not None and vehicle.has_reservation:
