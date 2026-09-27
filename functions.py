@@ -3,6 +3,7 @@ import math
 from bufferManagement import BufferStrategy
 from parkArea import get_park_area
 import traci
+import random
 from constants import (
     TOTAL_POPULATION,
     STEPS_PER_HOUR,
@@ -12,6 +13,11 @@ from constants import (
     STANDARD_AUCTION_PRICE,
     DOUBLE_ROWS,
     MAX_REVIEW_STARS,
+    GOOD_OVERSTAY_PROBABILITY,
+    BAD_OVERSTAY_PROBABILITY,
+    RATING_DETERRENCE,
+    MIN_OVERSTAY_STEPS,
+    MAX_OVERSTAY_STEPS
 )
 
 SLOT_DURATION = STEPS_PER_HOUR
@@ -164,3 +170,28 @@ def change_reservation(
                 return area2.name
 
     return "End"
+
+def overstay_probability(
+    is_bad_driver: bool,
+    review_stars: int,
+    good_probability: float = GOOD_OVERSTAY_PROBABILITY,
+    bad_probability: float = BAD_OVERSTAY_PROBABILITY,
+    deterrence: float = RATING_DETERRENCE,
+) -> float:
+    """Determines the probability of overstaying for the given user for his next reservation"""
+    base = bad_probability if is_bad_driver else good_probability
+    return base * (1.0 - deterrence * review_stars / MAX_REVIEW_STARS)
+
+
+def overstay_for(
+    is_bad_driver: bool,
+    review_stars: int,
+    rng: random.Random,
+    min_steps: int = MIN_OVERSTAY_STEPS,
+    max_steps: int = MAX_OVERSTAY_STEPS,
+) -> int:
+    """Determines how long the overstay is going to be (if performed) for the given user."""
+    if rng.random() >= overstay_probability(is_bad_driver, review_stars):
+        return 0
+
+    return rng.randint(min_steps, max_steps)

@@ -26,6 +26,9 @@ class Vehicle:
         # Checks if the vahicle changed route at least once during the entire simulation
         self.changed_route = False
 
+        # Represents the length of the overstay for the current stop
+        self.overstay = 0
+
 
     # No need for methods
 

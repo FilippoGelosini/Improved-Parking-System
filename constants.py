@@ -30,6 +30,17 @@ BUFFER_RESET_PERIOD = 8 * STEPS_PER_HOUR # Only works with legacy strategy. Spec
 
 BUFFER_WARMUP_STEPS = 0 # Only works with legacy strategy. Specifies the number of initial steps in which the buffer dimension is set to MAX_BUFFER_SPOTS
 
+# rating la riduce, non la aumenta mai.
+GOOD_OVERSTAY_PROBABILITY = 0.05 # Probability for good vehicles to overstay
+BAD_OVERSTAY_PROBABILITY = 0.60  # Probability for bad vehicles to overstay
+
+RATING_DETERRENCE = 0.5 # Needed to adjust the overstay probabilities (see above) based on user's stars: 1 - RATING_DETERRENCE * <user_stars> / MAX_REVIEW_STARS
+
+MIN_OVERSTAY_STEPS = STEPS_PER_HOUR // 4
+MAX_OVERSTAY_STEPS = 2 * STEPS_PER_HOUR
+
+BEHAVIOUR_SEED = 27 # Vehicles behaviour random seed
+
 TOTAL_PARK_AREAS = 8
 DOUBLE_ROWS = 2
 SLOTS_PER_ROW = 10

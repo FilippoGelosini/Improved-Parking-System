@@ -237,7 +237,6 @@ def generate_routes():
             is_bad = is_vehicle_bad[i]
             vtype = "carB" if is_bad else "car"
             good_behaviour = "False" if is_bad else "True"
-            delay = STEPS_PER_HOUR if is_bad else 0
             
             row_idx = (i // 2) % DOUBLE_ROWS
             sign = "" if i % 2 == 0 else "-"
@@ -249,13 +248,13 @@ def generate_routes():
             print(f'        <param key="reviewStars" value="3" />', file=routes)
             print(f'        <param key="wallet" value="100" />', file=routes)
             print(f'        <param key="goodBehaviour" value="{good_behaviour}" />', file=routes)
-            print(f'        <param key="delay" value="{delay}" />', file=routes)
+            print(f'        <param key="badDriver" value="{is_bad}" />', file=routes)
 
             for s in range(TOTAL_STOPS):
                 duration = random.randrange(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR
                 park_area_type = random.choice([PARK_AREA_NAMES[0], PARK_AREA_NAMES[1]])
                 
-                print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration + delay}"/>', file=routes)
+                print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration}"/>', file=routes)
                 
                 if (s + 1) % STOPS_PER_DAY == 0:
                     out_duration = random.randrange(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR

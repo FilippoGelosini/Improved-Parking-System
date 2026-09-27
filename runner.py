@@ -3,6 +3,7 @@ from __future__ import absolute_import, print_function
 import math
 import os
 import sys
+import random
 
 from constants import (
     PREFIX,
@@ -21,6 +22,7 @@ from constants import (
     BUFFER_WARMUP_STEPS,
     STANDARD_AUCTION_PRICE,
     STARTING_STOP,
+    BEHAVIOUR_SEED
 )
 from bufferManagement import make_buffer_manager
 from parkArea import get_park_area, is_out_of_town
@@ -72,6 +74,9 @@ def run():
 
     # Stores the park areas (name -> ParkArea)
     areas = {}
+
+    # RNG used to determine the vehicles behaviour
+    behaviour_rng = random.Random(BEHAVIOUR_SEED)
 
     # Counts how many overstays happen in each area (name -> overstay_number)
     bad_behaviour = {}
@@ -230,8 +235,7 @@ def run():
 
                         # Check vehicle's wallet, if it has enough credits it can park in "Town"
                         if not is_out_of_town(park_area):
-                            delay = int(traci.vehicle.getParameter(id_vehicle, "delay"))
-                            new_wallet = check_wallet(duration - delay, id_vehicle)
+                            new_wallet = check_wallet(duration, id_vehicle)
                             if not new_wallet:
                                 new_park_area = go_to_no_system_park(
                                     id_vehicle, duration, 0, areas
@@ -264,6 +268,29 @@ def run():
 
                     # Notify the buffer manager about a new reservation (only useful when using the "incremental" strategy)
                     if not area.is_out_of_town:
+                        # Deciding if the vehicle will overstay and eventually the overstay duration
+
+                        is_vehicle_bad = (
+                            traci.vehicle.getParameter(id_vehicle, "badDriver") == "True"
+                        )
+                        vehicle_stars = int(
+                            traci.vehicle.getParameter(id_vehicle, "reviewStars")
+                        )
+
+                        vehicle.overstay = overstay_for(
+                            is_vehicle_bad, vehicle_stars, behaviour_rng
+                        )
+
+                        # If the vehicle overstays for its current stop, the corresponding entry in the routes file needs to have its duration updated
+                        if vehicle.overstay > 0:
+                            traci.vehicle.replaceStop(
+                                id_vehicle,
+                                0,
+                                park_area,
+                                flags=65,
+                                duration=duration + vehicle.overstay,
+                                startPos=0.0,
+                            )
                         buffer_manager.on_reservation(
                             id_vehicle, park_area, INITIAL_BUFFER_SPOTS
                         )
@@ -273,6 +300,9 @@ def run():
                         )
                         if CONSTANT_BUFFER_SPOTS != -1:
                             cont_free_parks = CONSTANT_BUFFER_SPOTS
+                    else:
+                        # No need to track overstays for out of town park, so "vehicle.overstay" gets reset
+                        vehicle.overstay = 0
 
                 cont_ending_park = leaving_area_park_vehicle.get(park_area, 0)
 
@@ -292,7 +322,7 @@ def run():
                         new_park_area = change_reservation(
                             id_vehicle,
                             park_area,
-                            duration,
+                            duration + vehicle.overstay,
                             0,
                             areas,
                             buffer_manager,
@@ -381,18 +411,17 @@ def run():
             # If the vehicle is stopped
             if is_stopped_parking:
                 stops = list(traci.vehicle.getStops(id_vehicle, 0))
-                delay = int(traci.vehicle.getParameter(id_vehicle, "delay"))
 
                 # In case if the park is "ParkAreaOutOfTown", we don't track the ending time of the reservation
                 if not is_out_of_town(vehicle.last_park):
                     current_stop = stops[0]
 
-                    # Check only bad behavior car (since, by construction, all bad vehicles overstay for a fixed period of simulation steps declared in a specific parameter in the XML file, called "delay")
-                    if delay > 0:
+                    # Check only vehicles who are overstaying their current stop
+                    if vehicle.overstay > 0:
                         # If the current duration is negative that means someone is blocking the park
                         if current_stop.duration > 0:
                             if vehicle.paid and vehicle.park_duration is not None:
-                                # If the current simulation step coincides with the ending of the vehicle's reservation, the vehicle overstayed, and the buffer manager is notified, though only the "incremental" strategy takes action
+                                # If the current simulation step coincides with the ending of the vehicle's reservation, and said vehicle has not yet left the park area, the vehicle overstayed, and the buffer manager is notified, though only the "incremental" strategy takes action
                                 if simulation_time >= int(vehicle.park_duration):
                                     if vehicle.has_reservation:
                                         buffer_manager.on_overstay_start(
@@ -401,7 +430,7 @@ def run():
                                             INITIAL_BUFFER_SPOTS,
                                         )
 
-                                        # Remove the reservation from the area and increase the bad behaviour counter of the area
+                                        # Remove the reservation from the area (in order to not give other penalties to the vehicle) and increase the bad behaviour counter of the area
                                         vehicle.has_reservation = False
                                         get_park_area(
                                             vehicle.last_park, areas
@@ -427,7 +456,7 @@ def run():
                     # Vehicle doesn't pay if it doesn't park in "Town"
                     if not is_out_of_town(park_area):
                         # Calculate the supposed park ending
-                        leaving_time = simulation_time + (duration - delay)
+                        leaving_time = simulation_time + duration
                         # print("When it must end the park at:", leaving_time)
                         vehicle.park_duration = leaving_time
                         # print("Vehicle's ending time park:", leaving_time)
