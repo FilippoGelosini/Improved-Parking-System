@@ -20,7 +20,11 @@ from constants import (
     PARK_ROW_DISTANCE,
     MIN_PARK_DURATION,
     MAX_PARK_DURATION,
-    STEPS_PER_HOUR
+    STEPS_PER_HOUR,
+    OVERSTAY_PROBABILITY_SEED,
+    OVERSTAY_PROBABILITY_SPREAD,
+    GOOD_OVERSTAY_PROBABILITY,
+    BAD_OVERSTAY_PROBABILITY
 )
 
 sys.path.append(os.path.join(os.environ["SUMO_HOME"], "tools"))
@@ -225,6 +229,8 @@ def generate_routes():
     is_vehicle_bad = [False] * (TOTAL_POPULATION - number_bad_vehicles) + [True] * number_bad_vehicles
 
     random.shuffle(is_vehicle_bad)
+
+    probability_rng = random.Random(OVERSTAY_PROBABILITY_SEED)
     
     rowNumberOutOfTown = math.ceil(TOTAL_POPULATION / 20)
     if rowNumberOutOfTown < 4:
@@ -248,7 +254,14 @@ def generate_routes():
             print(f'        <param key="reviewStars" value="3" />', file=routes)
             print(f'        <param key="wallet" value="100" />', file=routes)
             print(f'        <param key="goodBehaviour" value="{good_behaviour}" />', file=routes)
-            print(f'        <param key="badDriver" value="{is_bad}" />', file=routes)
+
+            base = BAD_OVERSTAY_PROBABILITY if is_bad else GOOD_OVERSTAY_PROBABILITY
+            overstay_probability = min(1.0, max(0.0, probability_rng.uniform(
+                base * (1 - OVERSTAY_PROBABILITY_SPREAD),
+                base * (1 + OVERSTAY_PROBABILITY_SPREAD)
+            )))
+            # Initial likeliness of the generated vehicle to overstay at any given stop
+            print(f'        <param key="overstayProbability" value="{overstay_probability}" />', file=routes)
 
             for s in range(TOTAL_STOPS):
                 duration = random.randrange(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR

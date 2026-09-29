@@ -271,17 +271,17 @@ def run():
 
                     # Notify the buffer manager about a new reservation (only useful when using the "incremental" strategy)
                     if not area.is_out_of_town:
-                        # Deciding if the vehicle will overstay and eventually the overstay duration
+                        # Deciding if the vehicle will overstay based on its current probability of overstaying and eventually the overstay duration
 
-                        is_vehicle_bad = (
-                            traci.vehicle.getParameter(id_vehicle, "badDriver") == "True"
+                        base_probability = float(
+                            traci.vehicle.getParameter(id_vehicle, "overstayProbability")
                         )
                         vehicle_stars = int(
                             traci.vehicle.getParameter(id_vehicle, "reviewStars")
                         )
 
                         vehicle.overstay = overstay_for(
-                            is_vehicle_bad, vehicle_stars, behaviour_rng
+                            base_probability, vehicle_stars, behaviour_rng
                         )
 
                         # If the vehicle overstays for its current stop, the corresponding entry in the routes file needs to have its duration updated
@@ -466,7 +466,6 @@ def run():
                         
                         # Wallet overwritten with the new balance
                         traci.vehicle.setParameter(id_vehicle, "wallet", new_wallet)
-                        system_charge(id_vehicle)
                     if cont_stops > 1:
                         # Update which stop the vehicle is at
                         vehicle.stop_pos += 1
@@ -520,7 +519,7 @@ def run():
         else:
             print(f"Buffer: constant={CONSTANT_BUFFER_SPOTS}", file=f)
         print(
-            f"Bookings rejected, area already booked out:"
+            f"Bookings rejected, area already booked out (events):"
             f" {unsatisfied_reservations_cont}",
             file=f,
         )
@@ -535,7 +534,7 @@ def run():
             file=f,
         )
         print(
-            f"Arrivals at a physically full area: {cont_no_park}",
+            f"Arrivals at a physically full area (events): {cont_no_park}",
             file=f,
         )
         print(

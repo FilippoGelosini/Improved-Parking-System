@@ -22,7 +22,7 @@ CONSTANT_BUFFER_SPOTS = -1
 INITIAL_BUFFER_SPOTS = 1
 MAX_BUFFER_SPOTS = 3
 
-BUFFER_STRATEGY = "weighted" # "legacy", "incremental", "weighted"
+BUFFER_STRATEGY = "incremental" # "legacy", "incremental", "weighted"
 
 BUFFER_RISK_WEIGHT = 0.5 # Only works with weighted strategy. Should be between 0.0 and 1.0.
 
@@ -30,9 +30,12 @@ BUFFER_RESET_PERIOD = 8 * STEPS_PER_HOUR # Only works with legacy strategy. Spec
 
 BUFFER_WARMUP_STEPS = 0 # Only works with legacy strategy. Specifies the number of initial steps in which the buffer dimension is set to MAX_BUFFER_SPOTS
 
-# rating la riduce, non la aumenta mai.
+
 GOOD_OVERSTAY_PROBABILITY = 0.05 # Probability for good vehicles to overstay
 BAD_OVERSTAY_PROBABILITY = 0.60  # Probability for bad vehicles to overstay
+
+OVERSTAY_PROBABILITY_SPREAD = 0.0 # How much a vehicle is likely to overstay within its general behaviour
+OVERSTAY_PROBABILITY_SEED = 72 # Seed used to determine the previous variable
 
 RATING_DETERRENCE = 0.5 # Needed to adjust the overstay probabilities (see above) based on user's stars: 1 - RATING_DETERRENCE * <user_stars> / MAX_REVIEW_STARS
 

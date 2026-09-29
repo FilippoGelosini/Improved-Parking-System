@@ -172,26 +172,23 @@ def change_reservation(
     return "End"
 
 def overstay_probability(
-    is_bad_driver: bool,
+    base_probability: float,
     review_stars: int,
-    good_probability: float = GOOD_OVERSTAY_PROBABILITY,
-    bad_probability: float = BAD_OVERSTAY_PROBABILITY,
     deterrence: float = RATING_DETERRENCE,
 ) -> float:
     """Determines the probability of overstaying for the given user for his next reservation"""
-    base = bad_probability if is_bad_driver else good_probability
-    return base * (1.0 - deterrence * review_stars / MAX_REVIEW_STARS)
+    return base_probability * (1.0 - deterrence * review_stars / MAX_REVIEW_STARS)
 
 
 def overstay_for(
-    is_bad_driver: bool,
+    base_probability: float,
     review_stars: int,
     rng: random.Random,
     min_steps: int = MIN_OVERSTAY_STEPS,
     max_steps: int = MAX_OVERSTAY_STEPS,
 ) -> int:
     """Determines how long the overstay is going to be (if performed) for the given user."""
-    if rng.random() >= overstay_probability(is_bad_driver, review_stars):
+    if rng.random() >= overstay_probability(base_probability, review_stars):
         return 0
 
     return rng.randint(min_steps, max_steps)
