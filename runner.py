@@ -117,8 +117,8 @@ def run():
             if old_park_area and not is_out_of_town(old_park_area):
                 buffer_manager.on_exit(end_stop_vehicle, old_park_area, overstayed)
 
-                # Update vehicle's reputation
-                system_charge(end_stop_vehicle, overstayed)
+                # Update vehicle's reputation and update its behaviour (randomly)
+                system_charge(end_stop_vehicle, overstayed, behaviour_rng)
 
             # Decrement reservation count for the area the vehicle is leaving
             if vehicle is not None and vehicle.has_reservation:

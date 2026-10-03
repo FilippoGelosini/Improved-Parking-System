@@ -24,7 +24,8 @@ from constants import (
     OVERSTAY_PROBABILITY_SEED,
     OVERSTAY_PROBABILITY_SPREAD,
     GOOD_OVERSTAY_PROBABILITY,
-    BAD_OVERSTAY_PROBABILITY
+    BAD_OVERSTAY_PROBABILITY,
+    BAD_VEHICLE_TYPE
 )
 
 sys.path.append(os.path.join(os.environ["SUMO_HOME"], "tools"))
@@ -215,7 +216,7 @@ def generate_simulation_map():
         
         # Colors based on vehicles' behavior
         print('<vType id="car" color="0.7,0.7,0.7"/>', file=stops)
-        print('<vType id="carB" color="red"/>', file=stops)
+        print(f'<vType id="{BAD_VEHICLE_TYPE}" color="red"/>', file=stops)
         
         print("</additional>", file=stops)
 
@@ -241,7 +242,7 @@ def generate_routes():
         
         for i in range(TOTAL_POPULATION):
             is_bad = is_vehicle_bad[i]
-            vtype = "carB" if is_bad else "car"
+            vtype = BAD_VEHICLE_TYPE if is_bad else "car"
             good_behaviour = "False" if is_bad else "True"
             
             row_idx = (i // 2) % DOUBLE_ROWS

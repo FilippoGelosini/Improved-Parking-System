@@ -17,7 +17,10 @@ from constants import (
     BAD_OVERSTAY_PROBABILITY,
     RATING_DETERRENCE,
     MIN_OVERSTAY_STEPS,
-    MAX_OVERSTAY_STEPS
+    MAX_OVERSTAY_STEPS,
+    LEARNING_PROBABILITY,
+    LEARNING_RATE,
+    BAD_VEHICLE_TYPE
 )
 
 SLOT_DURATION = STEPS_PER_HOUR
@@ -50,13 +53,24 @@ def check_wallet(duration: int, id_vehicle: str) -> int:
     return new_wallet
 
 
-def system_charge(id_vehicle: str, overstayed: bool):
+def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
     """Function to change the vehicle's reputation based on behaviour. Called when a vehicle exits an area"""
 
     review_stars = int(traci.vehicle.getParameter(id_vehicle, "reviewStars"))
 
     if overstayed:
         traci.vehicle.setParameter(id_vehicle, "goodBehaviour", "False")
+
+        # For the sake of the simulation, the update of the overstay probability is made BEFORE the vehicle gets a warning. This way, even vehicles with 0 stars might improve their behaviour
+        if traci.vehicle.getTypeID(id_vehicle) == BAD_VEHICLE_TYPE:
+            current_probability = float(
+                traci.vehicle.getParameter(id_vehicle, "overstayProbability")
+            )
+            traci.vehicle.setParameter(
+                id_vehicle,
+                "overstayProbability",
+                update_overstay_probability(current_probability, rng)
+            )
         if review_stars == 0:
             return
         warning = int(traci.vehicle.getParameter(id_vehicle, "warning"))
@@ -192,3 +206,16 @@ def overstay_for(
         return 0
 
     return rng.randint(min_steps, max_steps)
+
+def update_overstay_probability (
+    current_probability: float,
+    rng: random.Random,
+    awareness: float = LEARNING_PROBABILITY,
+    learning_rate: float = LEARNING_RATE,
+    floor: float = GOOD_OVERSTAY_PROBABILITY
+) -> float:
+    """Updates the vehicle behaviour on probability \"awareness\""""
+    if rng.random() >= awareness:
+        return current_probability
+    # Overstay probability should not be lower than a fixed floor (GOOD_OVERSTAY_PROBABILITY by default, see "constants.py")
+    return max(floor, current_probability * (1 - learning_rate))

@@ -42,6 +42,12 @@ RATING_DETERRENCE = 0.5 # Needed to adjust the overstay probabilities (see above
 MIN_OVERSTAY_STEPS = STEPS_PER_HOUR // 4
 MAX_OVERSTAY_STEPS = 2 * STEPS_PER_HOUR
 
+LEARNING_PROBABILITY = 0.5 # Probability of a vehicle to correct its behaviour after receiving a warning or losing a star
+
+LEARNING_RATE = 0.3 # How much the probability of overstay decreases
+
+BAD_VEHICLE_TYPE = "carB" # Type of vehicle sporting a bad behavior, used by SUMO in its routes file
+
 BEHAVIOUR_SEED = 27 # Vehicles behaviour random seed
 
 TOTAL_PARK_AREAS = 8
