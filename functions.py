@@ -18,7 +18,6 @@ from constants import (
     RATING_DETERRENCE,
     MIN_OVERSTAY_STEPS,
     MAX_OVERSTAY_STEPS,
-    LEARNING_PROBABILITY,
     LEARNING_RATE,
     BAD_VEHICLE_TYPE
 )
@@ -66,10 +65,13 @@ def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
             current_probability = float(
                 traci.vehicle.getParameter(id_vehicle, "overstayProbability")
             )
+            awareness = float(
+                traci.vehicle.getParameter(id_vehicle, "learningProbability")
+            )
             traci.vehicle.setParameter(
                 id_vehicle,
                 "overstayProbability",
-                update_overstay_probability(current_probability, rng)
+                update_overstay_probability(current_probability, awareness, rng)
             )
         if review_stars == 0:
             return
@@ -209,8 +211,8 @@ def overstay_for(
 
 def update_overstay_probability (
     current_probability: float,
+    awareness: float,
     rng: random.Random,
-    awareness: float = LEARNING_PROBABILITY,
     learning_rate: float = LEARNING_RATE,
     floor: float = GOOD_OVERSTAY_PROBABILITY
 ) -> float:

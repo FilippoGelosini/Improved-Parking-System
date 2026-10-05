@@ -25,7 +25,9 @@ from constants import (
     OVERSTAY_PROBABILITY_SPREAD,
     GOOD_OVERSTAY_PROBABILITY,
     BAD_OVERSTAY_PROBABILITY,
-    BAD_VEHICLE_TYPE
+    BAD_VEHICLE_TYPE,
+    BAD_LEARNING_PROBABILITY,
+    LEARNING_PROBABILITY_SPREAD
 )
 
 sys.path.append(os.path.join(os.environ["SUMO_HOME"], "tools"))
@@ -256,13 +258,21 @@ def generate_routes():
             print(f'        <param key="wallet" value="100" />', file=routes)
             print(f'        <param key="goodBehaviour" value="{good_behaviour}" />', file=routes)
 
-            base = BAD_OVERSTAY_PROBABILITY if is_bad else GOOD_OVERSTAY_PROBABILITY
+            overstay_base = BAD_OVERSTAY_PROBABILITY if is_bad else GOOD_OVERSTAY_PROBABILITY
             overstay_probability = min(1.0, max(0.0, probability_rng.uniform(
-                base * (1 - OVERSTAY_PROBABILITY_SPREAD),
-                base * (1 + OVERSTAY_PROBABILITY_SPREAD)
+                overstay_base * (1 - OVERSTAY_PROBABILITY_SPREAD),
+                overstay_base * (1 + OVERSTAY_PROBABILITY_SPREAD)
             )))
             # Initial likeliness of the generated vehicle to overstay at any given stop
             print(f'        <param key="overstayProbability" value="{overstay_probability}" />', file=routes)
+
+            learning_base = BAD_LEARNING_PROBABILITY if is_bad else 0.0
+            learning_probability = min(1.0, max(0.0, probability_rng.uniform(
+                learning_base * (1 - LEARNING_PROBABILITY_SPREAD),
+                learning_base * (1 + LEARNING_PROBABILITY_SPREAD)
+            )))
+            # How likely is the generated vehicle to correct its behaviour
+            print(f'        <param key="learningProbability" value="{learning_probability}" />', file=routes)
 
             for s in range(TOTAL_STOPS):
                 duration = random.randrange(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR
