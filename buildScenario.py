@@ -27,7 +27,11 @@ from constants import (
     BAD_OVERSTAY_PROBABILITY,
     BAD_VEHICLE_TYPE,
     BAD_LEARNING_PROBABILITY,
-    LEARNING_PROBABILITY_SPREAD
+    LEARNING_PROBABILITY_SPREAD,
+    OUTER_POPULATION_PERCENTAGE,
+    OUTER_POPULATION_SEED,
+    OUTER_POPULATION_WALLET_MULTIPLIER,
+    INITIAL_WALLET
 )
 
 sys.path.append(os.path.join(os.environ["SUMO_HOME"], "tools"))
@@ -233,6 +237,11 @@ def generate_routes():
 
     random.shuffle(is_vehicle_bad)
 
+    outer_population_number = int(TOTAL_POPULATION * OUTER_POPULATION_PERCENTAGE)
+    is_vehicle_outer = [False] * (TOTAL_POPULATION - outer_population_number) + [True] * outer_population_number
+
+    random.Random(OUTER_POPULATION_SEED).shuffle(is_vehicle_outer)
+
     probability_rng = random.Random(OVERSTAY_PROBABILITY_SEED)
     
     rowNumberOutOfTown = math.ceil(TOTAL_POPULATION / 20)
@@ -244,6 +253,7 @@ def generate_routes():
         
         for i in range(TOTAL_POPULATION):
             is_bad = is_vehicle_bad[i]
+            is_outer = is_vehicle_outer[i]
             vtype = BAD_VEHICLE_TYPE if is_bad else "car"
             good_behaviour = "False" if is_bad else "True"
             
@@ -255,7 +265,10 @@ def generate_routes():
             print(f'        <param key="warning" value="0" />', file=routes)
             print(f'        <param key="civil" value="0" />', file=routes)
             print(f'        <param key="reviewStars" value="3" />', file=routes)
-            print(f'        <param key="wallet" value="100" />', file=routes)
+            wallet = INITIAL_WALLET
+            if is_outer:
+                wallet = int(wallet * OUTER_POPULATION_WALLET_MULTIPLIER)
+            print(f'        <param key="wallet" value="{wallet}" />', file=routes)
             print(f'        <param key="goodBehaviour" value="{good_behaviour}" />', file=routes)
 
             overstay_base = BAD_OVERSTAY_PROBABILITY if is_bad else GOOD_OVERSTAY_PROBABILITY
@@ -281,9 +294,13 @@ def generate_routes():
                 print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration}"/>', file=routes)
                 
                 if (s + 1) % STOPS_PER_DAY == 0:
-                    out_duration = random.randrange(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR
+                    night_duration = random.randrange(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR
+                    if is_outer:
+                        night_area = f"{sign}{PARK_AREA_NAMES[0]}{row_idx}"
+                    else:
+                        night_area = f"{sign}{PARK_AREA_NAMES[2]}{i % rowNumberOutOfTown}"
                     out_idx = i % rowNumberOutOfTown
-                    print(f'        <stop parkingArea="{sign}{PARK_AREA_NAMES[2]}{out_idx}" duration="{out_duration}"/>', file=routes)
+                    print(f'        <stop parkingArea="{night_area}" duration="{night_duration}"/>', file=routes)
 
             print(f'    </trip>', file=routes)
 

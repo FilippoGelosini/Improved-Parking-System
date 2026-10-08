@@ -3,6 +3,10 @@ FOLDER_NAME = "scenarios"
 
 TOTAL_POPULATION = 80
 BAD_DRIVERS_PERCENTAGE = 0.5
+INITIAL_WALLET = 100 # Base wallet for all vehicles
+OUTER_POPULATION_PERCENTAGE = 0.05 # Percentage of vehicles which never park in out of town areas (e.g. tourists)
+OUTER_POPULATION_SEED = 31 # Seed used to determine which vehicle belongs to the outer population
+OUTER_POPULATION_WALLET_MULTIPLIER = 1.5
 TOTAL_STOPS = 10
 STOPS_PER_DAY = 5
 
