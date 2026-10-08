@@ -41,16 +41,15 @@ BAD_OVERSTAY_PROBABILITY = 0.60  # Base probability for bad vehicles to overstay
 OVERSTAY_PROBABILITY_SPREAD = 0.0 # How much a vehicle is likely to overstay within its base probability
 OVERSTAY_PROBABILITY_SEED = 72 # Seed used to determine the previous variable
 
-RATING_DETERRENCE = 0.5 # Needed to adjust the overstay probabilities (see above) based on user's stars: 1 - RATING_DETERRENCE * <user_stars> / MAX_REVIEW_STARS
+RATING_DETERRENCE = 0.0 # Needed to adjust the overstay probabilities (see above) based on user's stars: 1 - RATING_DETERRENCE * <user_stars> / MAX_REVIEW_STARS
 
 MIN_OVERSTAY_STEPS = STEPS_PER_HOUR // 4
 MAX_OVERSTAY_STEPS = 2 * STEPS_PER_HOUR
 
 BAD_LEARNING_PROBABILITY = 0.5 # Base probability of a vehicle to correct its behaviour after receiving a warning or losing a star
-
 LEARNING_PROBABILITY_SPREAD = 0.0 # How much a vehicle is likely to correct its behaviour within its base probability
-
-LEARNING_RATE = 0.3 # How much the behaviour gets corrected
+WARNING_LEARNING_RATE = 0.3 # How much the behaviour gets corrected after receiving a warning
+STAR_LOSS_LEARNING_RATE = 0.5 # How much the behaviour gets corrected after losing a star
 
 BAD_VEHICLE_TYPE = "carB" # Type of vehicle sporting a bad behavior, used by SUMO in its routes file
 

@@ -18,7 +18,8 @@ from constants import (
     RATING_DETERRENCE,
     MIN_OVERSTAY_STEPS,
     MAX_OVERSTAY_STEPS,
-    LEARNING_RATE,
+    WARNING_LEARNING_RATE,
+    STAR_LOSS_LEARNING_RATE,
     BAD_VEHICLE_TYPE
 )
 
@@ -59,6 +60,8 @@ def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
 
     if overstayed:
         traci.vehicle.setParameter(id_vehicle, "goodBehaviour", "False")
+        warning = int(traci.vehicle.getParameter(id_vehicle, "warning")) + 1 # Pre-empively increment the warning count
+        star_loss = review_stars > 0 and warning == 5 # Used to determined if a vehicle is about to lose a star
 
         # For the sake of the simulation, the update of the overstay probability is made BEFORE the vehicle gets a warning. This way, even vehicles with 0 stars might improve their behaviour
         if traci.vehicle.getTypeID(id_vehicle) == BAD_VEHICLE_TYPE:
@@ -68,16 +71,16 @@ def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
             awareness = float(
                 traci.vehicle.getParameter(id_vehicle, "learningProbability")
             )
+
+            learning_rate = STAR_LOSS_LEARNING_RATE if star_loss else WARNING_LEARNING_RATE
             traci.vehicle.setParameter(
                 id_vehicle,
                 "overstayProbability",
-                update_overstay_probability(current_probability, awareness, rng)
+                update_overstay_probability(current_probability, awareness, rng, learning_rate)
             )
         if review_stars == 0:
             return
-        warning = int(traci.vehicle.getParameter(id_vehicle, "warning"))
-        warning += 1
-        if warning == 5:
+        if star_loss:
             review_stars -= 1
             traci.vehicle.setParameter(id_vehicle, "reviewStars", review_stars)
             traci.vehicle.setParameter(id_vehicle, "warning", 0)
@@ -213,7 +216,7 @@ def update_overstay_probability (
     current_probability: float,
     awareness: float,
     rng: random.Random,
-    learning_rate: float = LEARNING_RATE,
+    learning_rate: float,
     floor: float = GOOD_OVERSTAY_PROBABILITY
 ) -> float:
     """Updates the vehicle behaviour on probability \"awareness\""""
