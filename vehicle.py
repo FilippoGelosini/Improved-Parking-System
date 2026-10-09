@@ -31,6 +31,9 @@ class Vehicle:
         # Represents the length of the overstay for the current stop
         self.overstay = 0
 
+        # Represents the new balance of the vehicle's wallet after it reserves a spot
+        self.new_wallet = None
+
 
     # No need for methods
 

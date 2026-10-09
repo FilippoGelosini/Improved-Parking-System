@@ -73,8 +73,7 @@ def run():
     cont_bad_behaviour_vehicles = 0     # Number of times the vehicles didn't respect the reservations
     simulation_time = 0
     unsatisfied_reservations_cont = 0
-    no_found_reservation_cont = 0
-    new_wallet = 0                      # Temporarily stores the remaining credits of a vehicle after it reserves a spot
+    no_found_reservation_cont = 0           # Temporarily stores the remaining credits of a vehicle after it reserves a spot
 
     # Stores the vehicles (id -> Vehicle)
     vehicles = {}
@@ -238,8 +237,8 @@ def run():
 
                         # Check vehicle's wallet, if it has enough credits it can park in "Town"
                         if not is_out_of_town(park_area):
-                            new_wallet = check_wallet(duration, id_vehicle)
-                            if not new_wallet:
+                            vehicle.new_wallet = check_wallet(duration, id_vehicle)
+                            if not vehicle.new_wallet:
                                 new_park_area = go_to_no_system_park(
                                     id_vehicle, duration, 0, areas
                                 )
@@ -460,8 +459,12 @@ def run():
                         vehicle.park_duration = leaving_time
                         # print("Vehicle's ending time park:", leaving_time)
                         
-                        # Wallet overwritten with the new balance
-                        set_wallet(id_vehicle, new_wallet)
+                        # Wallet overwritten with the new balance. Raises an wxception if, for some reason, the vehicle did not have its wallet checked
+                        if vehicle.new_wallet is not None:
+                            set_wallet(id_vehicle, vehicle.new_wallet)
+                            vehicle.new_wallet = None
+                        else:
+                            raise ValueError(f"'{vehicle.id}' is parking in town without having its wallet checked")
                     if cont_stops > 1:
                         # Update which stop the vehicle is at
                         vehicle.stop_pos += 1
