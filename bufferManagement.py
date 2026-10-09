@@ -11,6 +11,8 @@ from constants import (
     MAX_REVIEW_STARS,
 )
 
+from vehicle import get_review_stars
+
 
 class LegacyBufferManager:
     """Previous buffer management strategy"""
@@ -183,8 +185,7 @@ class IncrementalBufferManager:
 def stars_in_area(park_area: str) -> list:
     """Returns a list containing the stars of the users parked in a given park area"""
     return [
-        int(traci.vehicle.getParameter(id_vehicle, "reviewStars"))
-        for id_vehicle in traci.parkingarea.getVehicleIDs(park_area)
+        get_review_stars(id_vehicle) for id_vehicle in traci.parkingarea.getVehicleIDs(park_area)
     ]
 
 

@@ -4,6 +4,19 @@ from bufferManagement import BufferStrategy
 from parkArea import get_park_area
 import traci
 import random
+from vehicle import (
+    get_review_stars,
+    set_review_stars,
+    get_warning,
+    set_warning,
+    get_civil,
+    set_civil,
+    get_wallet,
+    set_good_behaviour,
+    get_overstay_probability,
+    set_overstay_probability,
+    get_learning_probability
+)
 from constants import (
     TOTAL_POPULATION,
     STEPS_PER_HOUR,
@@ -39,10 +52,10 @@ def get_options(option_list: list):
 def check_wallet(duration: int, id_vehicle: str) -> int:
     """Function to check if the vehicle's user has enough money to pay."""
 
-    review_stars = int(traci.vehicle.getParameter(id_vehicle, "reviewStars"))
+    review_stars = get_review_stars(id_vehicle)
     cost = int(duration / SLOT_DURATION * STANDARD_AUCTION_PRICE)
     extra_cost = int(cost * 25 / 100) if review_stars < 3 else 0
-    current_credit = int(traci.vehicle.getParameter(id_vehicle, "wallet"))
+    current_credit = get_wallet(id_vehicle)
     # print(f"[{id_vehicle}] Credit: {current_credit}")
     new_wallet = current_credit - int(cost + extra_cost)
 
@@ -56,49 +69,43 @@ def check_wallet(duration: int, id_vehicle: str) -> int:
 def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
     """Function to change the vehicle's reputation based on behaviour. Called when a vehicle exits an area"""
 
-    review_stars = int(traci.vehicle.getParameter(id_vehicle, "reviewStars"))
+    review_stars = get_review_stars(id_vehicle)
 
     if overstayed:
-        traci.vehicle.setParameter(id_vehicle, "goodBehaviour", "False")
-        warning = int(traci.vehicle.getParameter(id_vehicle, "warning")) + 1 # Pre-empively increment the warning count
+        set_good_behaviour(id_vehicle, False)
+        warning = get_warning(id_vehicle) + 1 # Pre-empively increment the warning count
         star_loss = review_stars > 0 and warning == 5 # Used to determined if a vehicle is about to lose a star
 
         # For the sake of the simulation, the update of the overstay probability is made BEFORE the vehicle gets a warning. This way, even vehicles with 0 stars might improve their behaviour
         if traci.vehicle.getTypeID(id_vehicle) == BAD_VEHICLE_TYPE:
-            current_probability = float(
-                traci.vehicle.getParameter(id_vehicle, "overstayProbability")
-            )
-            awareness = float(
-                traci.vehicle.getParameter(id_vehicle, "learningProbability")
-            )
+            current_probability = get_overstay_probability(id_vehicle)
+            awareness = get_learning_probability(id_vehicle)
 
             learning_rate = STAR_LOSS_LEARNING_RATE if star_loss else WARNING_LEARNING_RATE
-            traci.vehicle.setParameter(
-                id_vehicle,
-                "overstayProbability",
-                update_overstay_probability(current_probability, awareness, rng, learning_rate)
-            )
+            set_overstay_probability(id_vehicle, update_overstay_probability(
+                current_probability, 
+                awareness, 
+                rng, 
+                learning_rate
+            ))
         if review_stars == 0:
             return
+        set_civil(id_vehicle, 0)
         if star_loss:
-            review_stars -= 1
-            traci.vehicle.setParameter(id_vehicle, "reviewStars", review_stars)
-            traci.vehicle.setParameter(id_vehicle, "warning", 0)
+            set_review_stars(id_vehicle, review_stars - 1)
+            set_warning(id_vehicle, 0)
         else:
-            traci.vehicle.setParameter(id_vehicle, "warning", warning)
-            traci.vehicle.setParameter(id_vehicle, "civil", 0)
+            set_warning(id_vehicle, warning)
     else:
-        traci.vehicle.setParameter(id_vehicle, "goodBehaviour", "True")
+        set_good_behaviour(id_vehicle, True)
         if review_stars == MAX_REVIEW_STARS:
             return
-        civil = int(traci.vehicle.getParameter(id_vehicle, "civil"))
-        civil += 1
+        civil = get_civil(id_vehicle) + 1
         if civil == 5:
-            review_stars += 1
-            traci.vehicle.setParameter(id_vehicle, "reviewStars", review_stars)
-            traci.vehicle.setParameter(id_vehicle, "civil", 0)
+            set_review_stars(id_vehicle, review_stars + 1)
+            set_civil(id_vehicle, 0)
         else:
-            traci.vehicle.setParameter(id_vehicle, "civil", civil)
+            set_civil(id_vehicle, civil)
 
 
 def go_to_no_system_park(

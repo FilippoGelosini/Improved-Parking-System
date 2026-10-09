@@ -26,7 +26,14 @@ from constants import (
 )
 from bufferManagement import make_buffer_manager
 from parkArea import get_park_area, is_out_of_town
-from vehicle import get_vehicle
+from vehicle import (
+    get_vehicle, 
+    get_review_stars, 
+    get_good_behaviour, 
+    set_good_behaviour, 
+    get_overstay_probability, 
+    set_wallet
+)
 
 from lxml import etree
 
@@ -211,25 +218,18 @@ def run():
                     if not is_out_of_town(park_area):
                         # Check if the vehicle has the requirements to park in "Town" (ParkArea and ParkAreaAlternative)
                         # Else it gets deviated to a park area out of town
-                        review_stars = int(
-                            traci.vehicle.getParameter(id_vehicle, "reviewStars")
-                        )
+                        review_stars = get_review_stars(id_vehicle)
                         # print("Review Stars:", review_stars)
-                        good_behaviour = traci.vehicle.getParameter(
-                            id_vehicle, "goodBehaviour"
-                        )
+                        good_behaviour = get_good_behaviour(id_vehicle)
                         # print("goodBehaviour:", good_behaviour)
-                        if review_stars < 3 and good_behaviour == "False":
+                        if review_stars < 3 and not good_behaviour:
                             new_park_area = go_to_no_system_park(
                                 id_vehicle, duration, 0, areas
                             )
 
                             # print("Stops:", traci.vehicle.getStops(id_vehicle, 0))
                             # print("New Park Area:", new_park_area)
-
-                            traci.vehicle.setParameter(
-                                id_vehicle, "goodBehaviour", "True"
-                            )
+                            set_good_behaviour(id_vehicle, True)
                             root[vehicle.xml_pos][
                                 STARTING_STOP + stop_pos_offset
                             ].set("parkingArea", new_park_area)
@@ -273,12 +273,8 @@ def run():
                     if not area.is_out_of_town:
                         # Deciding if the vehicle will overstay based on its current probability of overstaying and eventually the overstay duration
 
-                        base_probability = float(
-                            traci.vehicle.getParameter(id_vehicle, "overstayProbability")
-                        )
-                        vehicle_stars = int(
-                            traci.vehicle.getParameter(id_vehicle, "reviewStars")
-                        )
+                        base_probability = get_overstay_probability(id_vehicle)
+                        vehicle_stars = get_review_stars(id_vehicle)
 
                         vehicle.overstay = overstay_for(
                             base_probability, vehicle_stars, behaviour_rng
@@ -465,7 +461,7 @@ def run():
                         # print("Vehicle's ending time park:", leaving_time)
                         
                         # Wallet overwritten with the new balance
-                        traci.vehicle.setParameter(id_vehicle, "wallet", new_wallet)
+                        set_wallet(id_vehicle, new_wallet)
                     if cont_stops > 1:
                         # Update which stop the vehicle is at
                         vehicle.stop_pos += 1

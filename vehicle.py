@@ -1,3 +1,5 @@
+import traci
+
 class Vehicle:
     """Represents a single vehicle in the simulation"""
 
@@ -40,3 +42,49 @@ def get_vehicle(id_vehicle: str, vehicles: dict, xml_pos_by_id: dict) -> Vehicle
         vehicle = Vehicle(id_vehicle, xml_pos_by_id[id_vehicle])
         vehicles[id_vehicle] = vehicle
     return vehicle
+
+# Getters and setters for the various parameters, instead of calling TraCI directly
+
+def get_review_stars(id_vehicle: str) -> int:
+    return int(traci.vehicle.getParameter(id_vehicle, "reviewStars"))
+
+def set_review_stars(id_vehicle: str, review_stars: int) -> None:
+    traci.vehicle.setParameter(id_vehicle, "reviewStars", str(review_stars))
+
+def get_warning(id_vehicle: str) -> int:
+    return int(traci.vehicle.getParameter(id_vehicle, "warning"))
+
+def set_warning(id_vehicle: str, warning: int) -> None:
+    traci.vehicle.setParameter(id_vehicle, "warning", str(warning))
+
+def get_civil(id_vehicle: str) -> int:
+    return int(traci.vehicle.getParameter(id_vehicle, "civil"))
+
+def set_civil(id_vehicle: str, civil: int) -> None:
+    traci.vehicle.setParameter(id_vehicle, "civil", str(civil))
+
+def get_wallet(id_vehicle: str) -> int:
+    return int(traci.vehicle.getParameter(id_vehicle, "wallet"))
+
+def set_wallet(id_vehicle: str, wallet: int) -> None:
+    traci.vehicle.setParameter(id_vehicle, "wallet", str(wallet))
+
+def get_good_behaviour(id_vehicle: str) -> bool:
+    value = traci.vehicle.getParameter(id_vehicle, "goodBehaviour")
+    if value not in ("True", "False"):
+        raise ValueError(
+            f'{id_vehicle}, "goodBehaviour" value is "{value}", expected "True" or "False"'
+        )
+    return value == "True"
+
+def set_good_behaviour(id_vehicle: str, good_behaviour: bool) -> None:
+    traci.vehicle.setParameter(id_vehicle, "goodBehaviour", str(good_behaviour))
+
+def get_overstay_probability(id_vehicle: str) -> float:
+    return float(traci.vehicle.getParameter(id_vehicle, "overstayProbability"))
+
+def set_overstay_probability(id_vehicle: str, overstay_probability: float) -> None:
+    traci.vehicle.setParameter(id_vehicle, "overstayProbability", str(overstay_probability))
+
+def get_learning_probability(id_vehicle: str) -> float:
+    return float(traci.vehicle.getParameter(id_vehicle, "learningProbability"))
