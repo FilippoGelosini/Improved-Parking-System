@@ -88,7 +88,7 @@ def generate_simulation_map():
     print('<node id="backin" x="-100" y="-150"/>', file=nodes)
     print('<node id="backout" x="225" y="-150"/>', file=nodes)
 
-    print(f'<edge id="inOutOfTown" from="backout" to="mainOutOfTown{DOUBLE_ROWS * 2 - 1}" numLanes="3"/>', file=edges)
+    print(f'<edge id="inOutOfTown" from="backout" to="mainOutOfTown{rowNumberOutOfTown - 1}" numLanes="3"/>', file=edges)
     print('<edge id="outOutOfTown" from="mainOutOfTown0" to="backin" numLanes="3"/>', file=edges)
 
     print('<edge id="turnbackout" from="out" to="backout" numLanes="3"/>', file=edges)

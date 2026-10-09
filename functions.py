@@ -88,9 +88,9 @@ def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
                 rng, 
                 learning_rate
             ))
+        set_civil(id_vehicle, 0)
         if review_stars == 0:
             return
-        set_civil(id_vehicle, 0)
         if star_loss:
             set_review_stars(id_vehicle, review_stars - 1)
             set_warning(id_vehicle, 0)
