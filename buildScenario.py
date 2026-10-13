@@ -21,7 +21,6 @@ from constants import (
     MIN_PARK_DURATION,
     MAX_PARK_DURATION,
     STEPS_PER_HOUR,
-    OVERSTAY_PROBABILITY_SEED,
     OVERSTAY_PROBABILITY_SPREAD,
     GOOD_OVERSTAY_PROBABILITY,
     BAD_OVERSTAY_PROBABILITY,
@@ -29,9 +28,10 @@ from constants import (
     BAD_LEARNING_PROBABILITY,
     LEARNING_PROBABILITY_SPREAD,
     OUTER_POPULATION_PERCENTAGE,
-    OUTER_POPULATION_SEED,
     OUTER_POPULATION_WALLET_MULTIPLIER,
-    INITIAL_WALLET
+    INITIAL_WALLET,
+    SCENARIO_SEED,
+    stream_seed
 )
 
 sys.path.append(os.path.join(os.environ["SUMO_HOME"], "tools"))
@@ -229,20 +229,20 @@ def generate_simulation_map():
     return
 
 def generate_routes():
-    random.seed(TOTAL_POPULATION)
+    stops_rng = random.Random(stream_seed(SCENARIO_SEED, "stops"))
     departTime = 1
     number_bad_vehicles = int(TOTAL_POPULATION * BAD_DRIVERS_PERCENTAGE)
 
     is_vehicle_bad = [False] * (TOTAL_POPULATION - number_bad_vehicles) + [True] * number_bad_vehicles
 
-    random.shuffle(is_vehicle_bad)
+    random.Random(stream_seed(SCENARIO_SEED, "bad")).shuffle(is_vehicle_bad)
 
     outer_population_number = int(TOTAL_POPULATION * OUTER_POPULATION_PERCENTAGE)
     is_vehicle_outer = [False] * (TOTAL_POPULATION - outer_population_number) + [True] * outer_population_number
 
-    random.Random(OUTER_POPULATION_SEED).shuffle(is_vehicle_outer)
+    random.Random(stream_seed(SCENARIO_SEED, "tourists")).shuffle(is_vehicle_outer)
 
-    probability_rng = random.Random(OVERSTAY_PROBABILITY_SEED)
+    probability_rng = random.Random(stream_seed(SCENARIO_SEED, "propensities"))
     
     rowNumberOutOfTown = math.ceil(TOTAL_POPULATION / 20)
     if rowNumberOutOfTown < 4:
@@ -288,18 +288,17 @@ def generate_routes():
             print(f'        <param key="learningProbability" value="{learning_probability}" />', file=routes)
 
             for s in range(TOTAL_STOPS):
-                duration = random.randrange(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR
-                park_area_type = random.choice([PARK_AREA_NAMES[0], PARK_AREA_NAMES[1]])
+                duration = stops_rng.randrange(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR
+                park_area_type = stops_rng.choice([PARK_AREA_NAMES[0], PARK_AREA_NAMES[1]])
                 
                 print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration}"/>', file=routes)
                 
                 if (s + 1) % STOPS_PER_DAY == 0:
-                    night_duration = random.randrange(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR
+                    night_duration = stops_rng.randrange(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR
                     if is_outer:
                         night_area = f"{sign}{PARK_AREA_NAMES[0]}{row_idx}"
                     else:
                         night_area = f"{sign}{PARK_AREA_NAMES[2]}{i % rowNumberOutOfTown}"
-                    out_idx = i % rowNumberOutOfTown
                     print(f'        <stop parkingArea="{night_area}" duration="{night_duration}"/>', file=routes)
 
             print(f'    </trip>', file=routes)

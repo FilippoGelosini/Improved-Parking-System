@@ -1,3 +1,5 @@
+import random
+
 PREFIX = "park"
 FOLDER_NAME = "scenarios"
 
@@ -5,7 +7,6 @@ TOTAL_POPULATION = 80
 BAD_DRIVERS_PERCENTAGE = 0.5
 INITIAL_WALLET = 100 # Base wallet for all vehicles
 OUTER_POPULATION_PERCENTAGE = 0.05 # Percentage of vehicles which never park in out of town areas (e.g. tourists)
-OUTER_POPULATION_SEED = 31 # Seed used to determine which vehicle belongs to the outer population
 OUTER_POPULATION_WALLET_MULTIPLIER = 1.5
 TOTAL_STOPS = 10
 STOPS_PER_DAY = 5
@@ -39,7 +40,6 @@ GOOD_OVERSTAY_PROBABILITY = 0.05 # Base probability for good vehicles to oversta
 BAD_OVERSTAY_PROBABILITY = 0.60  # Base probability for bad vehicles to overstay
 
 OVERSTAY_PROBABILITY_SPREAD = 0.0 # How much a vehicle is likely to overstay within its base probability
-OVERSTAY_PROBABILITY_SEED = 72 # Seed used to determine the previous variable
 
 RATING_DETERRENCE = 0.0 # Needed to adjust the overstay probabilities (see above) based on user's stars: 1 - RATING_DETERRENCE * <user_stars> / MAX_REVIEW_STARS
 
@@ -53,7 +53,9 @@ STAR_LOSS_LEARNING_RATE = 0.5 # How much the behaviour gets corrected after losi
 
 BAD_VEHICLE_TYPE = "carB" # Type of vehicle sporting a bad behavior, used by SUMO in its routes file
 
-BEHAVIOUR_SEED = 27 # Vehicles behaviour random seed
+SCENARIO_SEED = 27 # Base seed representing scenario specific behaviours
+
+RUN_SEED = 72 # Base seed representing the single run
 
 TOTAL_PARK_AREAS = 8
 DOUBLE_ROWS = 2
@@ -63,3 +65,7 @@ SLOT_WIDTH = 5
 
 
 PARK_ROW_DISTANCE = 29
+
+def stream_seed(base_seed: int, stream: str) -> int:
+    """Seed derived from \"stream\", derived from \"base_seed\". These 2 parameters create a string, producing a seed used in a single use seed generator"""
+    return random.Random(f"{base_seed}:{stream}").randrange(2**31)

@@ -10,8 +10,6 @@ from constants import (
     FOLDER_NAME,
     TOTAL_POPULATION,
     BAD_DRIVERS_PERCENTAGE,
-    MAX_PARK_DURATION,
-    STEPS_PER_HOUR,
     CONSTANT_BUFFER_SPOTS,
     INITIAL_BUFFER_SPOTS,
     MAX_BUFFER_SPOTS,
@@ -20,9 +18,9 @@ from constants import (
     BUFFER_RISK_WEIGHT,
     BUFFER_RESET_PERIOD,
     BUFFER_WARMUP_STEPS,
-    STANDARD_AUCTION_PRICE,
     STARTING_STOP,
-    BEHAVIOUR_SEED
+    RUN_SEED,
+    stream_seed
 )
 from bufferManagement import make_buffer_manager
 from parkArea import get_park_area, is_out_of_town
@@ -73,7 +71,7 @@ def run():
     cont_bad_behaviour_vehicles = 0     # Number of times the vehicles didn't respect the reservations
     simulation_time = 0
     unsatisfied_reservations_cont = 0
-    no_found_reservation_cont = 0           # Temporarily stores the remaining credits of a vehicle after it reserves a spot
+    no_found_reservation_cont = 0
 
     # Stores the vehicles (id -> Vehicle)
     vehicles = {}
@@ -82,7 +80,7 @@ def run():
     areas = {}
 
     # RNG used to determine the vehicles behaviour
-    behaviour_rng = random.Random(BEHAVIOUR_SEED)
+    behaviour_rng = random.Random(stream_seed(RUN_SEED, "behaviour"))
 
     # Counts how many overstays happen in each area (name -> overstay_number)
     bad_behaviour = {}
@@ -566,5 +564,5 @@ if __name__ == "__main__":
         sumoBinary = checkBinary("sumo-gui")
 
     sumo_cfg = f"{FOLDER_NAME}/{PREFIX}_{TOTAL_POPULATION}.sumocfg"
-    traci.start([sumoBinary, "-c", sumo_cfg])
+    traci.start([sumoBinary, "--seed", str(stream_seed(RUN_SEED, "sumo")), "-c", sumo_cfg])
     run()
