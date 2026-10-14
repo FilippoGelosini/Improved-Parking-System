@@ -111,10 +111,15 @@ def run():
             vehicle = vehicles.get(end_stop_vehicle)
             old_park_area = vehicle.last_park if vehicle is not None else ""
 
+            # Use the supposed exit time if SUMO prevents a vehicle from exiting the spot, else the current step
+            release_step = simulation_time
+            if vehicle is not None and vehicle.slot_release_step is not None:
+                release_step = vehicle.slot_release_step
+
             overstayed = (
                 vehicle is not None
                 and vehicle.park_duration is not None
-                and simulation_time > int(vehicle.park_duration)
+                and release_step > int(vehicle.park_duration)
             )
 
             # Notify the buffer manager about the vehicle leaving the area (only if the area is "in town")
@@ -412,6 +417,10 @@ def run():
                 if not is_out_of_town(vehicle.last_park):
                     current_stop = stops[0]
 
+                    # Simulation step in which the vehicle leaves the spot, used in the first part of the run loop, where we iterate through vehicles about to end a park. The spot gets stored even if the vehicle doesn't actually leave the spot (only happens if SUMO prevents the vehicle from leaving)
+                    if vehicle.slot_release_step is None and vehicle.paid and current_stop.duration <= 0:
+                        vehicle.slot_release_step = simulation_time
+
                     # Check only vehicles who are overstaying their current stop
                     if vehicle.overstay > 0:
                         # If the current duration is negative that means someone is blocking the park
@@ -446,6 +455,8 @@ def run():
 
                 if not vehicle.paid:
                     vehicle.paid = True
+                    # New stop, the previous value needs to be reset
+                    vehicle.slot_release_step = None
                     cont_stops = len(stops)
                     # print("Stops:", traci.vehicle.getStops(id_vehicle, 0))
 

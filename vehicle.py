@@ -17,6 +17,9 @@ class Vehicle:
         # Represents the simulation step in which the vehicle should leave his currently reserved spot
         self.park_duration = None
 
+        # Represents the step in which the vehicle left the spot relative to its current stop. Gets set to a simulation step only if SUMO keeps it from moving
+        self.slot_release_step = None
+
         self.has_reservation = False
 
         # Checks if the vehicle paid for its current stop
