@@ -1,0 +1,4 @@
+__pycache__
+scenarios/*
+!scenarios/.gitkeep
+output.txt

@@ -24,7 +24,10 @@ class ParkArea:
     def has_free_slot(self, buffer_spots: int) -> bool:
         """Returns True if there are vacant reservable spots in the area"""
         return self.reservations < self.capacity - buffer_spots
-    
+
+    def unreserved_spots(self) -> int:
+        """Free (unreserved) spots, needed to check if a reservation was refused beacuse the buffer takes up empty spaces"""
+        return self.capacity - (self.reservations - 1)
 
 def get_park_area(name: str, areas: dict) -> ParkArea:
     """Returns the park area specified in 'name', eventually creates it inside 'areas'"""

@@ -72,6 +72,7 @@ def run():
     simulation_time = 0
     unsatisfied_reservations_cont = 0
     no_found_reservation_cont = 0
+    buffer_rejections = {}              # How many times a reservation is refused because the buffer takes up empty spaces
 
     # Stores the vehicles (id -> Vehicle)
     vehicles = {}
@@ -317,6 +318,11 @@ def run():
                     # Else the system tries to find another area with reservable spots
                     if not area.is_out_of_town:
                         unsatisfied_reservations_cont += 1
+                        unreserved = area.unreserved_spots()
+                        if unreserved > 0:
+                            reject_count = buffer_rejections.get(unreserved, 0)
+                            reject_count += 1
+                            buffer_rejections[unreserved] = reject_count
 
                         # print("Number of reservations in that Park-Area:", area.reservations)
                         # print("Waiting...")
@@ -539,6 +545,16 @@ def run():
         print(
             f"  of which sent out of town, no in-town area free:"
             f" {no_found_reservation_cont}",
+            file=f,
+        )
+        print(
+            f"  of which only because of the buffer (would pass with no buffer):"
+            f"{sum(buffer_rejections.values())}",
+            file=f,
+        )
+        print(
+            f"    by unreserved spots left (spots: rejections):"
+            f"{dict(sorted(buffer_rejections.items()))}",
             file=f,
         )
         print(
