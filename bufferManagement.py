@@ -150,7 +150,7 @@ class IncrementalBufferManager:
         """If a "bad" vehicle makes a reservation, the buffer dimension automatically tries to increase"""
         overstays = self.user_consecutive_overstays.get(id_vehicle, 0)
 
-        if overstays >= self.n:
+        if overstays >= self.n or get_review_stars(id_vehicle) < 3:
             # The given vehicle has a bad reputation: we try to increase the buffer dimension as soon as the reservation happens. If the buffer dimension is actually increased, the affected area gets stored
             self.requests[(id_vehicle, park_area)] = first_slot
 
@@ -163,7 +163,7 @@ class IncrementalBufferManager:
         """If an overstay is detected, and the vehicle did not already trigger a buffer dimension increase during the reservation, the buffer dimension tries to increase"""
         overstays = self.user_consecutive_overstays.get(id_vehicle, 0)
 
-        if overstays < self.n:
+        if (id_vehicle, park_area) not in self.requests:
             # First scenario, the vehicle did not trigger a buffer dimension increase during the reservation: we try to increase the buffer dimension as soon as the overstay is detected. If the buffer dimension is actually increased, the affected area gets stored
             self.requests[(id_vehicle, park_area)] = time_slot
         # Second scenario, the buffer dimension was already (supposedly) increased
