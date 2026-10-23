@@ -10,6 +10,7 @@ from constants import (
     FOLDER_NAME,
     TOTAL_POPULATION,
     BAD_DRIVERS_PERCENTAGE,
+    STEPS_PER_CALENDAR_SLOT,
     CONSTANT_BUFFER_SPOTS,
     INITIAL_BUFFER_SPOTS,
     MAX_BUFFER_SPOTS,
@@ -23,7 +24,7 @@ from constants import (
     stream_seed
 )
 from bufferManagement import make_buffer_manager
-from parkArea import get_park_area, is_out_of_town
+from parkArea import get_park_area, is_out_of_town, step_to_calendar_slot
 from vehicle import (
     get_vehicle, 
     get_review_stars, 
@@ -65,6 +66,16 @@ def run():
     # print("Number of vehicles:", str(max_trips))
     # print("List of vehicles in XML file:", vehicle_id_list_xml)
 
+    # Counts the number of <params> present for each vehicle, and if it does not march "STARTING_STOP" throws an error
+    param_counts = {
+        sum(1 for child in trip if child.tag == "param") for trip in root
+    }
+    assert param_counts == {STARTING_STOP}, (
+        f"STARTING_STOP={STARTING_STOP} non corrisponde al route file, che "
+        f"ha {param_counts} <param> per <trip>: le letture delle soste "
+        f"sarebbero sfasate"
+    )
+
     # Counters
     cont_no_park = 0                    # Number of times the vehicles don't park
     cont_end_park = 0                   # Number of times the vehicles end a park
@@ -72,6 +83,9 @@ def run():
     simulation_time = 0
     unsatisfied_reservations_cont = 0
     no_found_reservation_cont = 0
+    arrived_after_booking_end_cont = 0
+    arrived_before_booking_start_cont = 0
+    out_of_calendar_arrival_cont = 0
     buffer_rejections = {}              # How many times a reservation is refused because the buffer takes up empty spaces
 
     # Stores the vehicles (id -> Vehicle)
@@ -90,7 +104,7 @@ def run():
     leaving_area_park_vehicle = {}
 
     # Initializes the buffer manager
-    buffer_manager = make_buffer_manager()
+    buffer_manager = make_buffer_manager(areas)
 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
@@ -112,6 +126,17 @@ def run():
             vehicle = vehicles.get(end_stop_vehicle)
             old_park_area = vehicle.last_park if vehicle is not None else ""
 
+            # Handles the specific case of a vehicle arriving at its booked spot when the booking itself already ended, causing SUMO to end the stop immediately. This makes the vehicle appear as both stopped and about to exit.
+            if vehicle is not None and not vehicle.paid and vehicle.booking is not None:
+                vehicle.paid = True
+                vehicle.slot_release_step = None
+                vehicle.park_duration = vehicle.booking[2] * STEPS_PER_CALENDAR_SLOT
+                arrived_after_booking_end_cont += 1
+                set_wallet(end_stop_vehicle, vehicle.new_wallet)
+                vehicle.new_wallet = None
+                if len(traci.vehicle.getStops(end_stop_vehicle, 0)) > 1:
+                    vehicle.stop_pos += 1
+
             # Use the supposed exit time if SUMO prevents a vehicle from exiting the spot, else the current step
             release_step = simulation_time
             if vehicle is not None and vehicle.slot_release_step is not None:
@@ -125,19 +150,23 @@ def run():
 
             # Notify the buffer manager about the vehicle leaving the area (only if the area is "in town")
             if old_park_area and not is_out_of_town(old_park_area):
-                buffer_manager.on_exit(end_stop_vehicle, old_park_area, overstayed)
+                buffer_manager.on_exit(end_stop_vehicle, old_park_area, overstayed, step_to_calendar_slot(simulation_time))
 
                 # Update vehicle's reputation and update its behaviour (randomly)
                 system_charge(end_stop_vehicle, overstayed, behaviour_rng)
 
+            if vehicle is not None:
+                vehicle.booking = None
+
             # Decrement reservation count for the area the vehicle is leaving
             if vehicle is not None and vehicle.has_reservation:
                 old_area = get_park_area(old_park_area, areas)
-                old_area.reservations -= 1
+                if old_area.is_out_of_town:
+                    old_area.reservations -= 1
+                    if old_area.reservations < 0:
+                        print(f"Error: negative reservations for {old_park_area}")
+                        exit()
                 cont_end_park += 1
-                if old_area.reservations < 0:
-                    print(f"Error: negative reservations for {old_park_area}")
-                    exit()
                 vehicle.has_reservation = False
 
             # Update vehicle.last_park to the next stop's park area
@@ -209,7 +238,7 @@ def run():
             # print("Number of stops:", cont_stops)
             # print("Is the vehicle stopped?:", str(is_stopped_parking))
             # print("Park's duration:", str(duration))
-            # print("Buffer state:", buffer_manager.free_parks)
+            # print("Buffer state:", buffer_manager.free_parks(step_to_calendar_slot(simulation_time)))
 
             # If the vehicle is not stopped
             if not is_stopped_parking and cont_stops > 0:
@@ -258,23 +287,45 @@ def run():
 
                 # Set buffer spots (there are no buffer spots in "ParkAreaOutOfTown")
                 area = get_park_area(park_area, areas)
-                cont_free_parks = INITIAL_BUFFER_SPOTS
-                if not area.is_out_of_town:
-                    cont_free_parks = buffer_manager.get_buffer(
-                        park_area, INITIAL_BUFFER_SPOTS
-                    )
-                    if CONSTANT_BUFFER_SPOTS != -1:
-                        cont_free_parks = CONSTANT_BUFFER_SPOTS
-                else:
-                    cont_free_parks = 0
 
                 if not vehicle.has_reservation:
                     vehicle.has_reservation = True
-                    area.reservations += 1
+                    new_park_area = None
 
-                    # Notify the buffer manager about a new reservation (only useful when using the "incremental" strategy)
+                    # Check if the vehicle can park in the chosen area
                     if not area.is_out_of_town:
-                        # Deciding if the vehicle will overstay based on its current probability of overstaying and eventually the overstay duration
+                        first_slot, last_slot = booking_slots(id_vehicle, area.name, duration, simulation_time)
+
+                        if not area.can_book(first_slot, last_slot, buffer_of_slot(buffer_manager, area.name)):
+                            unsatisfied_reservations_cont += 1
+
+                            unreserved = area.unreserved_spots(first_slot, last_slot)
+                            if unreserved > 0:
+                                buffer_rejections[unreserved] = buffer_rejections.get(unreserved, 0) + 1
+
+                            new_park_area = change_reservation(id_vehicle, area.name, duration, 0, areas, buffer_manager, first_slot, last_slot)
+                            if new_park_area == "End":
+                                no_found_reservation_cont += 1
+                                new_park_area = go_to_no_system_park(id_vehicle, duration, 0, areas)
+
+                    # If the chosen area is out of town but it's full, choose another out of town area
+                    elif not area.has_free_slot(0):
+                        new_park_area = go_to_no_system_park(id_vehicle, duration, 0, areas)
+
+                    # If the parking area is not the one initially chosen, we need to update both the XML file and the current area
+                    if new_park_area is not None:
+                        root[vehicle.xml_pos][STARTING_STOP + stop_pos_offset].set(
+                            "parkingArea", new_park_area
+                        )
+                        vehicle.last_park = new_park_area
+                        park_area = new_park_area
+                        area = get_park_area(park_area, areas)
+
+                    if not area.is_out_of_town:
+                        # Decide if the vehicle overstays the current reservation if the area is in town
+                        area.book(id_vehicle, first_slot, last_slot)
+                        vehicle.booking = (area.name, first_slot, last_slot)
+                        buffer_manager.on_reservation(id_vehicle, area.name, first_slot, last_slot)
 
                         base_probability = get_overstay_probability(id_vehicle)
                         vehicle_stars = get_review_stars(id_vehicle)
@@ -284,104 +335,24 @@ def run():
                         )
 
                         # If the vehicle overstays for its current stop, the corresponding entry in the routes file needs to have its duration updated
-                        if vehicle.overstay > 0:
-                            traci.vehicle.replaceStop(
-                                id_vehicle,
-                                0,
-                                park_area,
-                                flags=65,
-                                duration=duration + vehicle.overstay,
-                                startPos=0.0,
+                        traci.vehicle.replaceStop(
+                            id_vehicle,
+                            0,
+                            park_area,
+                            flags=65,
+                            duration=0,
+                            until=last_slot * STEPS_PER_CALENDAR_SLOT - 1 + vehicle.overstay, # -1 needed to avoid counting a good reservation as an overstay
+                            startPos=0.0,
                             )
-                        buffer_manager.on_reservation(
-                            id_vehicle, park_area, INITIAL_BUFFER_SPOTS
-                        )
-                        # Re-read updated buffer after reservation, the "incremental" strategy might have increased the buffer dimension
-                        cont_free_parks = buffer_manager.get_buffer(
-                            park_area, INITIAL_BUFFER_SPOTS
-                        )
-                        if CONSTANT_BUFFER_SPOTS != -1:
-                            cont_free_parks = CONSTANT_BUFFER_SPOTS
                     else:
                         # No need to track overstays for out of town park, so "vehicle.overstay" gets reset
                         vehicle.overstay = 0
-
-                cont_ending_park = leaving_area_park_vehicle.get(park_area, 0)
-
-                # Check if the designated park area is fully booked (NOT full of vehicles) AFTER a vehicle already booked (behaviour of the "original" project)
-                if area.is_fully_booked(cont_free_parks):
-                    # If someone is leaving in the current step, the vehicle can park in its original destination
-                    if cont_ending_park > 0:
-                        leaving_area_park_vehicle[park_area] -= 1
-                        continue
-
-                    # Else the system tries to find another area with reservable spots
-                    if not area.is_out_of_town:
-                        unsatisfied_reservations_cont += 1
-                        unreserved = area.unreserved_spots()
-                        if unreserved > 0:
-                            reject_count = buffer_rejections.get(unreserved, 0)
-                            reject_count += 1
-                            buffer_rejections[unreserved] = reject_count
-
-                        # print("Number of reservations in that Park-Area:", area.reservations)
-                        # print("Waiting...")
-                        new_park_area = change_reservation(
-                            id_vehicle,
-                            park_area,
-                            duration + vehicle.overstay,
-                            0,
-                            areas,
-                            buffer_manager,
-                        )
-                        # If there are no reservable spots in any area in town, then the vehicle gets deviated in an area out of town
-                        if new_park_area == "End":
-                            no_found_reservation_cont += 1
-                            new_park_area = go_to_no_system_park(
-                                id_vehicle, duration, 0, areas
-                            )
-                    else:
-                        new_park_area = go_to_no_system_park(
-                            id_vehicle, duration, 0, areas
-                        )
-
-                    # print("Stops:", traci.vehicle.getStops(id_vehicle, 0))
-                    # print("New Park Area:", new_park_area)
-
-                    # Update the current (new) area in the XML
-                    root[vehicle.xml_pos][STARTING_STOP + stop_pos_offset].set(
-                        "parkingArea", new_park_area
-                    )
-                    vehicle.last_park = new_park_area
-                    # Finally, cancel the reservation in the "old" area and book a spot in the new one
-                    area.reservations -= 1
-                    get_park_area(new_park_area, areas).reservations += 1
-
-                    # print("------------------------")
-
-                    park_area = new_park_area
-                    area = get_park_area(park_area, areas)
-
-                    # Create a new reservation and read the buffer dimension for the new area
-                    cont_free_parks = INITIAL_BUFFER_SPOTS
-                    if not area.is_out_of_town:
-                        buffer_manager.on_reservation(
-                            id_vehicle, park_area, INITIAL_BUFFER_SPOTS
-                            )
-                        cont_free_parks = buffer_manager.get_buffer(
-                            park_area, INITIAL_BUFFER_SPOTS
-                        )
-                        if CONSTANT_BUFFER_SPOTS != -1:
-                            cont_free_parks = CONSTANT_BUFFER_SPOTS
-                    else:
-                        cont_free_parks = 0
+                        area.reservations += 1
 
                 cont_ending_park = leaving_area_park_vehicle.get(park_area, 0)
 
                 # Check if the designated park area is not fully booked, but still full of vehicles (many vehicles overstayed, leads to NO PARK scenario)
-                if (
-                    not area.is_fully_booked(cont_free_parks)
-                ) and traci.parkingarea.getVehicleCount(park_area) == area.capacity:
+                if traci.parkingarea.getVehicleCount(park_area) == area.capacity:
                     # If someone is leaving in the current step, the vehicle can park in its original destination
                     if cont_ending_park > 0:
                         leaving_area_park_vehicle[park_area] -= 1
@@ -398,6 +369,13 @@ def run():
                         # print("Number of vehicles in that Park-Area:", str(traci.parkingarea.getVehicleCount(park_area)))
                         # print("Waiting...")
 
+                    if vehicle.booking is not None:
+                        area.cancel(id_vehicle, vehicle.booking[1], vehicle.booking[2])
+                        buffer_manager.on_cancel(id_vehicle, area.name, vehicle.booking[1], vehicle.booking[2])
+                        vehicle.booking = None
+                    else:
+                        area.reservations -= 1
+
                     new_park_area = go_to_no_system_park(
                         id_vehicle, duration, 0, areas
                     )
@@ -411,8 +389,6 @@ def run():
                     )
                     vehicle.last_park = new_park_area
 
-                    # Finally, cancel the reservation in the "old" area and book a spot in the new one
-                    area.reservations -= 1
                     get_park_area(new_park_area, areas).reservations += 1
 
             # If the vehicle is stopped
@@ -438,14 +414,11 @@ def run():
                                         buffer_manager.on_overstay_start(
                                             id_vehicle,
                                             vehicle.last_park,
-                                            INITIAL_BUFFER_SPOTS,
+                                            step_to_calendar_slot(simulation_time),
                                         )
 
                                         # Remove the reservation from the area (in order to not give other penalties to the vehicle) and increase the bad behaviour counter of the area
                                         vehicle.has_reservation = False
-                                        get_park_area(
-                                            vehicle.last_park, areas
-                                        ).reservations -= 1
                                         cont_bad_behaviour_vehicles += 1
 
                                         if vehicle.last_park not in bad_behaviour:
@@ -469,11 +442,25 @@ def run():
                     # Vehicle doesn't pay if it doesn't park in "Town"
                     if not is_out_of_town(park_area):
                         # Calculate the supposed park ending
-                        leaving_time = simulation_time + duration
                         # print("When it must end the park at:", leaving_time)
-                        vehicle.park_duration = leaving_time
+                        vehicle.park_duration = vehicle.booking[2] * STEPS_PER_CALENDAR_SLOT
                         # print("Vehicle's ending time park:", leaving_time)
-                        
+
+                        area = get_park_area(vehicle.booking[0], areas)
+                        effective_arrival_slot = step_to_calendar_slot(simulation_time)
+
+                        # Check if the vehicle arrived outside of its reservation window and increments the counters accordingly
+                        if effective_arrival_slot < vehicle.booking[1]:
+                            arrived_before_booking_start_cont += 1
+                            if area.can_book(effective_arrival_slot, vehicle.booking[1], buffer_of_slot(buffer_manager, area.name)):
+                                area.book(vehicle.id, effective_arrival_slot, vehicle.booking[1])
+                                vehicle.booking = (area.name, effective_arrival_slot, vehicle.booking[2])
+                                buffer_manager.on_reservation(id_vehicle, area.name, effective_arrival_slot, vehicle.booking[2])
+                            else:
+                                out_of_calendar_arrival_cont += 1
+                        elif effective_arrival_slot >= vehicle.booking[2]:
+                            arrived_after_booking_end_cont += 1
+
                         # Wallet overwritten with the new balance. Raises an wxception if, for some reason, the vehicle did not have its wallet checked
                         if vehicle.new_wallet is not None:
                             set_wallet(id_vehicle, vehicle.new_wallet)
@@ -500,9 +487,7 @@ def run():
 
     # Output log
     vehicles_change_route_count = sum(1 for v in vehicles.values() if v.changed_route)
-    reservations_by_area = {
-        name: area.reservations for name, area in sorted(areas.items())
-    }
+    reservation ={name: area.reservations for name, area in sorted(areas.items()) if area.is_out_of_town}
 
     with open("output.txt", "a") as f:
         print(
@@ -549,12 +534,12 @@ def run():
         )
         print(
             f"  of which only because of the buffer (would pass with no buffer):"
-            f"{sum(buffer_rejections.values())}",
+            f" {sum(buffer_rejections.values())}",
             file=f,
         )
         print(
             f"    by unreserved spots left (spots: rejections):"
-            f"{dict(sorted(buffer_rejections.items()))}",
+            f" {dict(sorted(buffer_rejections.items()))}",
             file=f,
         )
         print(
@@ -566,14 +551,33 @@ def run():
             f" {vehicles_change_route_count}",
             file=f,
         )
+        print(
+            f"Arrivals before the booking started (events):"
+            f" {arrived_before_booking_start_cont}",
+            file=f,
+        )
+        print(
+            f"  of which outside the calendar (no room to extend backwards):"
+            f" {out_of_calendar_arrival_cont}",
+            file=f,
+        )
+        print(
+            f"Arrivals after the booking had ended (events):"
+            f" {arrived_after_booking_end_cont}",
+            file=f,
+        )
         print(f"End park(good behaviour): {cont_end_park}", file=f)
         print(f"End park(bad behaviour): {cont_bad_behaviour_vehicles}", file=f)
         print(
             f"Total end park: {cont_end_park + cont_bad_behaviour_vehicles}", file=f
         )
         print(f"Finish time step: {simulation_time}", file=f)
-        print(f"Reservation: {reservations_by_area}", file=f)
-        print(f"Buffer state: {buffer_manager.free_parks}", file=f)
+        print(f"Reservation: {reservation}", file=f)
+        future_slots = sum(
+            1 for area in areas.values() for time_slot in area.calendar if time_slot >= step_to_calendar_slot(simulation_time)
+        )
+        print(f"Future reserved slots: {future_slots}", file=f)
+        print(f"Buffer state: {buffer_manager.free_parks(step_to_calendar_slot(simulation_time))}", file=f)
         print(
             "------------------------------------------------------------------------",
             file=f,

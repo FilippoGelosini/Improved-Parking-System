@@ -1,7 +1,7 @@
 from optparse import OptionParser
 import math
 from bufferManagement import BufferStrategy
-from parkArea import get_park_area
+from parkArea import get_park_area, step_to_calendar_slot
 import traci
 import random
 from vehicle import (
@@ -20,6 +20,7 @@ from vehicle import (
 from constants import (
     TOTAL_POPULATION,
     STEPS_PER_HOUR,
+    STEPS_PER_CALENDAR_SLOT,
     PARK_AREA_NAMES,
     CONSTANT_BUFFER_SPOTS,
     INITIAL_BUFFER_SPOTS,
@@ -157,9 +158,11 @@ def change_reservation(
     duration: int,
     stop_pos: int,
     areas: dict,
-    buffer_manager: BufferStrategy
+    buffer_manager: BufferStrategy,
+    first_slot: int,
+    last_slot: int
 ) -> str:
-    """Function that tries to get a new reservation for the user."""
+    """Function that tries to get a new reservation in town for the user. Returns the name of the new area."""
 
     cont_stops = len(list(traci.vehicle.getStops(id_vehicle, 0)))
     if cont_stops < 1:
@@ -176,20 +179,14 @@ def change_reservation(
     for suffix in [park_area_suffix, park_area_suffix2]:
         for row in range(DOUBLE_ROWS):
             area1 = get_park_area(f"{suffix}{row}", areas)
-            cont_free_parks = buffer_manager.get_buffer(area1.name, INITIAL_BUFFER_SPOTS)
-            if CONSTANT_BUFFER_SPOTS != -1:
-                cont_free_parks = CONSTANT_BUFFER_SPOTS
-            if area1.has_free_slot(cont_free_parks):
+            if area1.can_book(first_slot, last_slot, buffer_of_slot(buffer_manager, area1.name)):
                 traci.vehicle.replaceStop(
                     id_vehicle, stop_pos, area1.name, flags=65, duration=duration, startPos=0.0
                 )
                 return area1.name
 
             area2 = get_park_area(f"-{suffix}{row}", areas)
-            cont_free_parks = buffer_manager.get_buffer(area2.name, INITIAL_BUFFER_SPOTS)
-            if CONSTANT_BUFFER_SPOTS != -1:
-                cont_free_parks = CONSTANT_BUFFER_SPOTS
-            if area2.has_free_slot(cont_free_parks):
+            if area2.can_book(first_slot, last_slot, buffer_of_slot(buffer_manager, area2.name)):
                 traci.vehicle.replaceStop(
                     id_vehicle, stop_pos, area2.name, flags=65, duration=duration, startPos=0.0
                 )
@@ -231,3 +228,23 @@ def update_overstay_probability (
         return current_probability
     # Overstay probability should not be lower than a fixed floor (GOOD_OVERSTAY_PROBABILITY by default, see "constants.py")
     return max(floor, current_probability * (1 - learning_rate))
+
+def booking_slots(
+    id_vehicle: str,
+    park_area: str,
+    duration: int,
+    depature_step: int
+) -> tuple[int, int]:
+    """Interval of time slots to reserve for a new booking"""
+    starting_point = traci.vehicle.getRoadID(id_vehicle)
+    ending_point = traci.lane.getEdgeID(traci.parkingarea.getLaneID(park_area))
+    estimated_travel_time = traci.simulation.findRoute(starting_point, ending_point).travelTime # Estimated travel time from the position of the vehicle to the new area
+
+    starting_time_slot = step_to_calendar_slot(estimated_travel_time + depature_step)
+    ending_time_slot = starting_time_slot + math.ceil(duration / STEPS_PER_CALENDAR_SLOT)
+    return (starting_time_slot, ending_time_slot)
+
+def buffer_of_slot(buffer_manager: BufferStrategy, park_area: str):
+    if CONSTANT_BUFFER_SPOTS == -1:
+        return lambda time_slot: buffer_manager.get_buffer(park_area, time_slot)
+    return lambda time_slot: CONSTANT_BUFFER_SPOTS

@@ -11,6 +11,9 @@ class Vehicle:
         # Index of the current stop of the vehicle in its stop sequence in the XML routes file
         self.stop_pos = 0
 
+        # Current booking as stored in the parking area's calendar (area, starting time slot, ending time slot)
+        self.booking = None
+
         # Name of the park area where the vehicle is currently stopped or where it's currently headed. Is None until observed for the first time 
         self.last_park = None
 

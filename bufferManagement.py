@@ -1,6 +1,7 @@
 import traci
 
 from constants import (
+    STEPS_PER_CALENDAR_SLOT,
     MAX_BUFFER_SPOTS,
     INITIAL_BUFFER_SPOTS,
     OVERSTAY_THRESHOLD,
@@ -12,6 +13,7 @@ from constants import (
 )
 
 from vehicle import get_review_stars
+from parkArea import get_park_area
 
 
 class LegacyBufferManager:
@@ -29,7 +31,7 @@ class LegacyBufferManager:
         self.warmup_steps = warmup_steps
         self.initial_buffer = initial_buffer
 
-        # Indicates the buffer dimension for each area. Accessed via the property "free_parks", which updates the clock first
+        # Indicates the buffer dimension for each area.
         self._free_parks = {}
 
         # Index of the last observed buffer refresh period (see "BUFFER_RESET_PERIOD" in constants.py). Increments only when BUFFER_RESET_PERIOD simulation steps passed.
@@ -51,22 +53,29 @@ class LegacyBufferManager:
 
     # Public methods --------------------------------------------------------------
 
-    def get_buffer(self, park_area: str, default_initial: int) -> int:
+    def get_buffer(self, park_area: str, time_slot: int) -> int:
         """Returns the current buffer dimension. If the area buffer is not initialized yet returns the default initial buffer spots"""
-        now = self._refresh()
-        if now < self.warmup_steps:
+        time_slot_start = time_slot * STEPS_PER_CALENDAR_SLOT
+        # Aggiorna l'azzeramento (e quindi self._period) prima di confrontare.
+        self._refresh()
+        if time_slot_start < self.warmup_steps:
             return self.max_buffer
-        return self._free_parks.get(park_area, default_initial)
+        elif self.reset_period > 0 and time_slot_start // self.reset_period > self._period:
+            return self.initial_buffer
+        return self._free_parks.get(park_area, self.initial_buffer)
 
     # Management hooks ------------------------------------------------------------
 
-    def on_reservation(self, id_vehicle: str, park_area: str, initial_buffer: int):
+    def on_reservation(self, id_vehicle: str, park_area: str, first_slot: int, last_slot: int):
         """No action on new reservations"""
 
-    def on_overstay_start(self, id_vehicle: str, park_area: str, initial_buffer: int):
+    def on_cancel(self, id_vehicle: str, park_area: str, first_slot: int, last_slot: int):
+        """No action when removing a reservation"""
+
+    def on_overstay_start(self, id_vehicle: str, park_area: str, time_slot: int):
         """No action when an overstay is detected"""
 
-    def on_exit(self, id_vehicle: str, park_area: str, overstayed: bool):
+    def on_exit(self, id_vehicle: str, park_area: str, overstayed: bool, time_slot: int):
         """If the user overstayed, the buffer's dimension for the given area increments if < self.max_buffer"""
         self._refresh()
         if not overstayed:
@@ -78,9 +87,8 @@ class LegacyBufferManager:
 
     # Getters ---------------------------------------------------------------------
 
-    @property
-    def free_parks(self) -> dict:
-        """Calls self._refresh() and returns self._free_parks"""
+    def free_parks(self, time_slot: int) -> dict:
+        """Buffer dimension of all park areas during the specified time slot"""
         self._refresh()
         return self._free_parks
 
@@ -91,102 +99,85 @@ class IncrementalBufferManager:
     def __init__(
         self,
         overstay_threshold: int = OVERSTAY_THRESHOLD,
-        max_buffer: int = MAX_BUFFER_SPOTS
+        max_buffer: int = MAX_BUFFER_SPOTS,
+        initial_buffer: int = INITIAL_BUFFER_SPOTS
     ):
         self.n = overstay_threshold
         self.max_buffer = max_buffer
+        self.initial_buffer = initial_buffer
 
         # Counts consecutive overstays for each vehicle
         self.user_consecutive_overstays = {}
 
-        # Indicates the area in which a vehicle made an overstay, and therefore incrementes the buffer size. Used to know if and where to decrement the buffer when a vehicle exits the area. Vehicles are the dict keys, park area names are the values, e.g. {"v27": "ParkArea0", "v3": None} 
-        self.user_buffer_added = {}
+        # Active requests for one extra buffer spot, one per (vehicle, area) pair:
+        # {(id_vehicle, park_area): time slot from which the request counts}.
+        # A request is added when a repeat offender books (from its first booked
+        # slot, see on_reservation) or when an overstay is detected (from that slot,
+        # see on_overstay_start), and it is removed when the vehicle leaves the area
+        # (on_exit) or cancels its booking there (on_cancel). get_buffer counts the
+        # requests already active in the given slot, capped at max_buffer.
+        # E.g. {("v5", "ParkArea0"): 412, ("v12", "-ParkAreaAlternative1"): 430} 
+        self.requests = {}
 
-        # Indicates the buffer dimension for each area.
-        self.free_parks = {}
+        self._areas = set()
 
     # Private methods -------------------------------------------------------------
-
-    def _init_area_if_needed(self, park_area: str, initial_buffer: int):
-        """Initializes the buffer for a given area if said area is not in self.free_parks"""
-        if park_area not in self.free_parks:
-            self.free_parks[park_area] = initial_buffer
-
-    def _increment_buffer(self, park_area: str) -> bool:
-        """Increments buffer's dimension if < self.max_buffer, returns True if the dimension was increased, False otherwise"""
-        if self.free_parks[park_area] < self.max_buffer:
-            self.free_parks[park_area] += 1
-            return True
-
-        return False
-
-    def _release_spot(self, id_vehicle: str):
-        """Releases the buffer spot increase caused by the given vehicle"""
-        # If the given vehicle caused a buffer dimension increase, the area in which the increase happened gets retrieved from 'self.user_buffer_added': If the returned value is None, the given vehicle did NOT cause a buffer dimension increase, even if it overstayed/has a bad reputation, therefore no decrease is needed.
-        buffered_area = self.user_buffer_added.get(id_vehicle)
-        if buffered_area is None:
-            return
-
-        # Instead, if the returned value is not None, the vehicle did cause an increase, and the name of the area in which the increase happened is the returned value. The dimension gets decreased and the value relative to the key (vehicle) in 'self.user_buffer_added' gets set to None 
-        self.free_parks[buffered_area] = max(
-            0, self.free_parks[buffered_area] - 1
-        )
-        
-        self.user_buffer_added[id_vehicle] = None
     
     # Public methods --------------------------------------------------------------
 
-    def get_buffer(self, park_area: str, default_initial: int) -> int:
+    def get_buffer(self, park_area: str, time_slot: int) -> int:
         """Returns the current buffer dimension. If the area buffer is not initialized yet returns the default initial buffer spots"""
-        return self.free_parks.get(park_area, default_initial)
+        self._areas.add(park_area)
+        active_reservations = sum(
+            1 for (vehicle, area), slot in self.requests.items() if area == park_area and slot <= time_slot
+        )
+        return min(self.max_buffer, self.initial_buffer + active_reservations)
 
     def get_user_overstays(self, id_vehicle: str) -> int:
         """Returns the number of consecutive overstays for a given vehicle"""
         return self.user_consecutive_overstays.get(id_vehicle, 0)
 
+    def free_parks(self, time_slot: int) -> dict:
+        """Buffer dimension of all park areas during the specified time slot"""
+        return {
+            area: self.get_buffer(area, time_slot)
+            for area in sorted(self._areas)
+        }
+
     # Management hooks ------------------------------------------------------------
 
-    def on_reservation(self, id_vehicle: str, park_area: str, initial_buffer: int):
+    def on_reservation(self, id_vehicle: str, park_area: str, first_slot: int, last_slot: int):
         """If a "bad" vehicle makes a reservation, the buffer dimension automatically tries to increase"""
-        self._release_spot(id_vehicle) # Only useful if the given vehicle has been redirected to a new area, this way the buffer releases the eventual increase caused by the original area reservation
-        self._init_area_if_needed(park_area, initial_buffer)
         overstays = self.user_consecutive_overstays.get(id_vehicle, 0)
 
         if overstays >= self.n:
             # The given vehicle has a bad reputation: we try to increase the buffer dimension as soon as the reservation happens. If the buffer dimension is actually increased, the affected area gets stored
-            self.user_buffer_added[id_vehicle] = (
-                park_area if self._increment_buffer(park_area) else None
-            )
+            self.requests[(id_vehicle, park_area)] = first_slot
 
-    def on_overstay_start(self, id_vehicle: str, park_area: str, initial_buffer: int):
+    def on_cancel(self, id_vehicle: str, park_area: str, first_slot: int, last_slot: int):
+        """If a vehicle deletes its reservation in the specified area (redirection, anticipated exit), if it has a request (-> occupies/should occupy a buffer spot) it gets removed
+        """
+        self.requests.pop((id_vehicle, park_area), None)
+
+    def on_overstay_start(self, id_vehicle: str, park_area: str, time_slot: int):
         """If an overstay is detected, and the vehicle did not already trigger a buffer dimension increase during the reservation, the buffer dimension tries to increase"""
-        self._init_area_if_needed(park_area, initial_buffer)
         overstays = self.user_consecutive_overstays.get(id_vehicle, 0)
 
         if overstays < self.n:
             # First scenario, the vehicle did not trigger a buffer dimension increase during the reservation: we try to increase the buffer dimension as soon as the overstay is detected. If the buffer dimension is actually increased, the affected area gets stored
-            self.user_buffer_added[id_vehicle] = (
-                park_area if self._increment_buffer(park_area) else None
-            )
+            self.requests[(id_vehicle, park_area)] = time_slot
         # Second scenario, the buffer dimension was already (supposedly) increased
 
         # The consecutive overstay counter gets updated anyways
         self.user_consecutive_overstays[id_vehicle] = overstays + 1
 
-    def on_exit(self, id_vehicle: str, park_area: str, overstayed: bool):
+    def on_exit(self, id_vehicle: str, park_area: str, overstayed: bool, time_slot: int):
         """If a vehicle who overstayed leaves, and it caused a buffer increase, the buffer dimension gets decreased. If a vehicle left the area and did NOT overstay, its consecutive overstay counter gets reset"""
 
         if not overstayed:
             self.user_consecutive_overstays[id_vehicle] = 0
 
-        self._release_spot(id_vehicle)
-
-
-def stars_in_area(park_area: str) -> list:
-    """Returns a list containing the stars of the users parked in a given park area"""
-    return [
-        get_review_stars(id_vehicle) for id_vehicle in traci.parkingarea.getVehicleIDs(park_area)
-    ]
+        self.requests.pop((id_vehicle, park_area), None)
 
 
 class WeightedBufferManager:
@@ -194,10 +185,12 @@ class WeightedBufferManager:
 
     def __init__(
         self,
+        stars_booked,
         max_buffer: int = MAX_BUFFER_SPOTS,
         max_stars: int = MAX_REVIEW_STARS,
         risk_weight: float = BUFFER_RISK_WEIGHT
     ):
+        self.stars_booked = stars_booked
         self.max_buffer = max_buffer
         self.max_stars = max_stars
         self.risk_weight = risk_weight
@@ -208,13 +201,13 @@ class WeightedBufferManager:
 
     # Public methods --------------------------------------------------------------
 
-    def get_buffer(self, park_area: str, default_initial: int) -> int:
+    def get_buffer(self, park_area: str, time_slot: int) -> int:
         """Calculates the current buffer dimension for the given area and returns it"""
         self._areas.add(park_area)
 
-        stars = list(stars_in_area(park_area))
+        stars = list(self.stars_booked(park_area, time_slot))
         if not stars:
-            return default_initial
+            return self._default_initial
 
         total_weight = 0.0
         weighted_risk = 0.0
@@ -231,31 +224,34 @@ class WeightedBufferManager:
         expected_overstays = int(mean_risk * len(stars) + 0.5) # + 0.5 needed to round to the closest integer
         return min(self.max_buffer, expected_overstays)
 
+    def free_parks(self, time_slot: int) -> dict:
+        """Buffer dimension of all park areas during the specified time slot"""
+        return {
+            area: self.get_buffer(area, time_slot)
+            for area in sorted(self._areas)
+        }
+    
     # Management hooks ------------------------------------------------------------
 
-    def on_reservation(self, id_vehicle: str, park_area: str, initial_buffer: int):
+    def on_reservation(self, id_vehicle: str, park_area: str, first_slot: int, last_slot: int):
         """No action required when a vehicle reserves a spot"""
 
-    def on_overstay_start(self, id_vehicle: str, park_area: str, initial_buffer: int):
+    def on_cancel(self, id_vehicle: str, park_area: str, first_slot: int, last_slot: int):
+        """No action when removing a reservation"""
+
+    def on_overstay_start(self, id_vehicle: str, park_area: str, time_slot: int):
         """No action required when a vehicle overstays"""
 
-    def on_exit(self, id_vehicle: str, park_area: str, overstayed: bool):
+    def on_exit(self, id_vehicle: str, park_area: str, overstayed: bool, time_slot):
         """No action required when a vehicle exits a park area"""
 
     # Getters ---------------------------------------------------------------------
 
-    @property
-    def free_parks(self) -> dict:
-        """Buffer corrente di tutte le aree viste (per la stampa finale)."""
-        return {
-            area: self.get_buffer(area, self._default_initial)
-            for area in sorted(self._areas)
-        }
 
 # Alias for the various strategies
 BufferStrategy = LegacyBufferManager | IncrementalBufferManager | WeightedBufferManager
 
-def make_buffer_manager(strategy: str = BUFFER_STRATEGY) -> BufferStrategy:
+def make_buffer_manager(areas: dict, strategy: str = BUFFER_STRATEGY) -> BufferStrategy:
     """Builds the buffer manager specified in constants.py. Can raise a ValueError exception if the strategy is invalid"""
     if strategy == "legacy":
         return LegacyBufferManager(
@@ -268,8 +264,12 @@ def make_buffer_manager(strategy: str = BUFFER_STRATEGY) -> BufferStrategy:
             overstay_threshold=OVERSTAY_THRESHOLD, max_buffer=MAX_BUFFER_SPOTS
         )
     if strategy == "weighted":
+        # Function "stars_booked" is defined here since it needs access to the dictionary "areas", defined in "run()" in "runner.py", which is unaccessible in any other part of this file
+        def stars_booked(park_area: str, time_slot: int) -> list:
+            area = get_park_area(park_area, areas)
+            return[get_review_stars(v) for v in area.booked(time_slot)]
         return WeightedBufferManager(
-            max_buffer=MAX_BUFFER_SPOTS, risk_weight=BUFFER_RISK_WEIGHT
+            stars_booked=stars_booked, max_buffer=MAX_BUFFER_SPOTS, risk_weight=BUFFER_RISK_WEIGHT
         )
     raise ValueError(
         f"Unknown value in constants.BUFFER_STRATEGY: {strategy!r}"
