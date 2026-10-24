@@ -10,6 +10,7 @@ from constants import (
     FOLDER_NAME,
     TOTAL_POPULATION,
     BAD_DRIVERS_PERCENTAGE,
+    MIXED_DRIVERS_PERCENTAGE,
     STEPS_PER_CALENDAR_SLOT,
     CONSTANT_BUFFER_SPOTS,
     INITIAL_BUFFER_SPOTS,
@@ -49,7 +50,8 @@ from functions import *
 
 # Derived constants
 NUMBER_BAD_VEHICLES = int(TOTAL_POPULATION * BAD_DRIVERS_PERCENTAGE)
-NUMBER_GOOD_VEHICLES = TOTAL_POPULATION - NUMBER_BAD_VEHICLES
+NUMBER_MIXED_VEHICLES = int(TOTAL_POPULATION * MIXED_DRIVERS_PERCENTAGE)
+NUMBER_GOOD_VEHICLES = TOTAL_POPULATION - NUMBER_BAD_VEHICLES - NUMBER_MIXED_VEHICLES
 
 def run():
     # Loadind the XML routes file
@@ -91,6 +93,9 @@ def run():
     # Stores the vehicles (id -> Vehicle)
     vehicles = {}
 
+    # Registers the number of overstays made by each behavioural category of vehicles (good, bad, mixed)
+    overstays_by_type = {}
+
     # Stores the park areas (name -> ParkArea)
     areas = {}
 
@@ -109,6 +114,14 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
 
+        # If a vehicle gets teleported by SUMO the run gets classified as invalid
+        teleported = traci.simulation.getStartingTeleportIDList()
+        if teleported:
+            raise RuntimeError(
+                f"Step {traci.simulation.getTime()}: SUMO teleported {list(teleported)}, "
+                f"probable congestion. Run results will be discarded"
+            )
+        
         # Loading vehicles
         running_vehicle_id_list = list(traci.vehicle.getIDList())
         # print("------------------------ Still active vehicle:", str(len(running_vehicle_id_list)), "------------------------")
@@ -151,6 +164,11 @@ def run():
             # Notify the buffer manager about the vehicle leaving the area (only if the area is "in town")
             if old_park_area and not is_out_of_town(old_park_area):
                 buffer_manager.on_exit(end_stop_vehicle, old_park_area, overstayed, step_to_calendar_slot(simulation_time))
+
+                # Increments the number of judged reservations (overstayed or not) and updates the number of overstays registered for the vehicle's type (general behaviour)
+                vehicle_type = traci.vehicle.getTypeID(end_stop_vehicle)
+                judged, overstays = overstays_by_type.get(vehicle_type, (0, 0))
+                overstays_by_type[vehicle_type] = (judged + 1, overstays + overstayed)
 
                 # Update vehicle's reputation and update its behaviour (randomly)
                 system_charge(end_stop_vehicle, overstayed, behaviour_rng)
@@ -492,7 +510,7 @@ def run():
     with open("output.txt", "a") as f:
         print(
             f"Which population: {TOTAL_POPULATION}"
-            f" ({NUMBER_GOOD_VEHICLES} - {NUMBER_BAD_VEHICLES})",
+            f" ({NUMBER_GOOD_VEHICLES} - {NUMBER_MIXED_VEHICLES} - {NUMBER_BAD_VEHICLES})",
             file=f,
         )
         if CONSTANT_BUFFER_SPOTS == -1:
@@ -568,6 +586,7 @@ def run():
         )
         print(f"End park(good behaviour): {cont_end_park}", file=f)
         print(f"End park(bad behaviour): {cont_bad_behaviour_vehicles}", file=f)
+        print(f"In-town stops judged and overstays detected, by vehicle type (behaviour): {dict(sorted(overstays_by_type.items()))}", file=f)
         print(
             f"Total end park: {cont_end_park + cont_bad_behaviour_vehicles}", file=f
         )
@@ -597,3 +616,4 @@ if __name__ == "__main__":
     sumo_cfg = f"{FOLDER_NAME}/{PREFIX}_{TOTAL_POPULATION}.sumocfg"
     traci.start([sumoBinary, "--seed", str(stream_seed(RUN_SEED, "sumo")), "-c", sumo_cfg])
     run()
+    traci.close()

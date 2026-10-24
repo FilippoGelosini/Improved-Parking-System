@@ -5,6 +5,7 @@ FOLDER_NAME = "scenarios"
 
 TOTAL_POPULATION = 80
 BAD_DRIVERS_PERCENTAGE = 0.5
+MIXED_DRIVERS_PERCENTAGE = 0.0
 INITIAL_WALLET = 100 # Base wallet for all vehicles
 OUTER_POPULATION_PERCENTAGE = 0.05 # Percentage of vehicles which never park in out of town areas (e.g. tourists)
 OUTER_POPULATION_WALLET_MULTIPLIER = 1.5
@@ -37,8 +38,9 @@ BUFFER_RESET_PERIOD = 8 * STEPS_PER_HOUR # Only works with legacy strategy. Spec
 BUFFER_WARMUP_STEPS = 0 # Only works with legacy strategy. Specifies the number of initial steps in which the buffer dimension is set to MAX_BUFFER_SPOTS
 
 
-GOOD_OVERSTAY_PROBABILITY = 0.05 # Base probability for good vehicles to overstay
-BAD_OVERSTAY_PROBABILITY = 0.60  # Base probability for bad vehicles to overstay
+GOOD_OVERSTAY_PROBABILITY = 0.05  # Base probability for good vehicles to overstay
+BAD_OVERSTAY_PROBABILITY = 0.60   # Base probability for bad vehicles to overstay
+MIXED_OVERSTAY_PROBABILITY = 0.30 # Base probability for mixed vehicles to overstay
 
 OVERSTAY_PROBABILITY_SPREAD = 0.0 # How much a vehicle is likely to overstay within its base probability
 
@@ -52,7 +54,8 @@ LEARNING_PROBABILITY_SPREAD = 0.0 # How much a vehicle is likely to correct its 
 WARNING_LEARNING_RATE = 0.3 # How much the behaviour gets corrected after receiving a warning
 STAR_LOSS_LEARNING_RATE = 0.5 # How much the behaviour gets corrected after losing a star
 
-BAD_VEHICLE_TYPE = "carB" # Type of vehicle sporting a bad behavior, used by SUMO in its routes file
+BAD_VEHICLE_TYPE = "carB"   # Type of vehicle sporting a bad behavior, used by SUMO in its routes file
+MIXED_VEHICLE_TYPE = "carM" # Type of vehicle sporting a mixed behavior, used by SUMO in its routes file
 
 SCENARIO_SEED = 27 # Base seed representing scenario specific behaviours
 

@@ -14,6 +14,7 @@ from constants import (
     TOTAL_STOPS,
     STOPS_PER_DAY,
     BAD_DRIVERS_PERCENTAGE,
+    MIXED_DRIVERS_PERCENTAGE,
     DOUBLE_ROWS,
     SLOTS_PER_ROW,
     SLOT_WIDTH,
@@ -24,7 +25,9 @@ from constants import (
     OVERSTAY_PROBABILITY_SPREAD,
     GOOD_OVERSTAY_PROBABILITY,
     BAD_OVERSTAY_PROBABILITY,
+    MIXED_OVERSTAY_PROBABILITY,
     BAD_VEHICLE_TYPE,
+    MIXED_VEHICLE_TYPE,
     BAD_LEARNING_PROBABILITY,
     LEARNING_PROBABILITY_SPREAD,
     OUTER_POPULATION_PERCENTAGE,
@@ -223,6 +226,7 @@ def generate_simulation_map():
         # Colors based on vehicles' behavior
         print('<vType id="car" color="0.7,0.7,0.7"/>', file=stops)
         print(f'<vType id="{BAD_VEHICLE_TYPE}" color="red"/>', file=stops)
+        print(f'<vType id="{MIXED_VEHICLE_TYPE}" color="yellow"/>', file=stops)
         
         print("</additional>", file=stops)
 
@@ -232,10 +236,12 @@ def generate_routes():
     stops_rng = random.Random(stream_seed(SCENARIO_SEED, "stops"))
     departTime = 1
     number_bad_vehicles = int(TOTAL_POPULATION * BAD_DRIVERS_PERCENTAGE)
+    number_mixed_vehicles = int(TOTAL_POPULATION * MIXED_DRIVERS_PERCENTAGE)
+    number_good_vehicles = TOTAL_POPULATION - number_bad_vehicles - number_mixed_vehicles
 
-    is_vehicle_bad = [False] * (TOTAL_POPULATION - number_bad_vehicles) + [True] * number_bad_vehicles
+    vehicles_behaviour = ["good"] * number_good_vehicles + ["mixed"] * number_mixed_vehicles + ["bad"] * number_bad_vehicles
 
-    random.Random(stream_seed(SCENARIO_SEED, "bad")).shuffle(is_vehicle_bad)
+    random.Random(stream_seed(SCENARIO_SEED, "bad")).shuffle(vehicles_behaviour)
 
     outer_population_number = int(TOTAL_POPULATION * OUTER_POPULATION_PERCENTAGE)
     is_vehicle_outer = [False] * (TOTAL_POPULATION - outer_population_number) + [True] * outer_population_number
@@ -248,14 +254,18 @@ def generate_routes():
     if rowNumberOutOfTown < 4:
         rowNumberOutOfTown = 4
 
+    types = {"bad": BAD_VEHICLE_TYPE, "mixed": MIXED_VEHICLE_TYPE, "good": "car"}
+    overstays = {"bad": BAD_OVERSTAY_PROBABILITY, "mixed": MIXED_OVERSTAY_PROBABILITY, "good": GOOD_OVERSTAY_PROBABILITY}
+    learnings = {"bad": BAD_LEARNING_PROBABILITY, "mixed": BAD_LEARNING_PROBABILITY, "good": 0.0}
+
     with open(f"{FOLDER_NAME}/{PREFIX}_{TOTAL_POPULATION}.rou.xml", "w") as routes:
         print("<routes>", file=routes)
         
         for i in range(TOTAL_POPULATION):
-            is_bad = is_vehicle_bad[i]
+            behaviour = vehicles_behaviour[i]
             is_outer = is_vehicle_outer[i]
-            vtype = BAD_VEHICLE_TYPE if is_bad else "car"
-            good_behaviour = "False" if is_bad else "True"
+            vtype = types[behaviour]
+            good_behaviour = "False" if behaviour == "bad" else "True"
             
             row_idx = (i // 2) % DOUBLE_ROWS
             sign = "" if i % 2 == 0 else "-"
@@ -271,7 +281,7 @@ def generate_routes():
             print(f'        <param key="wallet" value="{wallet}" />', file=routes)
             print(f'        <param key="goodBehaviour" value="{good_behaviour}" />', file=routes)
 
-            overstay_base = BAD_OVERSTAY_PROBABILITY if is_bad else GOOD_OVERSTAY_PROBABILITY
+            overstay_base = overstays[behaviour]
             overstay_probability = min(1.0, max(0.0, probability_rng.uniform(
                 overstay_base * (1 - OVERSTAY_PROBABILITY_SPREAD),
                 overstay_base * (1 + OVERSTAY_PROBABILITY_SPREAD)
@@ -279,7 +289,7 @@ def generate_routes():
             # Initial likeliness of the generated vehicle to overstay at any given stop
             print(f'        <param key="overstayProbability" value="{overstay_probability}" />', file=routes)
 
-            learning_base = BAD_LEARNING_PROBABILITY if is_bad else 0.0
+            learning_base = learnings[behaviour]
             learning_probability = min(1.0, max(0.0, probability_rng.uniform(
                 learning_base * (1 - LEARNING_PROBABILITY_SPREAD),
                 learning_base * (1 + LEARNING_PROBABILITY_SPREAD)
@@ -324,6 +334,6 @@ if __name__ == "__main__":
     <route-files value="{PREFIX}_{TOTAL_POPULATION}.rou.xml"/>
     <additional-files value="{PREFIX}.add.xml"/>
     <no-step-log value="True"/>
-    <time-to-teleport value="0"/>
+    <time-to-teleport value="300"/>
 </input>
 </configuration>""", file=sumo_config)
