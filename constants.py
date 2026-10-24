@@ -49,10 +49,20 @@ RATING_DETERRENCE = 0.0 # Needed to adjust the overstay probabilities (see above
 MIN_OVERSTAY_STEPS = STEPS_PER_HOUR // 4
 MAX_OVERSTAY_STEPS = 2 * STEPS_PER_HOUR
 
-BAD_LEARNING_PROBABILITY = 0.5 # Base probability of a vehicle to correct its behaviour after receiving a warning or losing a star
+MIN_OVERSTAY_PROBABILITY = GOOD_OVERSTAY_PROBABILITY # Upper limit to the overstay probability for a vehicle
+MAX_OVERSTAY_PROBABILITY = BAD_OVERSTAY_PROBABILITY  # Lower limit to the overstay probability for a vehicle
+
+# Base probabilities of the types of vehicles to correct their behaviour after a penalty, a missed reservation/redirection or a reward
+BAD_LEARNING_PROBABILITY = 0.5
+MIXED_LEARNING_PROBABILITY = BAD_LEARNING_PROBABILITY
+GOOD_LEARNING_PROBABILITY = 0.0
+
 LEARNING_PROBABILITY_SPREAD = 0.0 # How much a vehicle is likely to correct its behaviour within its base probability
-WARNING_LEARNING_RATE = 0.3 # How much the behaviour gets corrected after receiving a warning
-STAR_LOSS_LEARNING_RATE = 0.5 # How much the behaviour gets corrected after losing a star
+WARNING_LEARNING_RATE = 0.3       # How much the behaviour gets corrected after receiving a warning
+STAR_LOSS_LEARNING_RATE = 0.5     # How much the behaviour gets corrected after losing a star
+REWARD_LEARNING_RATE = 0.0        # How much the behaviour gets corrected after receiving a reward
+FRUSTRATION_LEARNING_RATE = 0.0            # How much the behaviour gets corrected after getting a refusal on a reservation
+RELOCATION_LEARNING_RATE = 0.0 # How much the behaviour gets corrected after getting relocated to another area
 
 BAD_VEHICLE_TYPE = "carB"   # Type of vehicle sporting a bad behavior, used by SUMO in its routes file
 MIXED_VEHICLE_TYPE = "carM" # Type of vehicle sporting a mixed behavior, used by SUMO in its routes file

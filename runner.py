@@ -16,6 +16,8 @@ from constants import (
     INITIAL_BUFFER_SPOTS,
     MAX_BUFFER_SPOTS,
     OVERSTAY_THRESHOLD,
+    FRUSTRATION_LEARNING_RATE,
+    RELOCATION_LEARNING_RATE,
     BUFFER_STRATEGY,
     BUFFER_RISK_WEIGHT,
     BUFFER_RESET_PERIOD,
@@ -96,6 +98,10 @@ def run():
     # Registers the number of overstays made by each behavioural category of vehicles (good, bad, mixed)
     overstays_by_type = {}
 
+    # Initial and final overstay probabilities for each simulation vehicles
+    initial_propensity = {}
+    final_propensity = {}
+
     # Stores the park areas (name -> ParkArea)
     areas = {}
 
@@ -134,7 +140,9 @@ def run():
         end_stop_vehicles = list(traci.simulation.getParkingEndingVehiclesIDList())
         # print("List of vehicles that are leaving their park:", end_stop_vehicles)
 
-        # First iterate on vehicles that are about to end a park
+        # ---------------------------------------------------------------
+        # FASE 1 — First iterate and manage vehicles that are about to end a park
+        # ---------------------------------------------------------------
         for end_stop_vehicle in end_stop_vehicles:
             vehicle = vehicles.get(end_stop_vehicle)
             old_park_area = vehicle.last_park if vehicle is not None else ""
@@ -175,6 +183,11 @@ def run():
 
             if vehicle is not None:
                 vehicle.booking = None
+                # Update the final overstay probability of the current vehicle after its current stop ends
+                final_propensity[end_stop_vehicle] = (
+                    traci.vehicle.getTypeID(end_stop_vehicle),
+                    get_overstay_probability(end_stop_vehicle),
+                )
 
             # Decrement reservation count for the area the vehicle is leaving
             if vehicle is not None and vehicle.has_reservation:
@@ -210,10 +223,15 @@ def run():
                     else:
                         leaving_area_park_vehicle[previous_park_area] += 1
 
-
-        # Then iterate only vehicles that are running in this scenario
+        # ---------------------------------------------------------------
+        # PHASE 2 — Iterate only vehicles that are running in this scenario
+        # ---------------------------------------------------------------
         for id_vehicle in running_vehicle_id_list:
             vehicle = get_vehicle(id_vehicle, vehicles, xml_pos_by_id)
+
+            # Store the initial probability for the current vehicle
+            if id_vehicle not in initial_propensity:
+                initial_propensity[id_vehicle] = get_overstay_probability(id_vehicle)
 
             is_stopped_parking = traci.vehicle.isStoppedParking(id_vehicle)
 
@@ -322,9 +340,14 @@ def run():
                                 buffer_rejections[unreserved] = buffer_rejections.get(unreserved, 0) + 1
 
                             new_park_area = change_reservation(id_vehicle, area.name, duration, 0, areas, buffer_manager, first_slot, last_slot)
+                            # If the vehicle can't be relocated to an in-town area, move it out of town and update its overstay probability using the "frustration" rate
                             if new_park_area == "End":
                                 no_found_reservation_cont += 1
+                                frustrate(id_vehicle, behaviour_rng, FRUSTRATION_LEARNING_RATE)
                                 new_park_area = go_to_no_system_park(id_vehicle, duration, 0, areas)
+                            # If it can be relocated to another in-town area, update the overstay probability anyways but with the "relocation" rate
+                            else:
+                                frustrate(id_vehicle, behaviour_rng, RELOCATION_LEARNING_RATE)
 
                     # If the chosen area is out of town but it's full, choose another out of town area
                     elif not area.has_free_slot(0):
@@ -376,10 +399,11 @@ def run():
                         leaving_area_park_vehicle[park_area] -= 1
                         continue
 
-                    # Else the system directs the vehicle out of town, and increases the NO PARK counter
+                    # Else the system directs the vehicle out of town, increases the NO PARK counter, and worsens the vehicle's overstay probability using the "frustration" rating
                     if not area.is_out_of_town:
                         if not vehicle.is_waiting:
                             cont_no_park += 1
+                            frustrate(vehicle.id, behaviour_rng, FRUSTRATION_LEARNING_RATE)
                             vehicle.is_waiting = True
                         if not vehicle.changed_route:
                             vehicle.changed_route = True
@@ -507,6 +531,22 @@ def run():
     vehicles_change_route_count = sum(1 for v in vehicles.values() if v.changed_route)
     reservation ={name: area.reservations for name, area in sorted(areas.items()) if area.is_out_of_town}
 
+    # Calculates the mean overstay probability for each type of vehicle behaviour (good, bad or mixed) both at the start of the simulation and at the end of it. Also prints the minimum and maximum probabilities for each behaviour category
+    values_by_type = {}
+    for id_vehicle, (vehicle_type, end_value) in final_propensity.items():
+        start_values, end_values = values_by_type.setdefault(vehicle_type, ([], []))
+        start_values.append(initial_propensity[id_vehicle])
+        end_values.append(end_value)
+    propensity_by_type = {
+        vehicle_type: (
+            round(sum(start) / len(start), 3),
+            round(sum(end) / len(end), 3),
+            round(min(end), 3),
+            round(max(end), 3),
+        )
+        for vehicle_type, (start, end) in sorted(values_by_type.items())
+    }
+
     with open("output.txt", "a") as f:
         print(
             f"Which population: {TOTAL_POPULATION}"
@@ -587,6 +627,12 @@ def run():
         print(f"End park(good behaviour): {cont_end_park}", file=f)
         print(f"End park(bad behaviour): {cont_bad_behaviour_vehicles}", file=f)
         print(f"In-town stops judged and overstays detected, by vehicle type (behaviour): {dict(sorted(overstays_by_type.items()))}", file=f)
+        print(
+            f"Overstay propensity by vehicle type"
+            f" (mean at start, mean at end, min at end, max at end):"
+            f" {propensity_by_type}",
+            file=f,
+        )
         print(
             f"Total end park: {cont_end_park + cont_bad_behaviour_vehicles}", file=f
         )

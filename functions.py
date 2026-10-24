@@ -29,11 +29,16 @@ from constants import (
     MAX_REVIEW_STARS,
     GOOD_OVERSTAY_PROBABILITY,
     BAD_OVERSTAY_PROBABILITY,
+    MIN_OVERSTAY_PROBABILITY,
+    MAX_OVERSTAY_PROBABILITY,
     RATING_DETERRENCE,
     MIN_OVERSTAY_STEPS,
     MAX_OVERSTAY_STEPS,
     WARNING_LEARNING_RATE,
     STAR_LOSS_LEARNING_RATE,
+    REWARD_LEARNING_RATE,
+    FRUSTRATION_LEARNING_RATE,
+    RELOCATION_LEARNING_RATE,
     BAD_VEHICLE_TYPE
 )
 
@@ -71,6 +76,8 @@ def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
     """Function to change the vehicle's reputation based on behaviour. Called when a vehicle exits an area"""
 
     review_stars = get_review_stars(id_vehicle)
+    current_probability = get_overstay_probability(id_vehicle)
+    awareness = get_learning_probability(id_vehicle)
 
     if overstayed:
         set_good_behaviour(id_vehicle, False)
@@ -78,10 +85,7 @@ def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
         star_loss = review_stars > 0 and warning == 5 # Used to determined if a vehicle is about to lose a star
 
         # For the sake of the simulation, the update of the overstay probability is made BEFORE the vehicle gets a warning. This way, even vehicles with 0 stars might improve their behaviour
-        if traci.vehicle.getTypeID(id_vehicle) == BAD_VEHICLE_TYPE:
-            current_probability = get_overstay_probability(id_vehicle)
-            awareness = get_learning_probability(id_vehicle)
-
+        if awareness > 0:
             learning_rate = STAR_LOSS_LEARNING_RATE if star_loss else WARNING_LEARNING_RATE
             set_overstay_probability(id_vehicle, update_overstay_probability(
                 current_probability, 
@@ -99,6 +103,7 @@ def system_charge(id_vehicle: str, overstayed: bool, rng: random.Random):
             set_warning(id_vehicle, warning)
     else:
         set_good_behaviour(id_vehicle, True)
+        set_overstay_probability(id_vehicle, update_overstay_probability(current_probability, awareness, rng, REWARD_LEARNING_RATE))
         if review_stars == MAX_REVIEW_STARS:
             return
         civil = get_civil(id_vehicle) + 1
@@ -221,13 +226,59 @@ def update_overstay_probability (
     awareness: float,
     rng: random.Random,
     learning_rate: float,
-    floor: float = GOOD_OVERSTAY_PROBABILITY
+    floor: float = MIN_OVERSTAY_PROBABILITY
 ) -> float:
-    """Updates the vehicle behaviour on probability \"awareness\""""
+    """Updates the vehicle's behaviour on probability \"awareness\""""
+    if learning_rate == 0 or awareness == 0:
+        return current_probability
     if rng.random() >= awareness:
         return current_probability
-    # Overstay probability should not be lower than a fixed floor (GOOD_OVERSTAY_PROBABILITY by default, see "constants.py")
+    # Overstay probability should not be lower than a fixed floor (MIN_OVERSTAY_PROBABILITY by default, see "constants.py")
     return max(floor, current_probability * (1 - learning_rate))
+
+def worsen_overstay_probability(
+    current_probability: float,
+    awareness: float,
+    rng: random.Random,
+    learning_rate: float,
+    ceiling: float = MAX_OVERSTAY_PROBABILITY
+) -> float:
+    """Worsens the vehicle's behaviour on probability \"awareness\""""
+    if learning_rate == 0 or awareness == 0:
+        return current_probability
+    if rng.random() >= awareness:
+        return current_probability
+    # Overstay probability should not be higher than a fixed ceiling (MAX_OVERSTAY_PROBABILITY by default, see "constants.py")
+    return max(current_probability, current_probability + learning_rate * (ceiling - current_probability))
+
+def frustrate(
+    id_vehicle: str,
+    rng: random.Random,
+    rate: float
+) -> None:
+    """
+    Frustrazione: il sistema non ha mantenuto la promessa, e la propensione
+    a sforare del veicolo puo' salire (vedi worsen_overstay_probability).
+
+    Legge propensione e ricettivita' dai parametri del veicolo e riscrive la
+    propensione, cosi' chi la chiama non deve fare altro: la chiamano tre
+    punti di runner.py, e se ognuno dovesse ricordarsi di salvare il
+    risultato, prima o poi uno se ne dimenticherebbe.
+
+    Con tasso o ricettivita' 0 non estrae e riscrive il valore di prima: le
+    corse restano identiche.
+
+    Args:
+        id_vehicle: il veicolo frustrato.
+        rng: generatore della corsa (behaviour_rng in runner.py), lo stesso
+             della punizione e del premio.
+        rate: FRUSTRATION_LEARNING_RATE per un rifiuto senza alternative in
+              centro o un'area fisicamente piena, RELOCATION_LEARNING_RATE
+              per una prenotazione spostata su un'altra area del centro.
+    """
+    current_probability = get_overstay_probability(id_vehicle)
+    awareness = get_learning_probability(id_vehicle)
+    set_overstay_probability(id_vehicle, worsen_overstay_probability(current_probability, awareness, rng, rate))
 
 def booking_slots(
     id_vehicle: str,
