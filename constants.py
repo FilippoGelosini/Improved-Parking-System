@@ -6,15 +6,16 @@ FOLDER_NAME = "scenarios"
 TOTAL_POPULATION = 80
 BAD_DRIVERS_PERCENTAGE = 0.5
 MIXED_DRIVERS_PERCENTAGE = 0.0
-INITIAL_WALLET = 100 # Base wallet for all vehicles
+INITIAL_WALLET = 100000 # Base wallet for all vehicles
 OUTER_POPULATION_PERCENTAGE = 0.05 # Percentage of vehicles which never park in out of town areas (e.g. tourists)
 OUTER_POPULATION_WALLET_MULTIPLIER = 1.5
-TOTAL_STOPS = 10
+
 STOPS_PER_DAY = 5
+SIMULATION_DAYS = 2
 
 MIN_PARK_DURATION = 1
 MAX_PARK_DURATION = 24
-STEPS_PER_HOUR = 100
+STEPS_PER_HOUR = 500
 STEPS_PER_CALENDAR_SLOT = STEPS_PER_HOUR // 4
 
 PARK_AREA_NAMES = ["ParkArea", "ParkAreaAlternative", "ParkAreaOutOfTown"]
@@ -49,8 +50,8 @@ RATING_DETERRENCE = 0.0 # Needed to adjust the overstay probabilities (see above
 MIN_OVERSTAY_STEPS = STEPS_PER_HOUR // 4
 MAX_OVERSTAY_STEPS = 2 * STEPS_PER_HOUR
 
-MIN_OVERSTAY_PROBABILITY = GOOD_OVERSTAY_PROBABILITY # Upper limit to the overstay probability for a vehicle
-MAX_OVERSTAY_PROBABILITY = BAD_OVERSTAY_PROBABILITY  # Lower limit to the overstay probability for a vehicle
+MIN_OVERSTAY_PROBABILITY = GOOD_OVERSTAY_PROBABILITY # Lower limit to the overstay probability for a vehicle
+MAX_OVERSTAY_PROBABILITY = BAD_OVERSTAY_PROBABILITY  # Upper limit to the overstay probability for a vehicle
 
 # Base probabilities of the types of vehicles to correct their behaviour after a penalty, a missed reservation/redirection or a reward
 BAD_LEARNING_PROBABILITY = 0.5

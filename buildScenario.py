@@ -11,8 +11,8 @@ from constants import (
     FOLDER_NAME,
     PARK_AREA_NAMES,
     TOTAL_POPULATION,
-    TOTAL_STOPS,
     STOPS_PER_DAY,
+    SIMULATION_DAYS,
     BAD_DRIVERS_PERCENTAGE,
     MIXED_DRIVERS_PERCENTAGE,
     DOUBLE_ROWS,
@@ -248,7 +248,7 @@ def generate_routes():
     outer_population_number = int(TOTAL_POPULATION * OUTER_POPULATION_PERCENTAGE)
     is_vehicle_outer = [False] * (TOTAL_POPULATION - outer_population_number) + [True] * outer_population_number
 
-    random.Random(stream_seed(SCENARIO_SEED, "tourists")).shuffle(is_vehicle_outer)
+    random.Random(stream_seed(SCENARIO_SEED, "outer")).shuffle(is_vehicle_outer)
 
     probability_rng = random.Random(stream_seed(SCENARIO_SEED, "propensities"))
     
@@ -299,19 +299,19 @@ def generate_routes():
             # How likely is the generated vehicle to correct its behaviour
             print(f'        <param key="learningProbability" value="{learning_probability}" />', file=routes)
 
-            for s in range(TOTAL_STOPS):
-                duration = stops_rng.randrange(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR
-                park_area_type = stops_rng.choice([PARK_AREA_NAMES[0], PARK_AREA_NAMES[1]])
+            for d in range(SIMULATION_DAYS):
+                for s in range(STOPS_PER_DAY):
+                    duration = stops_rng.randint(MIN_PARK_DURATION, max(2, int(MAX_PARK_DURATION / 8))) * STEPS_PER_HOUR
+                    park_area_type = stops_rng.choice([PARK_AREA_NAMES[0], PARK_AREA_NAMES[1]])
+                    
+                    print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration}"/>', file=routes)
                 
-                print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration}"/>', file=routes)
-                
-                if (s + 1) % STOPS_PER_DAY == 0:
-                    night_duration = stops_rng.randrange(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR
-                    if is_outer:
-                        night_area = f"{sign}{PARK_AREA_NAMES[0]}{row_idx}"
-                    else:
-                        night_area = f"{sign}{PARK_AREA_NAMES[2]}{i % rowNumberOutOfTown}"
-                    print(f'        <stop parkingArea="{night_area}" duration="{night_duration}"/>', file=routes)
+                night_duration = stops_rng.randint(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR
+                if is_outer:
+                    night_area = f"{sign}{PARK_AREA_NAMES[0]}{row_idx}"
+                else:
+                    night_area = f"{sign}{PARK_AREA_NAMES[2]}{i % rowNumberOutOfTown}"
+                print(f'        <stop parkingArea="{night_area}" duration="{night_duration}"/>', file=routes)
 
             print(f'    </trip>', file=routes)
 

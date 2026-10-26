@@ -153,8 +153,8 @@ def run():
                 vehicle.slot_release_step = None
                 vehicle.park_duration = vehicle.booking[2] * STEPS_PER_CALENDAR_SLOT
                 arrived_after_booking_end_cont += 1
-                set_wallet(end_stop_vehicle, vehicle.new_wallet)
-                vehicle.new_wallet = None
+                #set_wallet(end_stop_vehicle, vehicle.new_wallet)
+                #vehicle.new_wallet = None
                 if len(traci.vehicle.getStops(end_stop_vehicle, 0)) > 1:
                     vehicle.stop_pos += 1
 
@@ -305,21 +305,21 @@ def run():
                             park_area = new_park_area
 
                         # Check vehicle's wallet, if it has enough credits it can park in "Town"
-                        if not is_out_of_town(park_area):
-                            vehicle.new_wallet = check_wallet(duration, id_vehicle)
-                            if not vehicle.new_wallet:
-                                new_park_area = go_to_no_system_park(
-                                    id_vehicle, duration, 0, areas
-                                )
+                        #if not is_out_of_town(park_area):
+                        #    vehicle.new_wallet = check_wallet(duration, id_vehicle)
+                        #    if not vehicle.new_wallet:
+                        #        new_park_area = go_to_no_system_park(
+                        #            id_vehicle, duration, 0, areas
+                        #        )
 
-                                # print("Stops:", traci.vehicle.getStops(id_vehicle, 0))
-                                # print("New Park Area:", new_park_area)
+                        #        # print("Stops:", traci.vehicle.getStops(id_vehicle, 0))
+                        #        # print("New Park Area:", new_park_area)
 
-                                root[vehicle.xml_pos][
-                                    STARTING_STOP + stop_pos_offset
-                                ].set("parkingArea", new_park_area)
-                                vehicle.last_park = new_park_area
-                                park_area = new_park_area
+                        #        root[vehicle.xml_pos][
+                        #            STARTING_STOP + stop_pos_offset
+                        #        ].set("parkingArea", new_park_area)
+                        #        vehicle.last_park = new_park_area
+                        #        park_area = new_park_area
 
                 # Set buffer spots (there are no buffer spots in "ParkAreaOutOfTown")
                 area = get_park_area(park_area, areas)
@@ -504,11 +504,11 @@ def run():
                             arrived_after_booking_end_cont += 1
 
                         # Wallet overwritten with the new balance. Raises an wxception if, for some reason, the vehicle did not have its wallet checked
-                        if vehicle.new_wallet is not None:
-                            set_wallet(id_vehicle, vehicle.new_wallet)
-                            vehicle.new_wallet = None
-                        else:
-                            raise ValueError(f"'{vehicle.id}' is parking in town without having its wallet checked")
+                        #if vehicle.new_wallet is not None:
+                        #    set_wallet(id_vehicle, vehicle.new_wallet)
+                        #    vehicle.new_wallet = None
+                        #else:
+                        #    raise ValueError(f"'{vehicle.id}' is parking in town without having its wallet checked")
                     if cont_stops > 1:
                         # Update which stop the vehicle is at
                         vehicle.stop_pos += 1
