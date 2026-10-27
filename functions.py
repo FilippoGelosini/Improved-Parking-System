@@ -299,3 +299,11 @@ def buffer_of_slot(buffer_manager: BufferStrategy, park_area: str):
     if CONSTANT_BUFFER_SPOTS == -1:
         return lambda time_slot: buffer_manager.get_buffer(park_area, time_slot)
     return lambda time_slot: CONSTANT_BUFFER_SPOTS
+
+def spare_spots_at_peak(peak_occupancy: dict, area_name: str, areas: dict, first_slot: int, last_slot: int) -> int:
+    """Number of physically free spots in an area during the fullest time slot in the given interval (capacity - free slots for the judged time slot)"""
+    area_capacity = get_park_area(area_name, areas).capacity
+    spare_spots = []
+    for i in range(first_slot, last_slot):
+        spare_spots.append(area_capacity - peak_occupancy.get((area_name, i), 0))
+    return min(spare_spots)

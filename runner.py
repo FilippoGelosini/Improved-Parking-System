@@ -87,6 +87,11 @@ def run():
     simulation_time = 0
     unsatisfied_reservations_cont = 0
     no_found_reservation_cont = 0
+    suspended_reservations_cont = 0 # Number of times a reservation is refused because the vehicle had < 3 stars and "goodBehaviour" set to false (overstay during its last stop)
+
+    peak_occupancy = {}    # Maximum number of vehicles parked observed during a certain time slot, only for in-town areas
+    rejected_bookings = [] # Number of rejected bookings because of a full area, stored as a tuple (area name, arrival time slot, last time slot - 1). Judged after the end of the run
+
     arrived_after_booking_end_cont = 0
     arrived_before_booking_start_cont = 0
     out_of_calendar_arrival_cont = 0
@@ -134,6 +139,15 @@ def run():
 
         simulation_time = traci.simulation.getTime()
         # print("Time:", simulation_time)
+
+        current_slot = step_to_calendar_slot(simulation_time)
+        for area in areas.values():
+            if not area.is_out_of_town:
+                area_name = area.name
+                peak_occupancy[area_name, current_slot] = max(
+                    peak_occupancy.get((area_name, current_slot), 0),
+                    traci.parkingarea.getVehicleCount(area_name),
+                )
 
         # Remove all ending park vehicles' reservations
         leaving_area_park_vehicle.clear()
@@ -291,6 +305,7 @@ def run():
                         good_behaviour = get_good_behaviour(id_vehicle)
                         # print("goodBehaviour:", good_behaviour)
                         if review_stars < 3 and not good_behaviour:
+                            suspended_reservations_cont += 1
                             new_park_area = go_to_no_system_park(
                                 id_vehicle, duration, 0, areas
                             )
@@ -335,6 +350,9 @@ def run():
                         if not area.can_book(first_slot, last_slot, buffer_of_slot(buffer_manager, area.name)):
                             unsatisfied_reservations_cont += 1
 
+                            rejected_bookings.append((area.name, first_slot, last_slot))
+
+                            # Reservation refused because of the buffer's dimension
                             unreserved = area.unreserved_spots(first_slot, last_slot)
                             if unreserved > 0:
                                 buffer_rejections[unreserved] = buffer_rejections.get(unreserved, 0) + 1
@@ -547,6 +565,17 @@ def run():
         for vehicle_type, (start, end) in sorted(values_by_type.items())
     }
 
+    # Ogni rifiuto per area esaurita, giudicato a posteriori: posti rimasti
+    # fisicamente liberi nel momento più pieno delle fasce chieste -> quante
+    # volte è successo. Come buffer_rejections, un solo dizionario per tutta
+    # la simulazione.
+
+    # Counts the number of rejection for each full area
+    spare_at_peak = {}
+    for area_name, first_slot, last_slot in rejected_bookings:
+        spare = spare_spots_at_peak(peak_occupancy, area_name, areas, first_slot, last_slot)
+        spare_at_peak[spare] = spare_at_peak.get(spare, 0) + 1
+
     with open("output.txt", "a") as f:
         print(
             f"Which population: {TOTAL_POPULATION}"
@@ -598,6 +627,32 @@ def run():
         print(
             f"    by unreserved spots left (spots: rejections):"
             f" {dict(sorted(buffer_rejections.items()))}",
+            file=f,
+        )
+        # Lo stesso rifiuto giudicato a posteriori. La riga "only because of
+        # the buffer" guarda il calendario al momento del rifiuto, cioè le
+        # prenotazioni; queste due guardano i veicoli davvero parcheggiati
+        # nelle fasce chieste, a corsa finita. Chiave 0: l'area si è
+        # riempita almeno una volta, gli sforamenti hanno usato il buffer e
+        # il rifiuto era giustificato. Chiave maggiore di 0: in ogni momento
+        # restava quel numero di posti liberi, la prenotazione ci sarebbe
+        # stata e il buffer era sovradimensionato. Due limiti: non si rifà la
+        # corsa come se la prenotazione fosse stata accettata (si chiede solo
+        # se il posto c'era), e le fasce sono quelle stimate con findRoute.
+        print(
+            f"  of which with a spot actually free (buffer oversized):"
+            f" {sum(n for spare, n in spare_at_peak.items() if spare > 0)}",
+            file=f,
+        )
+        print(
+            f"    by spots free at the busiest moment (spots: rejections):"
+            f" {dict(sorted(spare_at_peak.items()))}",
+            file=f,
+        )
+        # Rejections caused by the "goodBehaviour" parameter set to False
+        print(
+            f"Bookings rejected, vehicle suspended (events):"
+            f" {suspended_reservations_cont}",
             file=f,
         )
         print(

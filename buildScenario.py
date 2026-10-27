@@ -108,13 +108,15 @@ def generate_simulation_map():
         print(f'<node id="{nodeID}" x="{x}" y="{y}"/>', file=nodes)
         if row > 0:
             edgeID = f"cyber{row - 1}to{row}"
-            print(f'<edge id="{edgeID}" from="cyber{row - 1}" to="cyber{row}" numLanes="2" spreadType="center">', file=edges)
+            print(f'<edge id="{edgeID}" from="cyber{row - 1}" to="cyber{row}" numLanes="3" spreadType="center">', file=edges)
             print('    <lane index="0"/>', file=edges)
             print('    <lane index="1"/>', file=edges)
+            print('    <lane index="2"/>', file=edges)
             print('</edge>', file=edges)
-            print(f'<edge id="-{edgeID}" from="cyber{row}" to="cyber{row - 1}" numLanes="2" spreadType="center">', file=edges)
+            print(f'<edge id="-{edgeID}" from="cyber{row}" to="cyber{row - 1}" numLanes="3" spreadType="center">', file=edges)
             print('    <lane index="0"/>', file=edges)
             print('    <lane index="1"/>', file=edges)
+            print('    <lane index="2"/>', file=edges)
             print('</edge>', file=edges)
     
     y = (SLOTS_PER_ROW + 3) * SLOT_WIDTH
@@ -126,14 +128,28 @@ def generate_simulation_map():
         print(f'<node id="{nodeID}" x="{x}" y="{y}"/>', file=nodes)
         if row > 0:
             edgeID = f"cyberAlternative{row - 1}to{row}"
-            print(f'<edge id="{edgeID}" from="cyberAlternative{row - 1}" to="cyberAlternative{row}" numLanes="2" spreadType="center">', file=edges)
+            print(f'<edge id="{edgeID}" from="cyberAlternative{row - 1}" to="cyberAlternative{row}" numLanes="3" spreadType="center">', file=edges)
             print('    <lane index="0"/>', file=edges)
             print('    <lane index="1"/>', file=edges)
+            print('    <lane index="2"/>', file=edges)
             print('</edge>', file=edges)
-            print(f'<edge id="-{edgeID}" from="cyberAlternative{row}" to="cyberAlternative{row - 1}" numLanes="2" spreadType="center">', file=edges)
+            print(f'<edge id="-{edgeID}" from="cyberAlternative{row}" to="cyberAlternative{row - 1}" numLanes="3" spreadType="center">', file=edges)
             print('    <lane index="0"/>', file=edges)
             print('    <lane index="1"/>', file=edges)
+            print('    <lane index="2"/>', file=edges)
             print('</edge>', file=edges)
+
+    edgeID = "cybermid"
+    print(f'<edge id="{edgeID}" from="cyber{DOUBLE_ROWS - 1}" to="cyberAlternative0" numLanes="3" spreadType="center">', file=edges)
+    print('    <lane index="0"/>', file=edges)
+    print('    <lane index="1"/>', file=edges)
+    print('    <lane index="2"/>', file=edges)
+    print('</edge>', file=edges)
+    print(f'<edge id="-{edgeID}" from="cyberAlternative0" to="cyber{DOUBLE_ROWS - 1}" numLanes="3" spreadType="center">', file=edges)
+    print('    <lane index="0"/>', file=edges)
+    print('    <lane index="1"/>', file=edges)
+    print('    <lane index="2"/>', file=edges)
+    print('</edge>', file=edges)
     
     y = (SLOTS_PER_ROW + 3) * SLOT_WIDTH - 150
     print(f'<node id="cyberOutOfTown" x="-500" y="{y}"/>', file=nodes)
@@ -144,13 +160,15 @@ def generate_simulation_map():
         print(f'<node id="{nodeID}" x="{x}" y="{y}"/>', file=nodes)
         if row > 0:
             edgeID = f"cyberOutOfTown{row - 1}to{row}"
-            print(f'<edge id="{edgeID}" from="cyberOutOfTown{row - 1}" to="cyberOutOfTown{row}" numLanes="2" spreadType="center">', file=edges)
+            print(f'<edge id="{edgeID}" from="cyberOutOfTown{row - 1}" to="cyberOutOfTown{row}" numLanes="3" spreadType="center">', file=edges)
             print('    <lane index="0"/>', file=edges)
             print('    <lane index="1"/>', file=edges)
+            print('    <lane index="2"/>', file=edges)
             print('</edge>', file=edges)
-            print(f'<edge id="-{edgeID}" from="cyberOutOfTown{row}" to="cyberOutOfTown{row - 1}" numLanes="2" spreadType="center">', file=edges)
+            print(f'<edge id="-{edgeID}" from="cyberOutOfTown{row}" to="cyberOutOfTown{row - 1}" numLanes="3" spreadType="center">', file=edges)
             print('    <lane index="0"/>', file=edges)
             print('    <lane index="1"/>', file=edges)
+            print('    <lane index="2"/>', file=edges)
             print('</edge>', file=edges)
 
     for row in range(DOUBLE_ROWS):
@@ -305,13 +323,14 @@ def generate_routes():
                     park_area_type = stops_rng.choice([PARK_AREA_NAMES[0], PARK_AREA_NAMES[1]])
                     
                     print(f'        <stop parkingArea="{sign}{park_area_type}{row_idx}" duration="{duration}"/>', file=routes)
-                
+
                 night_duration = stops_rng.randint(int(MAX_PARK_DURATION / 3), max(2, int(MAX_PARK_DURATION - MAX_PARK_DURATION / 3))) * STEPS_PER_HOUR
                 if is_outer:
                     night_area = f"{sign}{PARK_AREA_NAMES[0]}{row_idx}"
                 else:
                     night_area = f"{sign}{PARK_AREA_NAMES[2]}{i % rowNumberOutOfTown}"
-                print(f'        <stop parkingArea="{night_area}" duration="{night_duration}"/>', file=routes)
+                if d < SIMULATION_DAYS - 1 or is_outer:
+                    print(f'        <stop parkingArea="{night_area}" duration="{night_duration}"/>', file=routes)
 
             print(f'    </trip>', file=routes)
 
